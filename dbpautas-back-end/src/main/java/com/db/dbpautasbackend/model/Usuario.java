@@ -43,10 +43,10 @@ public class Usuario {
     @Column(nullable = false, length = 50)
     private String sobrenome;
 
-    @Column(nullable = false, length = 100)
+    @Column(nullable = false, length = 100, unique = true)
     private String email;
 
-    @Column(nullable = false, length = 11)
+    @Column(nullable = false, length = 11, unique = true)
     private String cpf;
 
     @Column(nullable = false, length = 30)
