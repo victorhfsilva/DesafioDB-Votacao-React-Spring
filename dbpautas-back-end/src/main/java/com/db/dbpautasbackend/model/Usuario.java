@@ -22,19 +22,11 @@ public class Usuario {
     @Column(updatable = false, nullable = false)
     private Long id;
 
-    @Column(nullable = false)
     private boolean ativo;
-
-    @Column(nullable = false)
     private String criadoPor;
-
-    @Column(nullable = false)
     private LocalDateTime criadoAs;
-
     private String desativadoPor;
-
     private LocalDateTime desativadoAs;
-
     private LocalDateTime atualizadoAs;
 
     @Column(nullable = false, length = 50)
