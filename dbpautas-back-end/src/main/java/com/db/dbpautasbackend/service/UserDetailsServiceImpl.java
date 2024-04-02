@@ -2,6 +2,7 @@ package com.db.dbpautasbackend.service;
 
 import com.db.dbpautasbackend.model.Usuario;
 import com.db.dbpautasbackend.repository.UsuarioRepository;
+import com.db.dbpautasbackend.repository.info.UserDetailsInfo;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -21,9 +22,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Usuario usuario = usuarioRepository.findByCpf(username).orElseThrow();
-        String senha = usuario.getSenha();
-        List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(usuario.getPapel().name()));
+        UserDetailsInfo userDetailsInfo = usuarioRepository.findUserDetailsByCpf(username).orElseThrow();
+        String senha = userDetailsInfo.getSenha();
+        List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(userDetailsInfo.getPapel().name()));
         return new User(username, senha, authorities);
     }
 }

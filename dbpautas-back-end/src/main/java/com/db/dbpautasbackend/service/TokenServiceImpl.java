@@ -36,7 +36,7 @@ public class TokenServiceImpl implements TokenService {
                     .build()
                     .verify(token);
             String cpf = JWT.decode(token).getSubject();
-            return usuarioRepository.findByCpf(cpf).isPresent();
+            return usuarioRepository.findUserDetailsByCpf(cpf).isPresent();
         } catch (Exception ex) {
             return false;
         }
