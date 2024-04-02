@@ -22,13 +22,6 @@ public class Usuario {
     @Column(updatable = false, nullable = false)
     private Long id;
 
-    private boolean ativo;
-    private String criadoPor;
-    private LocalDateTime criadoAs;
-    private String desativadoPor;
-    private LocalDateTime desativadoAs;
-    private LocalDateTime atualizadoAs;
-
     @Column(nullable = false, length = 50)
     private String nome;
 
@@ -41,7 +34,7 @@ public class Usuario {
     @Column(nullable = false, length = 11, unique = true)
     private String cpf;
 
-    @Column(nullable = false, length = 30)
+    @Column(nullable = false, length = 255)
     private String senha;
 
     @Enumerated(EnumType.STRING)
