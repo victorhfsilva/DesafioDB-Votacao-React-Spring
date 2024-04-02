@@ -1,0 +1,9 @@
+CREATE TABLE usuarios (
+    id BIGSERIAL PRIMARY KEY,
+    nome VARCHAR(50) NOT NULL,
+    sobrenome VARCHAR(50) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    cpf VARCHAR(11) NOT NULL UNIQUE,
+    senha VARCHAR(255) NOT NULL,
+    papel VARCHAR(20) NOT NULL CHECK (papel IN ('ADMIN', 'USUARIO'))
+);
