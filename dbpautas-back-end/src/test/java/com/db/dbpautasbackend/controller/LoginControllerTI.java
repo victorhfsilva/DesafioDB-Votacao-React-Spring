@@ -2,7 +2,6 @@ package com.db.dbpautasbackend.controller;
 
 import com.db.dbpautasbackend.dto.LoginDTO;
 import com.db.dbpautasbackend.fixture.LoginDTOFixture;
-import com.db.dbpautasbackend.fixture.TokenFixture;
 import com.db.dbpautasbackend.service.interfaces.TokenService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -42,7 +41,7 @@ class LoginControllerTI {
     @DisplayName("Dado um login válido salvo no banco de dados, quando logado, deve gerar um token corretamente")
     @SqlGroup({
             @Sql(scripts =  "/db/clear_usuarios.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
-            @Sql(scripts = "/db/pupulate_table_usuarios.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+            @Sql(scripts = "/db/insert_usuarios.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     })
     void loginTest(){
         LoginDTO login = LoginDTOFixture.buiderDefault();
@@ -57,7 +56,7 @@ class LoginControllerTI {
     @DisplayName("Dado um login inválido salvo no banco de dados, quando logado, deve retornar status 400")
     @SqlGroup({
             @Sql(scripts =  "/db/clear_usuarios.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
-            @Sql(scripts = "/db/pupulate_table_usuarios.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+            @Sql(scripts = "/db/insert_usuarios.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     })
     void loginTestWithInvalidLogin(LoginDTO login){
         HttpEntity<LoginDTO> requisicao = new HttpEntity<>(login);
