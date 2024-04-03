@@ -45,7 +45,7 @@ public class TokenServiceImplTest {
         assertEquals(resultadoEsperado, resultado);
     }
 
-    public static Stream<Arguments> tokens() {
+    private static Stream<Arguments> tokens() {
         return Stream.of(
             Arguments.of(TokenFixture.builderDefault(), true)
         );
