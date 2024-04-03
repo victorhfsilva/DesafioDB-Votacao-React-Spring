@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @AllArgsConstructor
@@ -20,7 +21,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private UsuarioRepository usuarioRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) {
         UserDetailsInfo userDetailsInfo = usuarioRepository.findUserDetailsByCpf(username).orElseThrow();
         String senha = userDetailsInfo.getSenha();
         List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(userDetailsInfo.getPapel().name()));
