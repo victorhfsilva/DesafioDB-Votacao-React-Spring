@@ -19,7 +19,7 @@ public class LoginServiceImpl implements LoginService {
     public String gerarToken(LoginDTO login) {
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
                 new UsernamePasswordAuthenticationToken(login.cpf(), login.senha());
-        this.authenticationManager.authenticate(usernamePasswordAuthenticationToken);
+        authenticationManager.authenticate(usernamePasswordAuthenticationToken);
         return tokenService.gerarToken(login.cpf());
     }
 }
