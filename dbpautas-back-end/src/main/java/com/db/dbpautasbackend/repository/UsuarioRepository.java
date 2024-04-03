@@ -1,7 +1,7 @@
 package com.db.dbpautasbackend.repository;
 
 import com.db.dbpautasbackend.model.Usuario;
-import com.db.dbpautasbackend.repository.info.UserDetailsInfo;
+import com.db.dbpautasbackend.info.interfaces.UserDetailsInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

@@ -1,8 +1,7 @@
 package com.db.dbpautasbackend.service;
 
-import com.db.dbpautasbackend.model.Usuario;
 import com.db.dbpautasbackend.repository.UsuarioRepository;
-import com.db.dbpautasbackend.repository.info.UserDetailsInfo;
+import com.db.dbpautasbackend.info.interfaces.UserDetailsInfo;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
