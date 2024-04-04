@@ -44,7 +44,7 @@ class PautaControllerTest {
         Pauta pauta = PautaMapper.mapRegistrarPautaDTOtoPauta(pautaDTO);
         String pautaDTOJson = objectMapper.writeValueAsString(pautaDTO);
 
-        when(pautaService.salvar(pauta)).thenReturn(true);
+        when(pautaService.salvar(pauta)).thenReturn(pauta);
         mockMvc.perform(MockMvcRequestBuilders.post("/pauta/registrar")
                         .contentType("application/json")
                         .content(pautaDTOJson))

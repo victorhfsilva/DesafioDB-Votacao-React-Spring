@@ -23,8 +23,8 @@ public class PautaController {
     @Operation(summary = "Registra uma pauta no sistema.")
     public ResponseEntity<Boolean> registrar(@RequestBody @Valid RegistrarPautaDTO pautaDTO) {
         Pauta pauta = PautaMapper.mapRegistrarPautaDTOtoPauta(pautaDTO);
-        boolean salvo = pautaService.salvar(pauta);
-        return ResponseEntity.status(HttpStatus.CREATED).body(salvo);
+        pautaService.salvar(pauta);
+        return ResponseEntity.status(HttpStatus.CREATED).body(true);
     }
 
     @PatchMapping("/abrir/{id}")
@@ -32,7 +32,7 @@ public class PautaController {
     public ResponseEntity<Boolean> abrir(
             @PathVariable("id") Long id,
             @RequestParam(value = "minutos", required = false) Integer tempoDeSessaoEmMinutos){
-        boolean aberto = pautaService.abrirPauta(id, tempoDeSessaoEmMinutos);
-        return ResponseEntity.status(HttpStatus.OK).body(aberto);
+        pautaService.abrirPauta(id, tempoDeSessaoEmMinutos);
+        return ResponseEntity.status(HttpStatus.OK).body(true);
     }
 }

@@ -16,19 +16,17 @@ public class PautaServiceImpl implements PautaService {
     private PautaRepository pautaRepository;
 
     @Override
-    public boolean salvar(Pauta pauta) {
-        pautaRepository.save(pauta);
-        return true;
+    public Pauta salvar(Pauta pauta) {
+        return pautaRepository.save(pauta);
     }
 
     @Override
-    public boolean abrirPauta(Long id, Integer tempoDeSessaoEmMinutos) {
+    public Pauta abrirPauta(Long id, Integer tempoDeSessaoEmMinutos) {
         Pauta pauta = pautaRepository.findById(id).orElseThrow();
         pauta.setAberta(true);
         pauta.setAbertoAs(LocalDateTime.now());
         pauta.setTempoDeSessaoEmMinutos(tempoDeSessaoEmMinutos != null ? tempoDeSessaoEmMinutos : 1);
-        pautaRepository.save(pauta);
-        return true;
+        return pautaRepository.save(pauta);
     }
 
 }
