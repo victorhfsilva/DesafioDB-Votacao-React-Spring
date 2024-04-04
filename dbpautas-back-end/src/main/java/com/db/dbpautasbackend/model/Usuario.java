@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -40,4 +41,7 @@ public class Usuario {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
     private Papel papel;
+
+    @ManyToMany(mappedBy = "eleitores")
+    private List<Pauta> pautasVotadas;
 }
