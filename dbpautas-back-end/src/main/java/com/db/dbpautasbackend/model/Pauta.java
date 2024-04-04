@@ -45,15 +45,18 @@ public class Pauta {
     private List<Usuario> eleitores;
 
     @Column(nullable = false)
-    private boolean aberta;
+    @Builder.Default
+    private boolean aberta = false;
 
     private LocalDateTime abertoAs;
 
     @Column(nullable = false)
-    private int votosSim;
+    @Builder.Default
+    private int votosSim = 0;
 
     @Column(nullable = false)
-    private int votosNao;
+    @Builder.Default
+    private int votosNao = 0;
 
     @Column(nullable = false)
     @Builder.Default
