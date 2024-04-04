@@ -19,7 +19,8 @@ public interface PautaFixture {
     }
 
     private static Pauta.PautaBuilder builder(){
-        return Pauta.builder().titulo("Título da Pauta")
+        return Pauta.builder().id(1L)
+                                .titulo("Título da Pauta")
                                 .resumo("Resumo da Pauta")
                                 .descricao("Descrição da Pauta")
                                 .categoria(Categoria.EDUCACAO);
