@@ -4,4 +4,5 @@ import com.db.dbpautasbackend.model.Pauta;
 
 public interface PautaService {
     boolean salvar(Pauta pauta);
+    boolean abrirPauta(Long id, Integer tempoDeSessaoEmMinutos);
 }
