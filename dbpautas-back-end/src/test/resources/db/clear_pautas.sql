@@ -1,0 +1,1 @@
+DELETE FROM pautas WHERE EXISTS (SELECT 1 FROM pautas);
