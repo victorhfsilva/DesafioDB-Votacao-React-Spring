@@ -1,6 +1,7 @@
 package com.db.dbpautasbackend.controller;
 
 import com.db.dbpautasbackend.dto.RegistrarPautaDTO;
+import com.db.dbpautasbackend.fixture.PautaFixture;
 import com.db.dbpautasbackend.fixture.RegistrarPautaDTOFixture;
 import com.db.dbpautasbackend.mapper.PautaMapper;
 import com.db.dbpautasbackend.model.Pauta;
@@ -13,11 +14,14 @@ import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -31,7 +35,7 @@ class PautaControllerTest {
     @InjectMocks
     private PautaController pautaController;
 
-    @Mock
+    @MockBean
     private PautaService pautaService;
 
     @Autowired
@@ -44,11 +48,22 @@ class PautaControllerTest {
         Pauta pauta = PautaMapper.mapRegistrarPautaDTOtoPauta(pautaDTO);
         String pautaDTOJson = objectMapper.writeValueAsString(pautaDTO);
 
-        when(pautaService.salvar(pauta)).thenReturn(true);
+        when(pautaService.salvar(pauta)).thenReturn(pauta);
         mockMvc.perform(MockMvcRequestBuilders.post("/pauta/registrar")
                         .contentType("application/json")
                         .content(pautaDTOJson))
                 .andExpect(MockMvcResultMatchers.status().isCreated())
+                .andExpect(MockMvcResultMatchers.content().string("true"));
+    }
+
+    @Test
+    @DisplayName("Dado uma pauta fechada, quando aberta com sucesso, deve retornar verdadeiro.")
+    void abrirPautaTest() throws Exception {
+        Pauta pautaAberta = PautaFixture.builderDePautaAberta();
+        when(pautaService.abrirPauta(anyLong(), any())).thenReturn(pautaAberta);
+        mockMvc.perform(MockMvcRequestBuilders.patch("/pauta/abrir/1")
+                        .param("minutos", "180"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string("true"));
     }
 
