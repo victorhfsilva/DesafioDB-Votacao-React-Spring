@@ -18,7 +18,7 @@ import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class PautaServiceTest {
+class PautaServiceImplTest {
 
     @InjectMocks
     private PautaServiceImpl pautaService;

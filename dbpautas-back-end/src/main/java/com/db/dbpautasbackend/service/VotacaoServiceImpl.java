@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -46,7 +47,7 @@ public class VotacaoServiceImpl implements VotacaoService {
 
     private static void inicializaVotacao(Pauta pauta) {
         if (pauta.getEleitores() == null){
-            pauta.setEleitores(List.of());
+            pauta.setEleitores(new ArrayList<>());
         }
     }
 }
