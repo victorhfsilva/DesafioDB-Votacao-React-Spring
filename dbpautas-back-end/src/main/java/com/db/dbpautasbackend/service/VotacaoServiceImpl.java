@@ -8,6 +8,7 @@ import com.db.dbpautasbackend.model.Pauta;
 import com.db.dbpautasbackend.model.Usuario;
 import com.db.dbpautasbackend.repository.PautaRepository;
 import com.db.dbpautasbackend.service.interfaces.VotacaoService;
+import com.db.dbpautasbackend.validators.PautaValidators;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,9 +25,9 @@ public class VotacaoServiceImpl implements VotacaoService {
     @Override
     public Pauta votar(Pauta pauta, Usuario usuario, Voto voto) {
         inicializaVotacao(pauta);
-        validaPautaAberta(pauta);
-        validaSessaoFinalizada(pauta);
-        validaSePrimeiroVoto(pauta, usuario);
+        PautaValidators.validaPautaAberta(pauta);
+        PautaValidators.validaSessaoFinalizada(pauta);
+        PautaValidators.validaSePrimeiroVoto(pauta, usuario);
         return votacao(pauta, usuario, voto);
     }
 
@@ -42,27 +43,6 @@ public class VotacaoServiceImpl implements VotacaoService {
         return pautaRepository.save(pauta);
     }
 
-    private static void validaSessaoFinalizada(Pauta pauta) {
-        LocalDateTime abertoAs = pauta.getAbertoAs();
-        int tempoDeSessaoEmMinutos = pauta.getTempoDeSessaoEmMinutos();
-        LocalDateTime agora = LocalDateTime.now();
-        long minutosPassados = Duration.between(abertoAs, agora).toMinutes();
-        if (minutosPassados > tempoDeSessaoEmMinutos) {
-            throw new SessaoFinalizadaException("O tempo de sessão já expirou. Sessão finalizada.");
-        }
-    }
-
-    private static void validaPautaAberta(Pauta pauta){
-        if (!pauta.isAberta()){
-            throw new PautaFechadaException("Esta pauta ainda não foi aberta a votação.");
-        }
-    }
-
-    private static void validaSePrimeiroVoto(Pauta pauta, Usuario usuario){
-        if (pauta.getEleitores().contains(usuario)){
-            throw new VotoInvalidoException("Não é permitido votar duas vezes na mesma pauta.");
-        }
-    }
 
     private static void inicializaVotacao(Pauta pauta) {
         if (pauta.getEleitores() == null){
