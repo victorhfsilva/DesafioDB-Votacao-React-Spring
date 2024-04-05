@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -43,6 +44,7 @@ class PautaControllerTest {
 
     @Test
     @DisplayName("Dado uma pauta válida, quando registrada com sucesso, deve retornar verdadeiro")
+    @WithMockUser(username = "admin", authorities = {"ADMIN"})
     void registrarTest() throws Exception {
         RegistrarPautaDTO pautaDTO = RegistrarPautaDTOFixture.builderDefault();
         Pauta pauta = PautaMapper.mapRegistrarPautaDTOtoPauta(pautaDTO);
@@ -58,6 +60,7 @@ class PautaControllerTest {
 
     @Test
     @DisplayName("Dado uma pauta fechada, quando aberta com sucesso, deve retornar verdadeiro.")
+    @WithMockUser(username = "admin", authorities = {"ADMIN"})
     void abrirPautaTest() throws Exception {
         Pauta pautaAberta = PautaFixture.builderDePautaAberta();
         when(pautaService.abrirPauta(anyLong(), any())).thenReturn(pautaAberta);
