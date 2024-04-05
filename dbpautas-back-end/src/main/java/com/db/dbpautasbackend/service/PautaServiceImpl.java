@@ -6,6 +6,7 @@ import com.db.dbpautasbackend.model.Usuario;
 import com.db.dbpautasbackend.repository.PautaRepository;
 import com.db.dbpautasbackend.repository.UsuarioRepository;
 import com.db.dbpautasbackend.service.interfaces.PautaService;
+import com.db.dbpautasbackend.service.interfaces.VotacaoService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,6 +23,7 @@ public class PautaServiceImpl implements PautaService {
 
     private PautaRepository pautaRepository;
     private UsuarioRepository usuarioRepository;
+    private VotacaoService votacaoService;
 
     @Override
     public Pauta salvar(Pauta pauta) {
@@ -38,33 +40,12 @@ public class PautaServiceImpl implements PautaService {
     }
 
     @Override
-    public boolean votarPauta(Long id, Voto voto) {
+    public Pauta votarPauta(Long id, Voto voto) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String cpf = authentication.getName();
         Usuario usuario = usuarioRepository.findByCpf(cpf).orElseThrow();
         Pauta pauta = pautaRepository.findById(id).orElseThrow();
-
-        if (pauta.getEleitores() == null){
-            pauta.setEleitores(List.of());
-        }
-
-        LocalDateTime abertoAs = pauta.getAbertoAs();
-        int tempoDeSessaoEmMinutos = pauta.getTempoDeSessaoEmMinutos();
-        LocalDateTime agora = LocalDateTime.now();
-        long minutosPassados = Duration.between(abertoAs, agora).toMinutes();
-        boolean sessaoFinalizada = minutosPassados > tempoDeSessaoEmMinutos;
-
-        if (pauta.isAberta() && !pauta.getEleitores().contains(usuario) && !sessaoFinalizada){
-            pauta.getEleitores().add(usuario);
-            if (voto.isSim()) {
-                pauta.setVotosSim(pauta.getVotosSim()+1);
-            } else {
-                pauta.setVotosNao(pauta.getVotosNao()+1);
-            }
-            pautaRepository.save(pauta);
-            return true;
-        }
-        return false;
+        return votacaoService.votar(pauta, usuario, voto);
     }
 
 }

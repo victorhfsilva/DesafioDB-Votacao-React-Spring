@@ -43,7 +43,7 @@ public class PautaController {
             @PathVariable("id") Long id,
             @RequestParam(value = "voto") Voto voto
             ){
-        boolean votadoComSucesso = pautaService.votarPauta(id, voto);
-        return ResponseEntity.status(HttpStatus.OK).body(votadoComSucesso);
+        pautaService.votarPauta(id, voto);
+        return ResponseEntity.status(HttpStatus.OK).body(true);
     }
 }

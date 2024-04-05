@@ -6,6 +6,5 @@ import com.db.dbpautasbackend.model.Pauta;
 public interface PautaService {
     Pauta salvar(Pauta pauta);
     Pauta abrirPauta(Long id, Integer tempoDeSessaoEmMinutos);
-
-    boolean votarPauta(Long id, Voto voto);
+    Pauta votarPauta(Long id, Voto voto);
 }
