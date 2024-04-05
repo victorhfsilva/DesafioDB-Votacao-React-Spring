@@ -7,6 +7,7 @@ import com.db.dbpautasbackend.repository.PautaRepository;
 import com.db.dbpautasbackend.repository.UsuarioRepository;
 import com.db.dbpautasbackend.service.interfaces.PautaService;
 import com.db.dbpautasbackend.service.interfaces.VotacaoService;
+import com.db.dbpautasbackend.validators.PautaValidators;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -33,6 +34,7 @@ public class PautaServiceImpl implements PautaService {
     @Override
     public Pauta abrirPauta(Long id, Integer tempoDeSessaoEmMinutos) {
         Pauta pauta = pautaRepository.findById(id).orElseThrow();
+        PautaValidators.validaPautaFechada(pauta);
         pauta.setAberta(true);
         pauta.setAbertoAs(LocalDateTime.now());
         pauta.setTempoDeSessaoEmMinutos(tempoDeSessaoEmMinutos != null ? tempoDeSessaoEmMinutos : 1);
