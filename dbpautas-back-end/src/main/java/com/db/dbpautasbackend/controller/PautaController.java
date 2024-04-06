@@ -7,6 +7,7 @@ import com.db.dbpautasbackend.enums.Categoria;
 import com.db.dbpautasbackend.enums.Voto;
 import com.db.dbpautasbackend.mapper.PautaMapper;
 import com.db.dbpautasbackend.model.Pauta;
+import com.db.dbpautasbackend.service.interfaces.ContabilizacaoService;
 import com.db.dbpautasbackend.service.interfaces.PautaService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 public class PautaController {
 
     private PautaService pautaService;
+    private ContabilizacaoService contabilizacaoService;
 
     @PostMapping("/registrar")
     @Operation(summary = "Registra uma pauta no sistema.")
@@ -110,7 +112,7 @@ public class PautaController {
     ){
         Pageable pageable = PageRequest.of(pagina, tamanho);
         Page<Pauta> pautas = pautaService.obterPautasFinalizadas(pageable);
-        Page<PautaFinalizadaDTO> pautasDTOs = PautaMapper.mapPageOfPautaToPageOfPautaFinalizadaDTO(pautas);
+        Page<PautaFinalizadaDTO> pautasDTOs = PautaMapper.mapPageOfPautaToPageOfPautaFinalizadaDTO(pautas, contabilizacaoService);
         return ResponseEntity.status(HttpStatus.OK).body(pautasDTOs);
     }
 
@@ -123,7 +125,7 @@ public class PautaController {
     ){
         Pageable pageable = PageRequest.of(pagina, tamanho);
         Page<Pauta> pautas = pautaService.obterPautasFinalizadasPorCategoria(categoria, pageable);
-        Page<PautaFinalizadaDTO> pautasDTOs = PautaMapper.mapPageOfPautaToPageOfPautaFinalizadaDTO(pautas);
+        Page<PautaFinalizadaDTO> pautasDTOs = PautaMapper.mapPageOfPautaToPageOfPautaFinalizadaDTO(pautas, contabilizacaoService);
         return ResponseEntity.status(HttpStatus.OK).body(pautasDTOs);
     }
 
