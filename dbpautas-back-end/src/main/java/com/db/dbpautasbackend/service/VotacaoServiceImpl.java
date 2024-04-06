@@ -47,7 +47,7 @@ public class VotacaoServiceImpl implements VotacaoService {
 
     private static void inicializaVotacao(Pauta pauta) {
         if (pauta.getEleitores() == null){
-            pauta.setEleitores(new ArrayList<>());
+        pauta.setEleitores(new ArrayList<>());
         }
     }
 }
