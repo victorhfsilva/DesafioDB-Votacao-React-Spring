@@ -1,5 +1,6 @@
 package com.db.dbpautasbackend.service;
 
+import com.db.dbpautasbackend.enums.Categoria;
 import com.db.dbpautasbackend.enums.Voto;
 import com.db.dbpautasbackend.model.Pauta;
 import com.db.dbpautasbackend.model.Usuario;
@@ -9,6 +10,9 @@ import com.db.dbpautasbackend.service.interfaces.PautaService;
 import com.db.dbpautasbackend.service.interfaces.VotacaoService;
 import com.db.dbpautasbackend.validators.PautaValidators;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -48,6 +52,48 @@ public class PautaServiceImpl implements PautaService {
         Usuario usuario = usuarioRepository.findByCpf(cpf).orElseThrow();
         Pauta pauta = pautaRepository.findById(id).orElseThrow();
         return votacaoService.votar(pauta, usuario, voto);
+    }
+
+    @Override
+    public Page<Pauta> obterPautasFechadas(Pageable pageable) {
+        return pautaRepository.findPautasFechadas(pageable);
+    }
+
+    @Override
+    public Page<Pauta> obterPautasFechadasPorCategoria(Categoria categoria, Pageable pageable) {
+        return pautaRepository.findPautasFechadasPorCategoria(categoria, pageable);
+    }
+
+    @Override
+    public Page<Pauta> obterPautasAbertas(Pageable pageable) {
+        List<Pauta> pautas = pautaRepository.findPautasAbertas(pageable).stream().filter(pauta ->
+            !PautaValidators.verificaSessaoFinalizada(pauta)
+        ).toList();
+        return new PageImpl<>(pautas, pageable, pautas.size());
+    }
+
+    @Override
+    public Page<Pauta> obterPautasAbertasPorCategoria(Categoria categoria, Pageable pageable) {
+        List<Pauta> pautas = pautaRepository.findPautasAbertasPorCategoria(categoria, pageable).stream().filter(pauta ->
+                !PautaValidators.verificaSessaoFinalizada(pauta)
+        ).toList();
+        return new PageImpl<>(pautas, pageable, pautas.size());
+    }
+
+    @Override
+    public Page<Pauta> obterPautasFinalizadas(Pageable pageable) {
+        List<Pauta> pautas = pautaRepository.findPautasAbertas(pageable).stream().filter(
+                PautaValidators::verificaSessaoFinalizada
+        ).toList();
+        return new PageImpl<>(pautas, pageable, pautas.size());
+    }
+
+    @Override
+    public Page<Pauta> obterPautasFinalizadasPorCategoria(Categoria categoria, Pageable pageable) {
+        List<Pauta> pautas = pautaRepository.findPautasAbertasPorCategoria(categoria, pageable).stream().filter(
+                PautaValidators::verificaSessaoFinalizada
+        ).toList();
+        return new PageImpl<>(pautas, pageable, pautas.size());
     }
 
 }

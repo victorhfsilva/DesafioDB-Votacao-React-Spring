@@ -29,7 +29,34 @@ public interface PautaFixture {
                 .build();
     }
 
-    static Pauta builderDePautaFechada(){
+    static Pauta builderDePautaAprovada(){
+        return builder().aberta(true)
+                .abertoAs(LocalDateTime.of(2024,4,1,18,0,12))
+                .tempoDeSessaoEmMinutos(0)
+                .votosSim(14)
+                .votosNao(4)
+                .build();
+    }
+
+    static Pauta builderDePautaReprovada(){
+        return builder().aberta(true)
+                .abertoAs(LocalDateTime.of(2024,4,1,18,0,12))
+                .tempoDeSessaoEmMinutos(0)
+                .votosSim(2)
+                .votosNao(16)
+                .build();
+    }
+
+    static Pauta builderDePautaEmpatada(){
+        return builder().aberta(true)
+                .abertoAs(LocalDateTime.of(2024,4,1,18,0,12))
+                .tempoDeSessaoEmMinutos(0)
+                .votosSim(2)
+                .votosNao(2)
+                .build();
+    }
+
+    static Pauta builderDePautaFinalizada(){
         return builder().aberta(true)
                 .abertoAs(LocalDateTime.of(2024,4,1,18,0,12))
                 .tempoDeSessaoEmMinutos(0)
