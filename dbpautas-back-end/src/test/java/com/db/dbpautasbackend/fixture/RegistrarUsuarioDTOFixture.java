@@ -21,10 +21,10 @@ public interface RegistrarUsuarioDTOFixture {
     }
     private static RegistrarUsuarioDTO.RegistrarUsuarioDTOBuilder builder(){
         return RegistrarUsuarioDTO.builder()
-                .nome("Adalberto")
-                .sobrenome("Silva")
-                .email("adalberto@email.com")
-                .cpf("15333737525")
+                .nome("Maria")
+                .sobrenome("Silveira")
+                .email("mariaSilveira@email.com")
+                .cpf("41362512540")
                 .senha("P@ssword1")
                 .papel(Papel.ADMIN);
     }

@@ -40,7 +40,7 @@ class LoginControllerTI {
     @Test
     @DisplayName("Dado um login válido salvo no banco de dados, quando logado, deve gerar um token corretamente")
     @SqlGroup({
-            @Sql(scripts =  "/db/clear_usuarios.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
+            @Sql(scripts = "/db/clear_usuarios.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
             @Sql(scripts = "/db/insert_usuarios.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     })
     void loginTest(){
@@ -55,7 +55,7 @@ class LoginControllerTI {
     @MethodSource("logins")
     @DisplayName("Dado um login inválido salvo no banco de dados, quando logado, deve retornar status 400")
     @SqlGroup({
-            @Sql(scripts =  "/db/clear_usuarios.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
+            @Sql(scripts = "/db/clear_usuarios.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
             @Sql(scripts = "/db/insert_usuarios.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     })
     void loginTestWithInvalidLogin(LoginDTO login){
