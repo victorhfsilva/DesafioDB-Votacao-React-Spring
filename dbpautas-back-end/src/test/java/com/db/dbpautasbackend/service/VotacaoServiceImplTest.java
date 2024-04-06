@@ -12,14 +12,9 @@ import com.db.dbpautasbackend.repository.PautaRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -60,7 +55,7 @@ public class VotacaoServiceImplTest {
     @DisplayName("Dado uma pauta fechada, quando usuário votar na pauta, deve lançar exceção.")
     void votarEmPautaFinalizadaTest() {
         Usuario usuario = UsuarioFixture.builderDefault();
-        Pauta pautaFechada = PautaFixture.builderDePautaFechada();
+        Pauta pautaFechada = PautaFixture.builderDePautaFinalizada();
         assertThrows(SessaoFinalizadaException.class, () -> {
             votacaoService.votar(pautaFechada, usuario, Voto.SIM);
         });
