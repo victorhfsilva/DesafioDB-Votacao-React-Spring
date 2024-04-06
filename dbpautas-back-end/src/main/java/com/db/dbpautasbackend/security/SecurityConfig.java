@@ -31,7 +31,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(requests ->
-            requests
+            requests.requestMatchers("/pauta/registrar").hasAnyAuthority("ADMIN")
+                    .requestMatchers("/pauta/abrir/**").hasAnyAuthority("ADMIN")
+                    .requestMatchers("/pauta/votar/**").hasAnyAuthority("ADMIN", "USUARIO")
                 .anyRequest().permitAll())
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))

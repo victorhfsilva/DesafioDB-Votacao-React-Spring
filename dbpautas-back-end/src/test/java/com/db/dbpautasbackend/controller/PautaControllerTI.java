@@ -1,6 +1,8 @@
 package com.db.dbpautasbackend.controller;
 
+import com.db.dbpautasbackend.dto.LoginDTO;
 import com.db.dbpautasbackend.dto.RegistrarPautaDTO;
+import com.db.dbpautasbackend.fixture.LoginDTOFixture;
 import com.db.dbpautasbackend.fixture.RegistrarPautaDTOFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -9,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
@@ -32,8 +35,17 @@ class PautaControllerTI {
             @Sql(scripts =  "/db/clear_pautas.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     })
     void registrarTest(){
+        LoginDTO login = LoginDTOFixture.buiderDefault();
+        HttpEntity<LoginDTO> requisicaoLogin = new HttpEntity<>(login);
+        ResponseEntity<String> respostaLogin = restTemplate.postForEntity("http://localhost:" + port + "/login", requisicaoLogin, String.class);
+        String token = respostaLogin.getBody();
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add("Authorization", "Bearer " + token);
+
         RegistrarPautaDTO pautaDTO = RegistrarPautaDTOFixture.builderDefault();
-        HttpEntity<RegistrarPautaDTO> requisicao = new HttpEntity<>(pautaDTO);
+        HttpEntity<RegistrarPautaDTO> requisicao = new HttpEntity<>(pautaDTO, httpHeaders);
+
         ResponseEntity<Boolean> resposta = restTemplate.postForEntity("http://localhost:" + port + "/pauta/registrar", requisicao, Boolean.class);
         assertEquals(HttpStatus.CREATED, resposta.getStatusCode());
         assertEquals(Boolean.TRUE, resposta.getBody());

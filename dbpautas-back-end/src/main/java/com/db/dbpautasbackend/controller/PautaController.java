@@ -2,6 +2,7 @@ package com.db.dbpautasbackend.controller;
 
 import com.db.dbpautasbackend.dto.LoginDTO;
 import com.db.dbpautasbackend.dto.RegistrarPautaDTO;
+import com.db.dbpautasbackend.enums.Voto;
 import com.db.dbpautasbackend.mapper.PautaMapper;
 import com.db.dbpautasbackend.model.Pauta;
 import com.db.dbpautasbackend.service.interfaces.PautaService;
@@ -33,6 +34,16 @@ public class PautaController {
             @PathVariable("id") Long id,
             @RequestParam(value = "minutos", required = false) Integer tempoDeSessaoEmMinutos){
         pautaService.abrirPauta(id, tempoDeSessaoEmMinutos);
+        return ResponseEntity.status(HttpStatus.OK).body(true);
+    }
+
+    @PatchMapping("/votar/{id}")
+    @Operation(summary = "Vota uma pauta aberta. Cada usuário só pode votar uma vez.")
+    public ResponseEntity<Boolean> votar(
+            @PathVariable("id") Long id,
+            @RequestParam(value = "voto") Voto voto
+            ){
+        pautaService.votarPauta(id, voto);
         return ResponseEntity.status(HttpStatus.OK).body(true);
     }
 }

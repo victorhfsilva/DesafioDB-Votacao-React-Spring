@@ -14,4 +14,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     @Query("SELECT NEW com.db.dbpautasbackend.info.UserDetailsInfoImpl(u.cpf, u.senha, u.papel) FROM Usuario u WHERE u.cpf = :cpf")
     Optional<UserDetailsInfo> findUserDetailsByCpf(String cpf);
 
+    Optional<Usuario> findByCpf(String cpf);
+
 }
