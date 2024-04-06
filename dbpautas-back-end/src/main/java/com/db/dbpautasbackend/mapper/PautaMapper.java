@@ -35,6 +35,7 @@ public interface PautaMapper {
                         .categoria(pauta.getCategoria())
                         .votosSim(pauta.getVotosSim())
                         .votosNao(pauta.getVotosNao())
+                        .aprovado(pauta.getVotosSim() > pauta.getVotosNao())
                         .build()
         );
     }
