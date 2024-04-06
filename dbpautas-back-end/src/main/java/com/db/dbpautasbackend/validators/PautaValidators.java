@@ -21,6 +21,14 @@ public interface PautaValidators {
         }
     }
 
+    static boolean verificaSessaoFinalizada(Pauta pauta) {
+        LocalDateTime abertoAs = pauta.getAbertoAs();
+        int tempoDeSessaoEmMinutos = pauta.getTempoDeSessaoEmMinutos();
+        LocalDateTime agora = LocalDateTime.now();
+        long minutosPassados = Duration.between(abertoAs, agora).toMinutes();
+        return minutosPassados > tempoDeSessaoEmMinutos;
+    }
+
     static void validaPautaAberta(Pauta pauta){
         if (!pauta.isAberta()){
             throw new PautaFechadaException("Esta pauta ainda não foi aberta a votação.");

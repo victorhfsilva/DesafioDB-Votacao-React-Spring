@@ -1,7 +1,10 @@
 package com.db.dbpautasbackend.mapper;
 
+import com.db.dbpautasbackend.dto.PautaEmAndamentoDTO;
+import com.db.dbpautasbackend.dto.PautaFinalizadaDTO;
 import com.db.dbpautasbackend.dto.RegistrarPautaDTO;
 import com.db.dbpautasbackend.model.Pauta;
+import org.springframework.data.domain.Page;
 
 public interface PautaMapper {
     static Pauta mapRegistrarPautaDTOtoPauta(RegistrarPautaDTO registrarPautaDTO){
@@ -10,5 +13,29 @@ public interface PautaMapper {
                                 .descricao(registrarPautaDTO.descricao())
                                 .categoria(registrarPautaDTO.categoria())
                                 .build();
+    }
+
+    static Page<PautaEmAndamentoDTO> mapPageOfPautaToPageOfPautaEmAndamentoDTO(Page<Pauta> pautas){
+        return pautas.map(pauta ->
+            PautaEmAndamentoDTO.builder().id(pauta.getId())
+                    .titulo(pauta.getTitulo())
+                    .resumo(pauta.getResumo())
+                    .descricao(pauta.getDescricao())
+                    .categoria(pauta.getCategoria())
+                    .build()
+        );
+    }
+
+    static Page<PautaFinalizadaDTO> mapPageOfPautaToPageOfPautaFinalizadaDTO(Page<Pauta> pautas){
+        return pautas.map(pauta ->
+                PautaFinalizadaDTO.builder().id(pauta.getId())
+                        .titulo(pauta.getTitulo())
+                        .resumo(pauta.getResumo())
+                        .descricao(pauta.getDescricao())
+                        .categoria(pauta.getCategoria())
+                        .votosSim(pauta.getVotosSim())
+                        .votosNao(pauta.getVotosNao())
+                        .build()
+        );
     }
 }
