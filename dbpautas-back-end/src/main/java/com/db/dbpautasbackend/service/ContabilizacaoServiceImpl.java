@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ContabilizacaoServiceImpl implements ContabilizacaoService {
-
     public Decisao contabilizar(Pauta pauta) {
         Decisao decisao;
         if(pauta.getVotosSim() > pauta.getVotosNao()) {

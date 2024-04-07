@@ -9,5 +9,5 @@ public enum Voto {
     SIM(true),
     NAO(false);
 
-    private boolean sim;
+    private final boolean sim;
 }

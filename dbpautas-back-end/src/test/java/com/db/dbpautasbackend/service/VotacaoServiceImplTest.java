@@ -21,7 +21,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class VotacaoServiceImplTest {
+class VotacaoServiceImplTest {
 
     @InjectMocks
     private VotacaoServiceImpl votacaoService;
@@ -46,9 +46,9 @@ public class VotacaoServiceImplTest {
     void votarEmPautaFechadaTest() {
         Usuario usuario = UsuarioFixture.builderDefault();
         Pauta pautaFechada = PautaFixture.builderDefault();
-        assertThrows(PautaFechadaException.class, () -> {
-            votacaoService.votar(pautaFechada, usuario, Voto.SIM);
-        });
+        assertThrows(PautaFechadaException.class, () ->
+            votacaoService.votar(pautaFechada, usuario, Voto.SIM)
+        );
     }
 
     @Test
@@ -56,9 +56,9 @@ public class VotacaoServiceImplTest {
     void votarEmPautaFinalizadaTest() {
         Usuario usuario = UsuarioFixture.builderDefault();
         Pauta pautaFechada = PautaFixture.builderDePautaFinalizada();
-        assertThrows(SessaoFinalizadaException.class, () -> {
-            votacaoService.votar(pautaFechada, usuario, Voto.SIM);
-        });
+        assertThrows(SessaoFinalizadaException.class, () ->
+            votacaoService.votar(pautaFechada, usuario, Voto.SIM)
+        );
     }
 
     @Test
@@ -66,9 +66,9 @@ public class VotacaoServiceImplTest {
     void votarEmPautaFDuasVezesTest() {
         Usuario usuario = UsuarioFixture.builderDefault();
         Pauta pauta = PautaFixture.builderDePautaAbertaComVotos(usuario);
-        assertThrows(VotoInvalidoException.class, () -> {
-            votacaoService.votar(pauta, usuario, Voto.SIM);
-        });
+        assertThrows(VotoInvalidoException.class, () ->
+            votacaoService.votar(pauta, usuario, Voto.SIM)
+        );
     }
 
 }

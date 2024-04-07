@@ -3,8 +3,6 @@ package com.db.dbpautasbackend.model;
 import com.db.dbpautasbackend.enums.Papel;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -35,7 +33,7 @@ public class Usuario {
     @Column(nullable = false, length = 11, unique = true)
     private String cpf;
 
-    @Column(nullable = false, length = 255)
+    @Column(nullable = false)
     private String senha;
 
     @Enumerated(EnumType.STRING)

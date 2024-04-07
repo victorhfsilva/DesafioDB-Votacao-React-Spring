@@ -2,7 +2,6 @@ package com.db.dbpautasbackend.fixture;
 
 import com.db.dbpautasbackend.dto.RegistrarUsuarioDTO;
 import com.db.dbpautasbackend.enums.Papel;
-import com.db.dbpautasbackend.model.Usuario;
 
 public interface RegistrarUsuarioDTOFixture {
 
