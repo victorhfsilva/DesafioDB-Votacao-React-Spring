@@ -1,9 +1,6 @@
 package com.db.dbpautasbackend.service;
 
 import com.db.dbpautasbackend.enums.Voto;
-import com.db.dbpautasbackend.exception.PautaFechadaException;
-import com.db.dbpautasbackend.exception.SessaoFinalizadaException;
-import com.db.dbpautasbackend.exception.VotoInvalidoException;
 import com.db.dbpautasbackend.model.Pauta;
 import com.db.dbpautasbackend.model.Usuario;
 import com.db.dbpautasbackend.repository.PautaRepository;
@@ -11,11 +8,7 @@ import com.db.dbpautasbackend.service.interfaces.VotacaoService;
 import com.db.dbpautasbackend.validators.PautaValidators;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.time.Duration;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.List;
 
 @Service
 @AllArgsConstructor

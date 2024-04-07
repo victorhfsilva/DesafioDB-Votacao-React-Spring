@@ -14,7 +14,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -98,7 +97,7 @@ class PautaControllerTest {
     void buscarPautasFechadaTest() throws Exception {
         Pageable pageable = PageRequest.of(0, 10);
         Pauta pautaEsperada = PautaFixture.builderDefault();
-        Page<Pauta> pautas = new PageImpl(List.of(pautaEsperada), pageable, 1);
+        Page<Pauta> pautas = new PageImpl<>(List.of(pautaEsperada), pageable, 1);
         when(pautaService.obterPautasFechadas(pageable)).thenReturn(pautas);
         mockMvc.perform(MockMvcRequestBuilders.get("/pauta/fechada")
                         .param("pagina", "0")
@@ -113,7 +112,7 @@ class PautaControllerTest {
     void buscarPautasFechadaPorCategoriaTest() throws Exception {
         Pageable pageable = PageRequest.of(0, 10);
         Pauta pautaEsperada = PautaFixture.builderDefault();
-        Page<Pauta> pautas = new PageImpl(List.of(pautaEsperada), pageable, 1);
+        Page<Pauta> pautas = new PageImpl<>(List.of(pautaEsperada), pageable, 1);
         when(pautaService.obterPautasFechadasPorCategoria(Categoria.EDUCACAO, pageable)).thenReturn(pautas);
         mockMvc.perform(MockMvcRequestBuilders.get("/pauta/fechada/EDUCACAO")
                         .param("pagina", "0")
@@ -127,7 +126,7 @@ class PautaControllerTest {
     void buscarPautasAbertaTest() throws Exception {
         Pageable pageable = PageRequest.of(0, 10);
         Pauta pautaEsperada = PautaFixture.builderDePautaAberta();
-        Page<Pauta> pautas = new PageImpl(List.of(pautaEsperada), pageable, 1);
+        Page<Pauta> pautas = new PageImpl<>(List.of(pautaEsperada), pageable, 1);
         when(pautaService.obterPautasAbertas(pageable)).thenReturn(pautas);
         mockMvc.perform(MockMvcRequestBuilders.get("/pauta/aberta")
                         .param("pagina", "0")
@@ -141,7 +140,7 @@ class PautaControllerTest {
     void buscarPautasAbertaPorCategoriaTest() throws Exception {
         Pageable pageable = PageRequest.of(0, 10);
         Pauta pautaEsperada = PautaFixture.builderDePautaAberta();
-        Page<Pauta> pautas = new PageImpl(List.of(pautaEsperada), pageable, 1);
+        Page<Pauta> pautas = new PageImpl<>(List.of(pautaEsperada), pageable, 1);
         when(pautaService.obterPautasAbertasPorCategoria(Categoria.EDUCACAO, pageable)).thenReturn(pautas);
         mockMvc.perform(MockMvcRequestBuilders.get("/pauta/aberta/EDUCACAO")
                         .param("pagina", "0")
@@ -155,7 +154,7 @@ class PautaControllerTest {
     void buscarPautasFinalizadasTest() throws Exception {
         Pageable pageable = PageRequest.of(0, 10);
         Pauta pautaEsperada = PautaFixture.builderDePautaAprovada();
-        Page<Pauta> pautas = new PageImpl(List.of(pautaEsperada), pageable, 1);
+        Page<Pauta> pautas = new PageImpl<>(List.of(pautaEsperada), pageable, 1);
         when(pautaService.obterPautasFinalizadas(pageable)).thenReturn(pautas);
         mockMvc.perform(MockMvcRequestBuilders.get("/pauta/finalizada")
                         .param("pagina", "0")
@@ -169,7 +168,7 @@ class PautaControllerTest {
     void buscarPautasFinalizadasPorCategoriaTest() throws Exception {
         Pageable pageable = PageRequest.of(0, 10);
         Pauta pautaEsperada = PautaFixture.builderDePautaAprovada();
-        Page<Pauta> pautas = new PageImpl(List.of(pautaEsperada), pageable, 1);
+        Page<Pauta> pautas = new PageImpl<>(List.of(pautaEsperada), pageable, 1);
         when(pautaService.obterPautasFinalizadasPorCategoria(Categoria.EDUCACAO, pageable)).thenReturn(pautas);
         mockMvc.perform(MockMvcRequestBuilders.get("/pauta/finalizada/EDUCACAO")
                         .param("pagina", "0")

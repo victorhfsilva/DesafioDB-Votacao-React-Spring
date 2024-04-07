@@ -9,9 +9,9 @@ import java.time.ZoneOffset;
 
 public interface TokenFixture {
 
-    static final String ISSUER = "DB";
-    static final String SECRET = "nfY;z=8eZ=P;;Aos62itcz7MNHb9#x%0Bhyq%jq[4CP;29W04k";
-    static final Algorithm ALGORITHM = Algorithm.HMAC256(SECRET);
+    String ISSUER = "DB";
+    String SECRET = "nfY;z=8eZ=P;;Aos62itcz7MNHb9#x%0Bhyq%jq[4CP;29W04k";
+    Algorithm ALGORITHM = Algorithm.HMAC256(SECRET);
 
     static String builderDefault(){
         return builder().sign(ALGORITHM);
