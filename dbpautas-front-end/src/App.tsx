@@ -1,9 +1,13 @@
 import PageRouter from "./router/PageRouter"
+import { ThemeProvider } from "styled-components"
+import defaultTheme from "./themes/default"
 
 function App() {
 
   return (
-    <PageRouter />
+    <ThemeProvider theme={defaultTheme}>
+      <PageRouter />
+    </ThemeProvider>
   )
 }
 
