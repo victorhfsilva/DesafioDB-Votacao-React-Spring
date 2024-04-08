@@ -1,9 +1,14 @@
+import PageRouter from "./router/PageRouter"
+import defaultTheme from "./themes/default"
+import { CSSReset, ChakraProvider } from "@chakra-ui/react"
+
 function App() {
 
   return (
-    <>
-      <h1>App</h1>
-    </>
+      <ChakraProvider theme={defaultTheme}>
+        <CSSReset />
+        <PageRouter />
+      </ChakraProvider>
   )
 }
 
