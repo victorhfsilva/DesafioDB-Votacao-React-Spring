@@ -1,8 +1,9 @@
+import { Heading } from "@chakra-ui/react";
 
 const Menu = () => {
     return (
         <div>
-            <h1>Menu</h1>
+            <Heading color={"cinza4"}>Menu</Heading>
         </div>
     );
 };

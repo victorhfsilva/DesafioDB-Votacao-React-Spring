@@ -1,7 +1,8 @@
+import { extendTheme } from "@chakra-ui/react";
 import cores from "./tokens/cores";
 
 const defaultTheme = {
-    cores
+    colors: cores,
 }
 
-export default defaultTheme;
+export default extendTheme(defaultTheme);
