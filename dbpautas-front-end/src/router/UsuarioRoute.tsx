@@ -7,9 +7,9 @@ interface UsuarioRouteProps {
   }
   
 const UsuarioRoute = ({ children }: UsuarioRouteProps) => {
-    const isAuthenticated = useAuthStore((state) => state.isAutenticado);
+    const isAutenticado = useAuthStore((state) => state.isAutenticado);
         
-    if (isAuthenticated ) {
+    if (isAutenticado) {
       return children
     }
       

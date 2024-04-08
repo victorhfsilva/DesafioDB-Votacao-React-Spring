@@ -7,10 +7,10 @@ interface AdminRouteProps {
   }
   
 const AdminRoute = ({ children }: AdminRouteProps) => {
-    const isAuthenticated = useAuthStore((state) => state.isAutenticado);
+    const isAutenticado = useAuthStore((state) => state.isAutenticado);
     const isAdmin = useAuthStore((state) => state.isAdmin);
 
-    if (isAuthenticated && isAdmin) {
+    if (isAutenticado && isAdmin) {
       return children
     }
       
