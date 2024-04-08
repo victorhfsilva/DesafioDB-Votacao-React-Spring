@@ -1,9 +1,11 @@
 import App from "./App"
-import { render } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
+import '@testing-library/jest-dom'
 
 describe('App', () => {
     it('should render the App component', () => {
         render(<App />)
-        expect(1).toBe(1)
+        const titulo = screen.getByText('App');
+        expect(titulo).toBeInTheDocument();
     })
 })
