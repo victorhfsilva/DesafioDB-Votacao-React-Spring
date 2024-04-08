@@ -1,9 +1,9 @@
+import PageRouter from "./router/PageRouter"
+
 function App() {
 
   return (
-    <>
-      <h1>App</h1>
-    </>
+    <PageRouter />
   )
 }
 
