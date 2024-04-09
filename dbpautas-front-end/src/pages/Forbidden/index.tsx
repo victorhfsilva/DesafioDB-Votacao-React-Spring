@@ -1,11 +1,11 @@
 import { Text } from "@chakra-ui/react";
 
-const PautasAbertas = () => {
+const NotFound = () => {
     return (
         <div>
-            <Text>Pautas Abertas</Text>
+            <Text>403: Forbidden</Text>
         </div>
     );
 };
 
-export default PautasAbertas;
+export default NotFound;

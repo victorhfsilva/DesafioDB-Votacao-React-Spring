@@ -1,10 +1,11 @@
-import { Text } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
+import LoginForm from "./LoginForm";
 
 const Login = () => {
     return (
-        <div>
-            <Text>Login</Text>
-        </div>
+        <Flex justify={'center'}>
+           <LoginForm />
+        </Flex>
     );
 };
 

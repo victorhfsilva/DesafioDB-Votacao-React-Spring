@@ -4,11 +4,16 @@ import { Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react';
 const UsuarioMenu = () => {
     return (
         <Menu isLazy>
-            <MenuButton color={'branco'} fontFamily={'Poppins'} paddingLeft={'1.6em'} fontSize={'1.0em'} data-testid='menu-pautas'>
-                Usuário
+            <MenuButton 
+                color={'branco'} 
+                fontFamily={'Poppins'} 
+                paddingLeft={'1.6em'} 
+                fontSize={'1.0em'} 
+                data-testid='menu-pautas'>
+                    Usuário
             </MenuButton>
             <MenuList fontFamily={'Poppins'} fontSize={'.9em'}>
-                <MenuItem>
+                <MenuItem data-testid='menu-login'>
                     <Link to={'/login'}>
                         Login
                     </Link>

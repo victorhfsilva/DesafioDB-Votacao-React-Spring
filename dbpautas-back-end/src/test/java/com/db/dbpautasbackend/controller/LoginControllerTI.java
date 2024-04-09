@@ -1,6 +1,8 @@
 package com.db.dbpautasbackend.controller;
 
 import com.db.dbpautasbackend.dto.LoginDTO;
+import com.db.dbpautasbackend.dto.LoginRespostaDTO;
+import com.db.dbpautasbackend.enums.Papel;
 import com.db.dbpautasbackend.fixture.LoginDTOFixture;
 import com.db.dbpautasbackend.service.interfaces.TokenService;
 import org.junit.jupiter.api.DisplayName;
@@ -46,9 +48,10 @@ class LoginControllerTI {
     void loginTest(){
         LoginDTO login = LoginDTOFixture.buiderDefault();
         HttpEntity<LoginDTO> requisicao = new HttpEntity<>(login);
-        ResponseEntity<String> resposta = restTemplate.postForEntity("http://localhost:" + port + "/login", requisicao, String.class);
+        ResponseEntity<LoginRespostaDTO> resposta = restTemplate.postForEntity("http://localhost:" + port + "/login", requisicao, LoginRespostaDTO.class);
         assertEquals(HttpStatus.OK, resposta.getStatusCode());
-        assertTrue(tokenService.isTokenValido(resposta.getBody()));
+        assertTrue(tokenService.isTokenValido(resposta.getBody().token()));
+        assertEquals(Papel.ADMIN, resposta.getBody().papel());
     }
 
     @ParameterizedTest

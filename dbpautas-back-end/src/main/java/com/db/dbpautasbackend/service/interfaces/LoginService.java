@@ -1,7 +1,8 @@
 package com.db.dbpautasbackend.service.interfaces;
 
 import com.db.dbpautasbackend.dto.LoginDTO;
+import com.db.dbpautasbackend.dto.LoginRespostaDTO;
 
 public interface LoginService {
-    String gerarToken(LoginDTO loginDTO);
+    LoginRespostaDTO gerarToken(LoginDTO loginDTO);
 }
