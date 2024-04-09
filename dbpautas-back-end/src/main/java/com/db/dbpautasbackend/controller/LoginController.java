@@ -1,6 +1,7 @@
 package com.db.dbpautasbackend.controller;
 
 import com.db.dbpautasbackend.dto.LoginDTO;
+import com.db.dbpautasbackend.dto.LoginRespostaDTO;
 import com.db.dbpautasbackend.service.interfaces.LoginService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
@@ -21,9 +22,9 @@ public class LoginController {
 
     @PostMapping("")
     @Operation(summary = "Faz login na api e obtém um token JWT.")
-    public ResponseEntity<String> login(@RequestBody @Valid LoginDTO login) {
-        String token = loginService.gerarToken(login);
-        return ResponseEntity.status(HttpStatus.OK).body(token);
+    public ResponseEntity<LoginRespostaDTO> login(@RequestBody @Valid LoginDTO login) {
+        LoginRespostaDTO loginRespostaDTO = loginService.gerarToken(login);
+        return ResponseEntity.status(HttpStatus.OK).body(loginRespostaDTO);
     }
 
 }

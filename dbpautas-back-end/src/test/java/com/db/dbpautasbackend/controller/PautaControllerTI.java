@@ -1,6 +1,7 @@
 package com.db.dbpautasbackend.controller;
 
 import com.db.dbpautasbackend.dto.LoginDTO;
+import com.db.dbpautasbackend.dto.LoginRespostaDTO;
 import com.db.dbpautasbackend.dto.RegistrarPautaDTO;
 import com.db.dbpautasbackend.fixture.LoginDTOFixture;
 import com.db.dbpautasbackend.fixture.RegistrarPautaDTOFixture;
@@ -39,8 +40,8 @@ class PautaControllerTI {
     void registrarTest(){
         LoginDTO login = LoginDTOFixture.buiderDefault();
         HttpEntity<LoginDTO> requisicaoLogin = new HttpEntity<>(login);
-        ResponseEntity<String> respostaLogin = restTemplate.postForEntity("http://localhost:" + port + "/login", requisicaoLogin, String.class);
-        String token = respostaLogin.getBody();
+        ResponseEntity<LoginRespostaDTO> respostaLogin = restTemplate.postForEntity("http://localhost:" + port + "/login", requisicaoLogin, LoginRespostaDTO.class);
+        String token = respostaLogin.getBody().token();
 
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("Authorization", "Bearer " + token);

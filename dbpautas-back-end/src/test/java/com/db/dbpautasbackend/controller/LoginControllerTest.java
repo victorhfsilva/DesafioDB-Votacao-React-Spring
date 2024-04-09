@@ -1,7 +1,9 @@
 package com.db.dbpautasbackend.controller;
 
 import com.db.dbpautasbackend.dto.LoginDTO;
+import com.db.dbpautasbackend.dto.LoginRespostaDTO;
 import com.db.dbpautasbackend.fixture.LoginDTOFixture;
+import com.db.dbpautasbackend.fixture.LoginRespostaDTOFixture;
 import com.db.dbpautasbackend.service.LoginServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
@@ -37,13 +39,15 @@ class LoginControllerTest {
     @DisplayName("Dado um login válido, quando logado, deve gerar um token corretamente")
     void loginTest() throws Exception {
         LoginDTO login = LoginDTOFixture.buiderDefault();
+        LoginRespostaDTO loginResposta = LoginRespostaDTOFixture.buiderDefault();
         String loginJson = objectMapper.writeValueAsString(login);
 
-        when(loginService.gerarToken(login)).thenReturn("token");
+        when(loginService.gerarToken(login)).thenReturn(loginResposta);
         mockMvc.perform(MockMvcRequestBuilders.post("/login")
                                                 .contentType("application/json")
                                                 .content(loginJson))
                                                 .andExpect(MockMvcResultMatchers.status().isOk())
-                                                .andExpect(MockMvcResultMatchers.content().string("token"));
+                                                .andExpect(MockMvcResultMatchers.jsonPath("$.token").value("token"))
+                                                .andExpect(MockMvcResultMatchers.jsonPath("$.papel").value("ADMIN"));
     }
 }
