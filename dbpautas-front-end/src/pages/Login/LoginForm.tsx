@@ -18,7 +18,7 @@ const LoginForm = () => {
           ...loginForm,
           [name]: value,
         });
-      };
+    };
 
     const handleCpfChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { value } = event.target;
@@ -28,7 +28,7 @@ const LoginForm = () => {
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         console.log(loginForm);
-    }
+    };
 
     return (
         <form onSubmit={handleSubmit}>
@@ -76,8 +76,7 @@ const LoginForm = () => {
                         value={loginForm.senha}
                         onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                             handleInputChange(event);
-                        }}
-                        />
+                        }}/>
                 </Flex>
                 
                 <Flex width={'100%'} direction={'column'} align={'flex-end'} paddingRight={'3vw'}>
