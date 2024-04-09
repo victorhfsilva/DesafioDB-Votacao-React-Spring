@@ -8,12 +8,12 @@ const PautasMenu = () => {
                 Pautas
             </MenuButton>
             <MenuList fontFamily={'Poppins'} fontSize={'.9em'}>
-                <MenuItem>
+                <MenuItem data-testid='menu-pautas-abertas'>
                     <Link to={'/pautasAbertas'}>
                         Pautas Abertas
                     </Link>
                 </MenuItem>
-                <MenuItem>
+                <MenuItem data-testid='menu-pautas-finalizadas'>
                     <Link to={'/pautasFinalizadas'}>
                         Pautas Finalizadas
                     </Link>

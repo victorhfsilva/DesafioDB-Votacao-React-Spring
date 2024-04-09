@@ -8,7 +8,7 @@ const UsuarioMenu = () => {
                 Usuário
             </MenuButton>
             <MenuList fontFamily={'Poppins'} fontSize={'.9em'}>
-                <MenuItem>
+                <MenuItem data-testid='menu-login'>
                     <Link to={'/login'}>
                         Login
                     </Link>

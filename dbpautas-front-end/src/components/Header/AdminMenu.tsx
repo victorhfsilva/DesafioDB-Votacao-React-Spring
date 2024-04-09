@@ -8,17 +8,17 @@ const AdminMenu = () => {
                 Admin
             </MenuButton>
             <MenuList fontFamily={'Poppins'} fontSize={'.9em'}>
-                <MenuItem>
+                <MenuItem data-testid='menu-registrar-usuario'>
                     <Link to={'/registrarUsuario'}>
                         Registrar Usuário
                     </Link>
                 </MenuItem>
-                <MenuItem>
+                <MenuItem data-testid='menu-cadastrar-pauta'>
                     <Link to={'/cadastrarPauta'}>
                         Cadastrar Pauta
                     </Link>
                 </MenuItem>
-                <MenuItem>
+                <MenuItem data-testid='menu-abrir-pauta'>
                     <Link to={'/abrirPauta'}>
                         Abrir Pauta
                     </Link>
