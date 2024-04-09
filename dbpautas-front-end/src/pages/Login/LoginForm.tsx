@@ -1,13 +1,14 @@
 import { Button, Flex, Heading, Input } from "@chakra-ui/react";
 import { useState } from "react";
+import LoginRequisicaoModel from "../../models/LoginRequisicaoModel";
+import useAuthStore from "../../hooks/useAuthStore";
+import loginService from "../../services/login.service";
 
 const LoginForm = () => {
-    interface  ILoginForm {
-        cpf: string;
-        senha: string;
-    }
 
-    const [loginForm, setLoginForm] = useState<ILoginForm>({    
+    const { setAutenticado, setAdmin } = useAuthStore();
+
+    const [loginForm, setLoginForm] = useState<LoginRequisicaoModel>({    
         cpf: '',
         senha: ''
     });
@@ -20,14 +21,16 @@ const LoginForm = () => {
         });
     };
 
-    const handleCpfChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const { value } = event.target;
-        event.target.value = value.replace(/[^0-9]/g, "");
-    };
-
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        console.log(loginForm);
+        const data = await loginService(loginForm);
+        localStorage.setItem('token', data.token);
+        setAutenticado(true);
+        if(data.papel === "ADMIN"){
+            setAdmin(true);
+        } else {
+            setAdmin(false);
+        }     
     };
 
     return (
@@ -60,10 +63,7 @@ const LoginForm = () => {
                         type={'text'} 
                         name="cpf"
                         value={loginForm.cpf}
-                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                            handleCpfChange(event);
-                            handleInputChange(event);
-                        }}/>
+                        onChange={handleInputChange}/>
                     <Input 
                         marginTop={'2vw'} 
                         placeholder='Senha' 
@@ -74,9 +74,7 @@ const LoginForm = () => {
                         type='password'
                         name="senha"
                         value={loginForm.senha}
-                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                            handleInputChange(event);
-                        }}/>
+                        onChange={handleInputChange}/>
                 </Flex>
                 
                 <Flex width={'100%'} direction={'column'} align={'flex-end'} paddingRight={'3vw'}>
