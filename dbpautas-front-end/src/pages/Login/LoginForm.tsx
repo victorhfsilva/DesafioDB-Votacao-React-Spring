@@ -1,11 +1,15 @@
-import { Button, Flex, Heading, Input } from "@chakra-ui/react";
+import { Button, Flex, Heading, Input, useToast } from "@chakra-ui/react";
 import { useState } from "react";
 import LoginRequisicaoModel from "../../models/LoginRequisicaoModel";
 import useAuthStore from "../../hooks/useAuthStore";
 import loginService from "../../services/login.service";
 import { useNavigate } from "react-router-dom";
+import salvarLoginService from "../../services/salvarLogin.service";
+
 
 const LoginForm = () => {
+
+    const toast = useToast();
 
     const { setAutenticado, setAdmin } = useAuthStore();
 
@@ -26,15 +30,19 @@ const LoginForm = () => {
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const data = await loginService(loginForm);
-        localStorage.setItem('token', data.token);
-        setAutenticado(true);
-        if(data.papel === "ADMIN"){
-            setAdmin(true);
-        } else {
-            setAdmin(false);
-        }
-        navigate('/');
+        loginService(loginForm).then((data) => {
+            salvarLoginService(data, setAutenticado, setAdmin, navigate);
+        })
+        .catch(() => {
+            toast({
+                title: "Não foi possível fazer login.",
+                description: "Por favor, tente novamente",
+                status: "error",
+                duration: 9000,
+                isClosable: true,
+            });
+        });
+
     };
 
     return (
