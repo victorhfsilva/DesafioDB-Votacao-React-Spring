@@ -14,6 +14,14 @@ jest.mock('../../../services/login.service', () => {
     return jest.fn().mockResolvedValue(loginResposta)
 });
 
+const mockNavigate = jest.fn();
+
+jest.mock('react-router-dom', () => ({
+    ...jest.requireActual('react-router-dom'),
+    useNavigate: () => mockNavigate,
+  }));
+  
+
 it('deveria obter token com sucesso', async () => {
     render(
         <ChakraProvider theme={defaultTheme}>
@@ -37,6 +45,7 @@ it('deveria obter token com sucesso', async () => {
         fireEvent.click(submitButton);
     }
 
+    await waitFor(() => expect(mockNavigate).toHaveBeenCalledWith('/'));
     await waitFor( () => expect(loginService).toHaveBeenCalledWith({cpf: "22797475291", senha: "senha123"}))
     await waitFor( () => expect(localStorage.getItem('token')).toBe('token'))
 
