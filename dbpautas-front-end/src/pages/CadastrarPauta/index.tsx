@@ -1,10 +1,11 @@
-import { Text } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
+import CadastrarPautaForm from "./CadastrarPautaForm";
 
 const CadastrarPauta = () => {
     return (
-        <div>
-            <Text>Cadastrar Pauta</Text>
-        </div>
+        <Flex justify={'center'}>
+           <CadastrarPautaForm />
+        </Flex>
     );
 };
 
