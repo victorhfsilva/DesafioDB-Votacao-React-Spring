@@ -7,21 +7,19 @@ const cadastrarPautaService = async (CadastrarPautaRequisicao: CadastrarPautaReq
                                         setAutenticado: (isAutenticado: boolean) => void,
                                         setAdmin: (isAdmin: boolean) => void,
                                         navigate: (path: string) => void
-                                    ) => {
+                                      ) => {
     
-    try {
-        const response = await api.post('/pauta/registrar', CadastrarPautaRequisicao , {
+        return api.post('/pauta/registrar', CadastrarPautaRequisicao , {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
-            }
-        });
-        return response.data as boolean;
-    } catch (error) {
-        if (axios.isAxiosError(error) && error.response && error.response.status === 403) {
-            logoutService(setAutenticado, setAdmin, navigate);
-        }
-        throw error;
-    }
+            }}).then(response => {
+                return response.data as boolean;
+            }).catch((error) =>{
+                if (axios.isAxiosError(error) && error.response && error.response.status === 403) {
+                    logoutService(setAutenticado, setAdmin, navigate);
+                }
+                throw error;
+            });
 }
 
 export default cadastrarPautaService;
