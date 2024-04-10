@@ -3,10 +3,13 @@ import { useState } from "react";
 import LoginRequisicaoModel from "../../models/LoginRequisicaoModel";
 import useAuthStore from "../../hooks/useAuthStore";
 import loginService from "../../services/login.service";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
 
     const { setAutenticado, setAdmin } = useAuthStore();
+
+    const navigate = useNavigate();
 
     const [loginForm, setLoginForm] = useState<LoginRequisicaoModel>({    
         cpf: '',
@@ -30,7 +33,8 @@ const LoginForm = () => {
             setAdmin(true);
         } else {
             setAdmin(false);
-        }     
+        }
+        navigate('/');
     };
 
     return (
