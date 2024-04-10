@@ -12,6 +12,18 @@ const cadastrarPautaRequisicao: CadastrarPautaRequisicaoModel = {
     categoria: 'FINANCAS'
 }
 
+const mockSetAutenticado = jest.fn();
+const mockSetAdmin = jest.fn();
+
+jest.mock('../../../hooks/useAuthStore', () => ({
+    __esModule: true,
+    default: () => ({
+      setAutenticado: mockSetAutenticado,
+      setAdmin: mockSetAdmin,
+    }),
+  }));
+  
+
 jest.mock('../../../services/cadastrarPauta.service', () => {
     return jest.fn().mockResolvedValue(true)
 });
@@ -42,6 +54,6 @@ it("deveria cadastrar pauta com sucesso", async () => {
     if (categoriaSelect) fireEvent.change(categoriaSelect, { target: { value: 'FINANCAS' } });
     if (submitButton) fireEvent.click(submitButton);
 
-    await waitFor( () => expect(cadastrarPautaService).toHaveBeenCalledWith(cadastrarPautaRequisicao))
+    await waitFor( () => expect(cadastrarPautaService).toHaveBeenCalledWith(cadastrarPautaRequisicao, mockSetAutenticado, mockSetAdmin, mockNavigate))
     await waitFor(() => expect(mockNavigate).toHaveBeenCalledWith('/abrirPauta'));
 })

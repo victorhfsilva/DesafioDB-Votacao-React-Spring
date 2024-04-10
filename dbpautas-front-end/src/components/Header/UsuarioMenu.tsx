@@ -1,20 +1,17 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react';
 import useAuthStore from '../../hooks/useAuthStore';
+import logoutService from '../../services/logout.service';
 
 const UsuarioMenu = () => {
     const isAutenticado = useAuthStore((state) => state.isAutenticado);
     const { setAutenticado, setAdmin } = useAuthStore();
     const navigate = useNavigate();
 
-
     const handleLogout = () => {
-        setAutenticado(false);
-        setAdmin(false);
-        localStorage.setItem('token', "");
-        navigate('/login');
-    }
-
+        logoutService(setAutenticado, setAdmin, navigate);
+    } 
+     
     return (
         <Menu isLazy>
             <MenuButton 

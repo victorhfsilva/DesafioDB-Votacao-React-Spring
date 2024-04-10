@@ -33,17 +33,9 @@ it('deveria obter token com sucesso', async () => {
     const senhaInput = document.querySelector('input[name="senha"]');
     const submitButton = document.querySelector('button[type="submit"]');
 
-    if (cpfInput) {
-        fireEvent.change(cpfInput, { target: { value: '22797475291' } });
-    }
-
-    if (senhaInput) {
-        fireEvent.change(senhaInput, { target: { value: 'senha123' } });
-    }
-
-    if (submitButton) {
-        fireEvent.click(submitButton);
-    }
+    if (cpfInput) fireEvent.change(cpfInput, { target: { value: '22797475291' } });
+    if (senhaInput) fireEvent.change(senhaInput, { target: { value: 'senha123' } });
+    if (submitButton) fireEvent.click(submitButton);
 
     await waitFor(() => expect(mockNavigate).toHaveBeenCalledWith('/'));
     await waitFor( () => expect(loginService).toHaveBeenCalledWith({cpf: "22797475291", senha: "senha123"}))
