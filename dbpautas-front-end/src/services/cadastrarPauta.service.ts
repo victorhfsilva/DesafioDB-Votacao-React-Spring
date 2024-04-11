@@ -3,13 +3,13 @@ import api from "../libs/api";
 import CadastrarPautaRequisicaoModel from "../models/CadastrarPautaRequisicaoModel";
 import logoutService from "./logout.service";
 
-const cadastrarPautaService = async (CadastrarPautaRequisicao: CadastrarPautaRequisicaoModel, 
+const cadastrarPautaService = async (cadastrarPautaRequisicao: CadastrarPautaRequisicaoModel, 
                                         setAutenticado: (isAutenticado: boolean) => void,
                                         setAdmin: (isAdmin: boolean) => void,
                                         navigate: (path: string) => void
                                       ) => {
     
-        return api.post('/pauta/registrar', CadastrarPautaRequisicao , {
+        return api.post('/pauta/registrar', cadastrarPautaRequisicao , {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             }}).then(response => {
