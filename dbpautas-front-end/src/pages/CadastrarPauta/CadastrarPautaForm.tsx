@@ -49,6 +49,7 @@ const CadastrarPautaForm = () => {
             <form onSubmit={handleSubmit}>
             <Flex 
                 background={'cinza1'} 
+                height={'29.5em'}
                 width={'24em'} 
                 align={'center'} 
                 margin={'4vw'} 
