@@ -49,14 +49,14 @@ const LoginForm = () => {
         <form onSubmit={handleSubmit}>
             <Flex 
                 background={'cinza1'} 
-                height={'20em'} 
+                height={'17em'} 
                 width={'24em'} 
                 align={'center'} 
                 margin={'4vw'} 
                 borderRadius={'1em'} 
                 direction={'column'}>
                 
-                <Flex width={'100%'} padding={'3vw'} direction={'column'}>
+                <Flex width={'100%'} padding={'2vw'} direction={'column'}>
                     <Heading  
                         textAlign={'left'} 
                         color={'cinza4'} 
