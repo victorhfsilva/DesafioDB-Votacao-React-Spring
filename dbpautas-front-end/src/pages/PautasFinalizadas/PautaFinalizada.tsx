@@ -12,7 +12,7 @@ const PautaFinalizada: React.FC<PautaFinalizadaProps>  = ({pauta}) => {
         height={'17em'} 
         width={'20em'} 
         align={'flex-start'} 
-        margin={'4vw'} 
+        margin={'1.6vw'} 
         borderRadius={'1em'} 
         direction={'column'}>
             <Flex width={'100%'} direction={'row'} justifyContent={'space-between'}>
@@ -53,7 +53,7 @@ const PautaFinalizada: React.FC<PautaFinalizadaProps>  = ({pauta}) => {
             </Text>
             <Flex width={'100%'} direction={'row'} justifyContent={'flex-end'}>
                 <Text color={'cinza4'} fontFamily={'Poppins'} padding={'0.8em 1em 0.8em 1em'}>
-                    Sim: {pauta.votosSim} | Não: {pauta.votosNao}
+                    Sim: {pauta.votosSim} | N: {pauta.votosNao}
                 </Text>
             </Flex>
         </Flex>

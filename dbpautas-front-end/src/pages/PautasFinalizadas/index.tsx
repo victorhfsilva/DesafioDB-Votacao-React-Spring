@@ -1,24 +1,58 @@
-import { Grid } from "@chakra-ui/react";
+import { Grid, Tab, TabList, TabPanel, TabPanels, Tabs, useToast } from "@chakra-ui/react";
 import PautaFinalizada from "./PautaFinalizada";
 import PautaFinalizadaRespostaModel from "../../models/PautaFinalizadaRespostaModel";
+import categoriasMap from "../../models/CategoriasMap";
+import obterPautasFinalizadasService from "../../services/obterPautasFinalizadas.service";
+import { useNavigate } from "react-router-dom";
+import useAuthStore from "../../hooks/useAuthStore";
+import { useEffect, useState } from "react";
 
 const PautasFinalizadas = () => {
 
-    const pauta: PautaFinalizadaRespostaModel = {
-        id: 1,
-        titulo: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-        resumo: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer hendrerit convallis neque, a faucibus tellus. Nam in nisi nunc. Donec pellentesque leo eget iaculis ultricies. In pharetra sollicitudin est ac lacinia. Integer in laoreet quam. Nulla facilisi. Praesent id consequat diam.",
-        descricao: "Morbi ante est, finibus id ultrices ac, convallis quis lacus. Nam at felis quis magna sollicitudin fringilla. Nam et orci commodo, viverra mi et, lobortis urna. Sed pretium sapien at libero rhoncus iaculis. Donec luctus vehicula molestie. Sed in urna non mi efficitur tempus. Aenean id fringilla neque. Vestibulum ut neque placerat, malesuada eros sed, euismod ante. Etiam dapibus sem eget sem accumsan posuere. Suspendisse dolor massa, porttitor at dapibus vel, lobortis vel risus. Praesent pharetra, elit sit amet pulvinar imperdiet, nibh magna blandit ipsum, et fermentum massa elit at tellus. Nunc molestie tincidunt congue. Nullam odio massa, tempor ac lorem quis, hendrerit maximus urna. Morbi tempus diam in tortor vulputate, pharetra egestas ipsum cursus. Integer posuere mollis nulla, nec eleifend risus eleifend in.",
-        categoria: "SAUDE",
-        votosSim: 1,
-        votosNao: 1,
-        decisao: "EMPATE"
-    }
+    const toast = useToast();
+    const { setAutenticado, setAdmin } = useAuthStore();
+    const navigate = useNavigate();
+    const [tabAtiva, setTabAtiva] = useState(0);
+    const [pautas, setPautas] = useState<PautaFinalizadaRespostaModel[]>([]);
+
+    useEffect(() => {
+        const categoria = categoriasMap[tabAtiva];
+        obterPautasFinalizadasService(categoria.type, setAutenticado, setAdmin, navigate)
+            .then((data) => {
+                setPautas(data.content);
+            })
+            .catch(() => {
+                setPautas([]);
+                toast({
+                    title: "Não foi possível carregar as pautas.",
+                    description: "Por favor, tente novamente",
+                    status: "error",
+                    duration: 9000,
+                    isClosable: true,
+                });
+            });
+    }, [tabAtiva]); 
+    
 
     return (
-        <Grid>
-            <PautaFinalizada pauta={pauta}/>
-        </Grid>
+        <Tabs color={'cinza4'} colorScheme="gray" onChange={(index) => setTabAtiva(index)}>
+            <TabList>
+                {categoriasMap.map((item, index) => (
+                    <Tab key={index}>{item.categoria}</Tab>
+                ))}
+            </TabList>
+            <TabPanels>
+                {categoriasMap.map((item, index) => (
+                    <TabPanel key={index}>
+                        <Grid templateColumns='repeat(3, 1fr)'>
+                            {pautas.map((pauta, idx) => (
+                                <PautaFinalizada key={idx} pauta={pauta} />
+                            ))}
+                        </Grid>
+                    </TabPanel>
+                ))}
+            </TabPanels>
+        </Tabs>
     );
 };
 
