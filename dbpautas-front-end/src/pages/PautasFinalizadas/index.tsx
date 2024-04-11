@@ -1,4 +1,4 @@
-import { Grid, Tab, TabList, TabPanel, TabPanels, Tabs, useToast } from "@chakra-ui/react";
+import { Flex, Grid, Tab, TabList, TabPanel, TabPanels, Tabs, Text, useToast } from "@chakra-ui/react";
 import PautaFinalizada from "./PautaFinalizada";
 import PautaFinalizadaRespostaModel from "../../models/PautaFinalizadaRespostaModel";
 import categoriasMap from "../../models/CategoriasMap";
@@ -9,17 +9,33 @@ import { useEffect, useState } from "react";
 
 const PautasFinalizadas = () => {
 
+    interface PaginaInterface {
+        paginaAtual: number,
+        isPrimeiro: boolean,
+        isUltimo: boolean
+    }
+
     const toast = useToast();
     const { setAutenticado, setAdmin } = useAuthStore();
     const navigate = useNavigate();
     const [tabAtiva, setTabAtiva] = useState(0);
     const [pautas, setPautas] = useState<PautaFinalizadaRespostaModel[]>([]);
+    const [pagina, setPagina] = useState<PaginaInterface>({
+        paginaAtual: 0,
+        isPrimeiro: true,
+        isUltimo: false
+    });
 
     useEffect(() => {
         const categoria = categoriasMap[tabAtiva];
-        obterPautasFinalizadasService(categoria.type, setAutenticado, setAdmin, navigate)
+        obterPautasFinalizadasService(categoria.type, setAutenticado, setAdmin, navigate, pagina.paginaAtual, 6)
             .then((data) => {
                 setPautas(data.content);
+                setPagina({
+                    paginaAtual: data.number,
+                    isPrimeiro: data.first,
+                    isUltimo: data.last
+                })
             })
             .catch(() => {
                 setPautas([]);
@@ -31,10 +47,11 @@ const PautasFinalizadas = () => {
                     isClosable: true,
                 });
             });
-    }, [tabAtiva]); 
+    }, [tabAtiva, pagina.paginaAtual]); 
     
 
     return (
+        <>
         <Tabs color={'cinza4'} colorScheme="gray" onChange={(index) => setTabAtiva(index)}>
             <TabList>
                 {categoriasMap.map((item, index) => (
@@ -53,6 +70,36 @@ const PautasFinalizadas = () => {
                 ))}
             </TabPanels>
         </Tabs>
+        <Flex direction={'row'} justifyContent={'center'}>
+            {!pagina.isPrimeiro && <><Text as={'a'} 
+                    color={'cinza4'} 
+                    fontFamily={'Poppins'} 
+                    padding={'0.8em 1em 0.8em 1em'}
+                    overflow={'auto'}
+                    maxHeight={'7em'}
+                    _hover={{ textDecoration: 'underline' }}
+                    onClick={() => setPagina({...pagina, paginaAtual: pagina.paginaAtual - 1})}>
+                    Anterior
+            </Text>
+            <Text color={'cinza4'} 
+                    fontFamily={'Poppins'} 
+                    padding={'0.8em 1em 0.8em 1em'}
+                    overflow={'auto'}
+                    maxHeight={'7em'}>
+                    |
+            </Text></>}
+            { !pagina.isUltimo && <Text as={'a'} 
+                    color={'cinza4'} 
+                    fontFamily={'Poppins'} 
+                    padding={'0.8em 1em 0.8em 1em'}
+                    overflow={'auto'}
+                    maxHeight={'7em'}
+                    _hover={{ textDecoration: 'underline' }}
+                    onClick={() => setPagina({...pagina, paginaAtual: pagina.paginaAtual + 1})}>
+                    Próximo
+            </Text>}
+        </Flex>
+        </>
     );
 };
 
