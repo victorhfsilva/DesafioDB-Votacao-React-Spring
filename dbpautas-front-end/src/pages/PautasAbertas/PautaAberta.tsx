@@ -4,14 +4,22 @@ import PautaAbertaModal from "./PautaAbertaModal";
 
 interface PautaEmAndamentoProps {
     pauta: PautaEmAndamentoRespostaModel;
+    setAutenticado: (isAutenticado: boolean) => void;
+    setAdmin: (isAdmin: boolean) => void;
+    navigate: (path: string) => void;
 }
 
-const PautaAberta: React.FC<PautaEmAndamentoProps>  = ({pauta}) => {
+const PautaAberta: React.FC<PautaEmAndamentoProps>  = ({pauta, setAutenticado, setAdmin, navigate}) => {
     const {isOpen, onOpen, onClose} = useDisclosure();
 
     return(
         <>
-            <PautaAbertaModal pauta={pauta} isOpen={isOpen} onClose={onClose}/>
+            <PautaAbertaModal pauta={pauta} 
+                isOpen={isOpen} 
+                onClose={onClose}
+                setAutenticado={setAutenticado}
+                setAdmin={setAdmin}
+                navigate={navigate}/>
             <Flex 
             background={'cinza1'} 
             width={'20em'} 

@@ -3,7 +3,7 @@ import api from "../libs/api";
 import VotoModel from "../models/VotoModel";
 import logoutService from "./logout.service";
 
-const obterPautasAbertasService = async (id: number,
+const votarEmPautaService = async (id: number,
     voto: VotoModel,
     setAutenticado: (isAutenticado: boolean) => void,
     setAdmin: (isAdmin: boolean) => void,
@@ -26,4 +26,4 @@ const obterPautasAbertasService = async (id: number,
     });
 }
 
-export default obterPautasAbertasService;
+export default votarEmPautaService;

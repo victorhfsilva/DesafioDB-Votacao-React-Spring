@@ -1,14 +1,61 @@
-import { Button, Flex, Heading, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text } from "@chakra-ui/react";
+import { Button, Flex, Heading, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, useToast } from "@chakra-ui/react";
 import PautaEmAndamentoRespostaModel from "../../models/PautaEmAndamentoRespostaModel";
 import { getCategoriaFormatada } from "../../mappers/CategoriasMappper";
+import votarEmPautaService from "../../services/votarEmPauta.service";
 
 interface PautaAbertaProps {
     pauta: PautaEmAndamentoRespostaModel;
     isOpen: boolean;
     onClose: () => void;
+    setAutenticado: (isAutenticado: boolean) => void;
+    setAdmin: (isAdmin: boolean) => void;
+    navigate: (path: string) => void;
 }
 
-const PautaAbertaModal: React.FC<PautaAbertaProps> = ({pauta, isOpen, onClose}) => {
+const PautaAbertaModal: React.FC<PautaAbertaProps> = ({pauta, isOpen, onClose, setAutenticado, setAdmin, navigate}) => {
+
+    const toast = useToast();
+
+    const onVotoSim = () => {
+    votarEmPautaService(pauta.id, "SIM", setAutenticado, setAdmin, navigate).then(() => {
+            toast({
+                title: "Voto realizado com sucesso.",
+                description: "Obrigado por sua votação.",
+                status: "success",
+                duration: 9000,
+                isClosable: true,
+            });
+        onClose();
+    }).catch(() => {
+        toast({
+            title: "Não foi possível realizar a votação.",
+            description: "Por favor, tente novamente.",
+            status: "error",
+            duration: 9000,
+            isClosable: true,
+        })
+    })};
+
+    const onVotoNao = () => {
+        votarEmPautaService(pauta.id, "NAO", setAutenticado, setAdmin, navigate).then(() => {
+                toast({
+                    title: "Voto realizado com sucesso.",
+                    description: "Obrigado por sua votação.",
+                    status: "success",
+                    duration: 9000,
+                    isClosable: true,
+                });
+            onClose();
+        }).catch(() => {
+            toast({
+                title: "Não foi possível realizar a votação.",
+                description: "Por favor, tente novamente.",
+                status: "error",
+                duration: 9000,
+                isClosable: true,
+            })
+        })};
+
     return(
         <Modal isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
@@ -50,10 +97,10 @@ const PautaAbertaModal: React.FC<PautaAbertaProps> = ({pauta, isOpen, onClose}) 
                 </ModalBody>
                 <ModalFooter>
                     <Flex direction={'row'} justifyContent={'flex-end'}>
-                        <Button colorScheme='red' variant={'outline'} mr={3} onClick={onClose}>
+                        <Button colorScheme='red' variant={'outline'} mr={3} onClick={onVotoSim}>
                             Não
                         </Button>
-                        <Button colorScheme='green' mr={3} onClick={onClose}>
+                        <Button colorScheme='green' mr={3} onClick={onVotoNao}>
                             Sim
                         </Button>
                     </Flex>
