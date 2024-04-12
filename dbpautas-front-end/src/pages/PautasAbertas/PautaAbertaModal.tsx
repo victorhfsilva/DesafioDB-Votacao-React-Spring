@@ -97,10 +97,10 @@ const PautaAbertaModal: React.FC<PautaAbertaProps> = ({pauta, isOpen, onClose, s
                 </ModalBody>
                 <ModalFooter>
                     <Flex direction={'row'} justifyContent={'flex-end'}>
-                        <Button colorScheme='red' variant={'outline'} mr={3} onClick={onVotoSim}>
+                        <Button colorScheme='red' variant={'outline'} mr={3} onClick={onVotoNao}>
                             Não
                         </Button>
-                        <Button colorScheme='green' mr={3} onClick={onVotoNao}>
+                        <Button colorScheme='green' mr={3} onClick={onVotoSim}>
                             Sim
                         </Button>
                     </Flex>
