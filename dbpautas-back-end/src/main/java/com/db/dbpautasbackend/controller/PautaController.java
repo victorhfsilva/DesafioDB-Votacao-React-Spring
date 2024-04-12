@@ -79,7 +79,7 @@ public class PautaController {
         return ResponseEntity.status(HttpStatus.OK).body(pautasDTOs);
     }
 
-    @GetMapping("/aberta")
+    @GetMapping("/aberta/")
     @Operation(summary = "Obtêm uma página de pautas abertas.")
     public ResponseEntity<Page<PautaEmAndamentoDTO>> buscarPautasAbertas(
             @RequestParam(defaultValue = "0") final Integer pagina,
