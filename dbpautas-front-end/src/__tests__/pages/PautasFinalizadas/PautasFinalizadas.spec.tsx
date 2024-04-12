@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import Page from "../../../models/PageModel";
 import PautaFinalizadaRespostaModel from "../../../models/PautaFinalizadaRespostaModel";
 import { ChakraProvider } from "@chakra-ui/react";
@@ -69,23 +69,43 @@ jest.mock('react-router-dom', () => ({
     useNavigate: () => mockNavigate,
 }));
 
-it('deveria carregar pautas finalizadas com sucesso', async (): Promise<void> => {
-    render(
-        <ChakraProvider theme={defaultTheme}>
-            <PautasFinalizadas />
-        </ChakraProvider>
-    );
+describe("Teste de obtenção de pautas finalizadas", () => {
+    it('deveria carregar pautas finalizadas com sucesso', async (): Promise<void> => {
+        render(
+            <ChakraProvider theme={defaultTheme}>
+                <PautasFinalizadas />
+            </ChakraProvider>
+        );
+    
+        await waitFor(() => expect(obterPautasFinalizadasService).toHaveBeenCalledWith("", mockSetAutenticado, mockSetAdmin, mockNavigate, 0 , 6))
+    
+        const titulos = screen.queryAllByText('Titulo 1');
+        expect(titulos[0]).toBeInTheDocument();
+    
+        const resumos = screen.queryAllByText('Resumo 1');
+        expect(resumos[0]).toBeInTheDocument();
+    
+        const decisoes = screen.queryAllByText('Aprovado');
+        expect(decisoes[0]).toBeInTheDocument();
+    });
+  
+    it('deveria abrir o modal de uma pauta com sucesso', async (): Promise<void> => {
+        render(
+            <ChakraProvider theme={defaultTheme}>
+                <PautasFinalizadas />
+            </ChakraProvider>
+        );
+    
+        await waitFor(() => expect(obterPautasFinalizadasService).toHaveBeenCalledWith("", mockSetAutenticado, mockSetAdmin, mockNavigate, 0 , 6))
+    
+        const botaoSobre = screen.queryAllByText('Sobre');
+        expect(botaoSobre[0]).toBeInTheDocument();
+        fireEvent.click(botaoSobre[0]);
 
-    await waitFor(() => expect(obterPautasFinalizadasService).toHaveBeenCalledWith("", mockSetAutenticado, mockSetAdmin, mockNavigate, 0 ,6))
-
-    const titulos = screen.queryAllByText('Titulo 1');
-    expect(titulos[0]).toBeInTheDocument();
-
-    const resumos = screen.queryAllByText('Resumo 1');
-    expect(resumos[0]).toBeInTheDocument();
-
-    const decisoes = screen.queryAllByText('Aprovado');
-    expect(decisoes[0]).toBeInTheDocument();
-});
+        const descricao = screen.queryAllByText('Descricao 1');
+        expect(descricao[0]).toBeInTheDocument();
+    
+    });
+})
 
 

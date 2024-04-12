@@ -6,21 +6,17 @@ import obterPautasFinalizadasService from "../../services/obterPautasFinalizadas
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "../../hooks/useAuthStore";
 import { useEffect, useState } from "react";
+import PaginaModel from "../../models/PaginaModel";
 
 const PautasFinalizadas = () => {
 
-    interface PaginaInterface {
-        paginaAtual: number,
-        isPrimeiro: boolean,
-        isUltimo: boolean
-    }
 
     const toast = useToast();
     const { setAutenticado, setAdmin } = useAuthStore();
     const navigate = useNavigate();
     const [tabAtiva, setTabAtiva] = useState(0);
     const [pautas, setPautas] = useState<PautaFinalizadaRespostaModel[]>([]);
-    const [pagina, setPagina] = useState<PaginaInterface>({
+    const [pagina, setPagina] = useState<PaginaModel>({
         paginaAtual: 0,
         isPrimeiro: true,
         isUltimo: false
