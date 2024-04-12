@@ -104,7 +104,7 @@ public class PautaController {
         return ResponseEntity.status(HttpStatus.OK).body(pautasDTOs);
     }
 
-    @GetMapping("/finalizada")
+    @GetMapping("/finalizada/")
     @Operation(summary = "Obtêm uma página de pautas finalizadas")
     public ResponseEntity<Page<PautaFinalizadaDTO>> buscarPautasFinalizadas(
             @RequestParam(defaultValue = "0") final Integer pagina,
