@@ -1,7 +1,7 @@
 import { Flex, Grid, Tab, TabList, TabPanel, TabPanels, Tabs, Text, useToast } from "@chakra-ui/react";
 import PautaFinalizada from "./PautaFinalizada";
 import PautaFinalizadaRespostaModel from "../../models/PautaFinalizadaRespostaModel";
-import categoriasMap from "../../models/CategoriasMap";
+import {CategoriasMappper} from "../../mappers/CategoriasMappper";
 import obterPautasFinalizadasService from "../../services/obterPautasFinalizadas.service";
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "../../hooks/useAuthStore";
@@ -27,7 +27,7 @@ const PautasFinalizadas = () => {
     });
 
     useEffect(() => {
-        const categoria = categoriasMap[tabAtiva];
+        const categoria = CategoriasMappper[tabAtiva];
         obterPautasFinalizadasService(categoria.type, setAutenticado, setAdmin, navigate, pagina.paginaAtual, 6)
             .then((data) => {
                 setPautas(data.content);
@@ -54,12 +54,12 @@ const PautasFinalizadas = () => {
         <>
         <Tabs color={'cinza4'} colorScheme="gray" onChange={(index) => setTabAtiva(index)}>
             <TabList>
-                {categoriasMap.map((item, index) => (
+                {CategoriasMappper.map((item, index) => (
                     <Tab key={index}>{item.categoria}</Tab>
                 ))}
             </TabList>
             <TabPanels>
-                {categoriasMap.map((item, index) => (
+                {CategoriasMappper.map((item, index) => (
                     <TabPanel key={index}>
                         <Grid templateColumns='repeat(3, 1fr)'>
                             {pautas.map((pauta, idx) => (

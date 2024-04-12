@@ -1,11 +1,11 @@
-import CategoriaModel from "./CategoriaModel";
+import CategoriaModel from "../models/CategoriaModel";
 
-interface CategoriaMapInterface {
+interface CategoriaMapperInterface {
     categoria: string;
     type: CategoriaModel | "";
 } 
 
-const categoriasMap: CategoriaMapInterface[] = [
+const CategoriasMappper: CategoriaMapperInterface[] = [
     { categoria: "Todos", type: ""},
     { categoria: "Educação", type: "EDUCACAO" },
     { categoria: "Finanças", type: "FINANCAS" },
@@ -17,4 +17,9 @@ const categoriasMap: CategoriaMapInterface[] = [
     { categoria: "Transporte", type: "TRANSPORTE" }
 ];
 
-export default categoriasMap
+const getCategoriaFormatada = (categoriaType: CategoriaModel): string => {
+    const categoriaDaPauta = CategoriasMappper.find(c => c.type === categoriaType);
+    return categoriaDaPauta ? categoriaDaPauta.categoria : '';
+}
+
+export {CategoriasMappper, getCategoriaFormatada};

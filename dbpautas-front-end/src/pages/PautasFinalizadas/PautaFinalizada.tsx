@@ -1,6 +1,7 @@
 import { Button, Flex, Heading, Text, useDisclosure } from "@chakra-ui/react";
 import PautaFinalizadaRespostaModel from "../../models/PautaFinalizadaRespostaModel";
 import PautaFinalizadaModal from "./PautaFinalizadaModal";
+import { getDecisaoFormatada } from "../../mappers/DecisoesMapper";
 
 interface PautaFinalizadaProps {
     pauta: PautaFinalizadaRespostaModel;
@@ -24,16 +25,7 @@ const PautaFinalizada: React.FC<PautaFinalizadaProps>  = ({pauta}) => {
                         #{pauta.id}
                     </Text>
                     <Text color={'cinza4'} fontFamily={'Poppins'} padding={'0.8em 1em 0.8em 1em'}>
-                    {(() => {
-                        switch (pauta.decisao) {
-                            case 'APROVADO':
-                                return 'Aprovado';
-                            case 'REPROVADO':
-                                return 'Reprovado';
-                            case 'EMPATE':
-                                return 'Empate';
-                        }
-                    })()}
+                    {getDecisaoFormatada(pauta.decisao)}
                     </Text>
                 </Flex>
 
@@ -62,7 +54,7 @@ const PautaFinalizada: React.FC<PautaFinalizadaProps>  = ({pauta}) => {
                     <Button 
                         width={'26%'} 
                         background={'cinza2'} 
-                        color={'cinza4'} 
+                        color={'cinza4'}
                         _hover={{background: 'cinza5', color: 'cinza4'}} 
                         _active={{background: 'cinza5', color: 'cinza4'}}
                         onClick={onOpen}>
