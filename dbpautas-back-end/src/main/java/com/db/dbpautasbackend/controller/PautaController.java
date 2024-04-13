@@ -12,12 +12,11 @@ import com.db.dbpautasbackend.service.interfaces.PautaService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/pauta")
@@ -56,76 +55,58 @@ public class PautaController {
 
     @GetMapping("/fechada/")
     @Operation(summary = "Obtêm uma página de pautas fechadas")
-    public ResponseEntity<Page<PautaEmAndamentoDTO>> buscarPautasFechadas(
-            @RequestParam(defaultValue = "0") final Integer pagina,
-            @RequestParam(defaultValue = "10") final Integer tamanho
+    public ResponseEntity<List<PautaEmAndamentoDTO>> buscarPautasFechadas(
     ){
-        Pageable pageable = PageRequest.of(pagina, tamanho);
-        Page<Pauta> pautas = pautaService.obterPautasFechadas(pageable);
-        Page<PautaEmAndamentoDTO> pautasDTOs = PautaMapper.mapPageOfPautaToPageOfPautaEmAndamentoDTO(pautas);
+        List<Pauta> pautas = pautaService.obterPautasFechadas();
+        List<PautaEmAndamentoDTO> pautasDTOs = PautaMapper.mapPageOfPautaToPageOfPautaEmAndamentoDTO(pautas);
         return ResponseEntity.status(HttpStatus.OK).body(pautasDTOs);
     }
 
     @GetMapping("/fechada/{categoria}")
     @Operation(summary = "Obtêm uma página de pautas fechadas por categoria.")
-    public ResponseEntity<Page<PautaEmAndamentoDTO>> buscarPautasFechadasPorCategoria(
-            @RequestParam(defaultValue = "0") final Integer pagina,
-            @RequestParam(defaultValue = "10") final Integer tamanho,
+    public ResponseEntity<List<PautaEmAndamentoDTO>> buscarPautasFechadasPorCategoria(
             @PathVariable("categoria") Categoria categoria
             ){
-        Pageable pageable = PageRequest.of(pagina, tamanho);
-        Page<Pauta> pautas = pautaService.obterPautasFechadasPorCategoria(categoria, pageable);
-        Page<PautaEmAndamentoDTO> pautasDTOs = PautaMapper.mapPageOfPautaToPageOfPautaEmAndamentoDTO(pautas);
+        List<Pauta> pautas = pautaService.obterPautasFechadasPorCategoria(categoria);
+        List<PautaEmAndamentoDTO> pautasDTOs = PautaMapper.mapPageOfPautaToPageOfPautaEmAndamentoDTO(pautas);
         return ResponseEntity.status(HttpStatus.OK).body(pautasDTOs);
     }
 
     @GetMapping("/aberta/")
     @Operation(summary = "Obtêm uma página de pautas abertas.")
-    public ResponseEntity<Page<PautaEmAndamentoDTO>> buscarPautasAbertas(
-            @RequestParam(defaultValue = "0") final Integer pagina,
-            @RequestParam(defaultValue = "10") final Integer tamanho
+    public ResponseEntity<List<PautaEmAndamentoDTO>> buscarPautasAbertas(
     ){
-        Pageable pageable = PageRequest.of(pagina, tamanho);
-        Page<Pauta> pautas = pautaService.obterPautasAbertas(pageable);
-        Page<PautaEmAndamentoDTO> pautasDTOs = PautaMapper.mapPageOfPautaToPageOfPautaEmAndamentoDTO(pautas);
+        List<Pauta> pautas = pautaService.obterPautasAbertas();
+        List<PautaEmAndamentoDTO> pautasDTOs = PautaMapper.mapPageOfPautaToPageOfPautaEmAndamentoDTO(pautas);
         return ResponseEntity.status(HttpStatus.OK).body(pautasDTOs);
     }
 
     @GetMapping("/aberta/{categoria}")
     @Operation(summary = "Obtêm uma página de pautas abertas por categoria")
-    public ResponseEntity<Page<PautaEmAndamentoDTO>> buscarPautasAbertasPorCategoria(
-            @RequestParam(defaultValue = "0") final Integer pagina,
-            @RequestParam(defaultValue = "10") final Integer tamanho,
+    public ResponseEntity<List<PautaEmAndamentoDTO>> buscarPautasAbertasPorCategoria(
             @PathVariable("categoria") Categoria categoria
     ){
-        Pageable pageable = PageRequest.of(pagina, tamanho);
-        Page<Pauta> pautas = pautaService.obterPautasAbertasPorCategoria(categoria, pageable);
-        Page<PautaEmAndamentoDTO> pautasDTOs = PautaMapper.mapPageOfPautaToPageOfPautaEmAndamentoDTO(pautas);
+        List<Pauta> pautas = pautaService.obterPautasAbertasPorCategoria(categoria);
+        List<PautaEmAndamentoDTO> pautasDTOs = PautaMapper.mapPageOfPautaToPageOfPautaEmAndamentoDTO(pautas);
         return ResponseEntity.status(HttpStatus.OK).body(pautasDTOs);
     }
 
     @GetMapping("/finalizada/")
     @Operation(summary = "Obtêm uma página de pautas finalizadas")
-    public ResponseEntity<Page<PautaFinalizadaDTO>> buscarPautasFinalizadas(
-            @RequestParam(defaultValue = "0") final Integer pagina,
-            @RequestParam(defaultValue = "10") final Integer tamanho
+    public ResponseEntity<List<PautaFinalizadaDTO>> buscarPautasFinalizadas(
     ){
-        Pageable pageable = PageRequest.of(pagina, tamanho);
-        Page<Pauta> pautas = pautaService.obterPautasFinalizadas(pageable);
-        Page<PautaFinalizadaDTO> pautasDTOs = PautaMapper.mapPageOfPautaToPageOfPautaFinalizadaDTO(pautas, contabilizacaoService);
+        List<Pauta> pautas = pautaService.obterPautasFinalizadas();
+        List<PautaFinalizadaDTO> pautasDTOs = PautaMapper.mapPageOfPautaToPageOfPautaFinalizadaDTO(pautas, contabilizacaoService);
         return ResponseEntity.status(HttpStatus.OK).body(pautasDTOs);
     }
 
     @GetMapping("/finalizada/{categoria}")
     @Operation(summary = "Obtêm uma página de pautas fechadas")
-    public ResponseEntity<Page<PautaFinalizadaDTO>> buscarPautasFinalizadasPorCategoria(
-            @RequestParam(defaultValue = "0") final Integer pagina,
-            @RequestParam(defaultValue = "10") final Integer tamanho,
+    public ResponseEntity<List<PautaFinalizadaDTO>> buscarPautasFinalizadasPorCategoria(
             @PathVariable("categoria") Categoria categoria
     ){
-        Pageable pageable = PageRequest.of(pagina, tamanho);
-        Page<Pauta> pautas = pautaService.obterPautasFinalizadasPorCategoria(categoria, pageable);
-        Page<PautaFinalizadaDTO> pautasDTOs = PautaMapper.mapPageOfPautaToPageOfPautaFinalizadaDTO(pautas, contabilizacaoService);
+        List<Pauta> pautas = pautaService.obterPautasFinalizadasPorCategoria(categoria);
+        List<PautaFinalizadaDTO> pautasDTOs = PautaMapper.mapPageOfPautaToPageOfPautaFinalizadaDTO(pautas, contabilizacaoService);
         return ResponseEntity.status(HttpStatus.OK).body(pautasDTOs);
     }
 

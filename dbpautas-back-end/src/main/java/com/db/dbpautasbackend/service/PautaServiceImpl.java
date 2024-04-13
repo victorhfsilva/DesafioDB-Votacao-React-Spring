@@ -52,45 +52,41 @@ public class PautaServiceImpl implements PautaService {
     }
 
     @Override
-    public Page<Pauta> obterPautasFechadas(Pageable pageable) {
-        return pautaRepository.findPautasFechadas(pageable);
+    public List<Pauta> obterPautasFechadas() {
+        return pautaRepository.findPautasFechadas();
     }
 
     @Override
-    public Page<Pauta> obterPautasFechadasPorCategoria(Categoria categoria, Pageable pageable) {
-        return pautaRepository.findPautasFechadasPorCategoria(categoria, pageable);
+    public List<Pauta> obterPautasFechadasPorCategoria(Categoria categoria) {
+        return pautaRepository.findPautasFechadasPorCategoria(categoria);
     }
 
     @Override
-    public Page<Pauta> obterPautasAbertas(Pageable pageable) {
-        List<Pauta> pautas = pautaRepository.findPautasAbertas(pageable).stream().filter(pauta ->
+    public List<Pauta> obterPautasAbertas() {
+        return pautaRepository.findPautasAbertas().stream().filter(pauta ->
             !PautaValidators.verificaSessaoFinalizada(pauta)
         ).toList();
-        return new PageImpl<>(pautas, pageable, pautas.size());
     }
 
     @Override
-    public Page<Pauta> obterPautasAbertasPorCategoria(Categoria categoria, Pageable pageable) {
-        List<Pauta> pautas = pautaRepository.findPautasAbertasPorCategoria(categoria, pageable).stream().filter(pauta ->
+    public List<Pauta> obterPautasAbertasPorCategoria(Categoria categoria) {
+        return pautaRepository.findPautasAbertasPorCategoria(categoria).stream().filter(pauta ->
                 !PautaValidators.verificaSessaoFinalizada(pauta)
         ).toList();
-        return new PageImpl<>(pautas, pageable, pautas.size());
     }
 
     @Override
-    public Page<Pauta> obterPautasFinalizadas(Pageable pageable) {
-        List<Pauta> pautas = pautaRepository.findPautasAbertas(pageable).stream().filter(
+    public List<Pauta> obterPautasFinalizadas() {
+        return pautaRepository.findPautasAbertas().stream().filter(
                 PautaValidators::verificaSessaoFinalizada
         ).toList();
-        return new PageImpl<>(pautas, pageable, pautas.size());
     }
 
     @Override
-    public Page<Pauta> obterPautasFinalizadasPorCategoria(Categoria categoria, Pageable pageable) {
-        List<Pauta> pautas = pautaRepository.findPautasAbertasPorCategoria(categoria, pageable).stream().filter(
+    public List<Pauta> obterPautasFinalizadasPorCategoria(Categoria categoria) {
+        return pautaRepository.findPautasAbertasPorCategoria(categoria).stream().filter(
                 PautaValidators::verificaSessaoFinalizada
         ).toList();
-        return new PageImpl<>(pautas, pageable, pautas.size());
     }
 
 }

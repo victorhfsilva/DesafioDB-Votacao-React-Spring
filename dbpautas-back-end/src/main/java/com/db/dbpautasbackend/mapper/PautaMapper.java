@@ -7,6 +7,8 @@ import com.db.dbpautasbackend.model.Pauta;
 import com.db.dbpautasbackend.service.interfaces.ContabilizacaoService;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+
 public interface PautaMapper {
 
     static Pauta mapRegistrarPautaDTOtoPauta(RegistrarPautaDTO registrarPautaDTO){
@@ -17,19 +19,19 @@ public interface PautaMapper {
                                 .build();
     }
 
-    static Page<PautaEmAndamentoDTO> mapPageOfPautaToPageOfPautaEmAndamentoDTO(Page<Pauta> pautas){
-        return pautas.map(pauta ->
+    static List<PautaEmAndamentoDTO> mapPageOfPautaToPageOfPautaEmAndamentoDTO(List<Pauta> pautas){
+        return pautas.stream().map(pauta ->
             PautaEmAndamentoDTO.builder().id(pauta.getId())
                     .titulo(pauta.getTitulo())
                     .resumo(pauta.getResumo())
                     .descricao(pauta.getDescricao())
                     .categoria(pauta.getCategoria())
                     .build()
-        );
+        ).toList();
     }
 
-    static Page<PautaFinalizadaDTO> mapPageOfPautaToPageOfPautaFinalizadaDTO(Page<Pauta> pautas, ContabilizacaoService contabilizacaoService){
-        return pautas.map(pauta ->
+    static List<PautaFinalizadaDTO> mapPageOfPautaToPageOfPautaFinalizadaDTO(List<Pauta> pautas, ContabilizacaoService contabilizacaoService){
+        return pautas.stream().map(pauta ->
             PautaFinalizadaDTO.builder().id(pauta.getId())
                         .titulo(pauta.getTitulo())
                         .resumo(pauta.getResumo())
@@ -39,7 +41,7 @@ public interface PautaMapper {
                         .votosNao(pauta.getVotosNao())
                         .decisao(contabilizacaoService.contabilizar(pauta))
                         .build()
-        );
+        ).toList();
     }
 
 
