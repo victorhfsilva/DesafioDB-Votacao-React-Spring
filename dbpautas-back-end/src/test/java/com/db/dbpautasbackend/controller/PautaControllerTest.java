@@ -123,6 +123,7 @@ class PautaControllerTest {
 
     @Test
     @DisplayName("Dado uma lista de pautas, quando o usuário buscar por pautas abertas, deve retornar as pautas corretamente.")
+    @WithMockUser(username = "admin", authorities = {"ADMIN"})
     void buscarPautasAbertaTest() throws Exception {
         Pageable pageable = PageRequest.of(0, 10);
         Pauta pautaEsperada = PautaFixture.builderDePautaAberta();
@@ -137,6 +138,7 @@ class PautaControllerTest {
 
     @Test
     @DisplayName("Dado uma lista de pautas, quando o usuário buscar por pautas abertas filtradas por categoria, deve retornar as pautas corretamente.")
+    @WithMockUser(username = "admin", authorities = {"ADMIN"})
     void buscarPautasAbertaPorCategoriaTest() throws Exception {
         Pageable pageable = PageRequest.of(0, 10);
         Pauta pautaEsperada = PautaFixture.builderDePautaAberta();
@@ -151,6 +153,7 @@ class PautaControllerTest {
 
     @Test
     @DisplayName("Dado uma lista de pautas, quando o usuário buscar por pautas finalizadas, deve retornar as pautas corretamente.")
+    @WithMockUser(username = "admin", authorities = {"ADMIN"})
     void buscarPautasFinalizadasTest() throws Exception {
         Pageable pageable = PageRequest.of(0, 10);
         Pauta pautaEsperada = PautaFixture.builderDePautaAprovada();
@@ -165,6 +168,7 @@ class PautaControllerTest {
 
     @Test
     @DisplayName("Dado uma lista de pautas, quando o usuário buscar por pautas finalizadas filtradas por categoria, deve retornar as pautas corretamente.")
+    @WithMockUser(username = "admin", authorities = {"ADMIN"})
     void buscarPautasFinalizadasPorCategoriaTest() throws Exception {
         Pageable pageable = PageRequest.of(0, 10);
         Pauta pautaEsperada = PautaFixture.builderDePautaAprovada();
