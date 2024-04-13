@@ -27,7 +27,8 @@ const PautaFechada: React.FC<PautaEmAndamentoProps>  = ({pauta, setAutenticado, 
             align={'flex-start'} 
             margin={'1.6vw'} 
             borderRadius={'1em'} 
-            direction={'column'}>
+            direction={'column'}
+            justify={'space-between'}>
                 <Flex width={'100%'} direction={'row'} justifyContent={'space-between'}>
                     <Text color={'cinza4'} fontFamily={'Poppins'} padding={'0.8em 1em 0.8em 1em'}>
                         #{pauta.id}

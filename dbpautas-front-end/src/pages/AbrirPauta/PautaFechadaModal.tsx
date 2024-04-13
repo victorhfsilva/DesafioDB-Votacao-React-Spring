@@ -64,24 +64,15 @@ const PautaFechadaModal: React.FC<PautaFechadaProps> = ({pauta, isOpen, onClose,
                         fontFamily={'Poppins'} 
                         padding={'0.8em 1em 0.8em 1em'}
                         overflow={'auto'}
-                        maxHeight={'7em'}>
+                        maxHeight={'16em'}>
                         <b>Resumo:</b> {pauta.resumo}
-                    </Text>
-                    <Text color={'cinza4'} 
-                        fontFamily={'Poppins'} 
-                        padding={'0.8em 1em 0.8em 1em'}
-                        overflow={'auto'}
-                        maxHeight={'7em'}>
+                        <br />
+                        <br />
                         <b>Descrição:</b> {pauta.descricao}
-                    </Text>
-                    <Text color={'cinza4'} 
-                        fontFamily={'Poppins'} 
-                        padding={'0.8em 1em 0.8em 1em'}
-                        overflow={'auto'}
-                        maxHeight={'7em'}>
+                        <br />
+                        <br />
                         <b>Categoria:</b> {getCategoriaFormatada(pauta.categoria)}
-                    </Text>
-                    
+                    </Text>                    
                 </ModalBody>
                 <ModalFooter>
                     <NumberInput _placeholder={'Tempo de Votação (minutos)'} defaultValue={1} min={1} max={43200} value={minutos} onChange={handleMinutosChange}>
