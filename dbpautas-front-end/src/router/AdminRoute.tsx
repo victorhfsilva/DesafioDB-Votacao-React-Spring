@@ -14,7 +14,7 @@ const AdminRoute = ({ children }: AdminRouteProps) => {
       return children
     }
       
-    return <Navigate to="/acessoNegado" />
+    return <Navigate to="/login" />
 }
 
 export default AdminRoute;

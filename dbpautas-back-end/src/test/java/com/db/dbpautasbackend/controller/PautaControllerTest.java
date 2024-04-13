@@ -99,7 +99,7 @@ class PautaControllerTest {
         Pauta pautaEsperada = PautaFixture.builderDefault();
         Page<Pauta> pautas = new PageImpl<>(List.of(pautaEsperada), pageable, 1);
         when(pautaService.obterPautasFechadas(pageable)).thenReturn(pautas);
-        mockMvc.perform(MockMvcRequestBuilders.get("/pauta/fechada")
+        mockMvc.perform(MockMvcRequestBuilders.get("/pauta/fechada/")
                         .param("pagina", "0")
                         .param("tamanho", "10"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -128,7 +128,7 @@ class PautaControllerTest {
         Pauta pautaEsperada = PautaFixture.builderDePautaAberta();
         Page<Pauta> pautas = new PageImpl<>(List.of(pautaEsperada), pageable, 1);
         when(pautaService.obterPautasAbertas(pageable)).thenReturn(pautas);
-        mockMvc.perform(MockMvcRequestBuilders.get("/pauta/aberta")
+        mockMvc.perform(MockMvcRequestBuilders.get("/pauta/aberta/")
                         .param("pagina", "0")
                         .param("tamanho", "10"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -156,7 +156,7 @@ class PautaControllerTest {
         Pauta pautaEsperada = PautaFixture.builderDePautaAprovada();
         Page<Pauta> pautas = new PageImpl<>(List.of(pautaEsperada), pageable, 1);
         when(pautaService.obterPautasFinalizadas(pageable)).thenReturn(pautas);
-        mockMvc.perform(MockMvcRequestBuilders.get("/pauta/finalizada")
+        mockMvc.perform(MockMvcRequestBuilders.get("/pauta/finalizada/")
                         .param("pagina", "0")
                         .param("tamanho", "10"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
