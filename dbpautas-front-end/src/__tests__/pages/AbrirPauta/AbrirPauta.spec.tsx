@@ -4,7 +4,6 @@ import '@testing-library/jest-dom';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { ChakraProvider } from "@chakra-ui/react";
 import defaultTheme from "../../../themes/default"
-import obterPautasAbertasService from "../../../services/obterPautasAbertas.service";
 import obterPautasFechadasService from "../../../services/obterPautasFechadas.service";
 import abrirPautaService from "../../../services/abrirPauta.service";
 import AbrirPautas from "../../../pages/AbrirPauta";

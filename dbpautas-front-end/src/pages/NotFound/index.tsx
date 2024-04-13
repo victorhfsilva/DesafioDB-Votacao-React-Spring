@@ -5,7 +5,7 @@ const NotFound = () => {
         <div>
             <Heading  
                 textAlign={'left'}
-                padding={'0em 1em 0em 0.8em'} 
+                padding={'1em 1em 0em 1.8em'} 
                 color={'cinza4'} 
                 fontSize={'1.2em'} 
                 fontFamily={'Poppins'} 
@@ -16,7 +16,7 @@ const NotFound = () => {
             </Heading>
             <Text color={'cinza4'} 
                 fontFamily={'Poppins'} 
-                padding={'0.8em 1em 0.8em 1em'}
+                padding={'0.8em 1em 0.8em 2.2em'}
                 overflow={'auto'}
                 maxHeight={'7em'}>
                 Não foi possível encontrar a página solicitada.

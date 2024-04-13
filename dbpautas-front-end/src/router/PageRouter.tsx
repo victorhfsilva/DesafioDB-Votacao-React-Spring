@@ -3,7 +3,6 @@ import Header from "../components/Header";
 import Home from "../pages/Home";
 import NotFound from "../pages/NotFound";
 import Login from "../pages/Login";
-import Forbidden from "../pages/Forbidden";
 import AbrirPauta from "../pages/AbrirPauta";
 import CadastrarPauta from "../pages/CadastrarPauta";
 import PautasAbertas from "../pages/PautasAbertas";
@@ -19,7 +18,6 @@ const PageRouter = () => {
             <Routes>
                 <Route path="/login" element={<Login />} />
                 <Route path="*" element={<NotFound />} />
-                <Route path="/acessoNegado" element={<Forbidden />} />
 
                 <Route path="/" element={
                     <UsuarioRoute>
