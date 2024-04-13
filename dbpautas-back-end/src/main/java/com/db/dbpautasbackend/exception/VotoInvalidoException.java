@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@ResponseStatus(HttpStatus.FORBIDDEN)
+@ResponseStatus(HttpStatus.BAD_REQUEST)
 public class VotoInvalidoException extends RuntimeException{
     private String mensagem;
 }
