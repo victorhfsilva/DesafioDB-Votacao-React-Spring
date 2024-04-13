@@ -1,4 +1,4 @@
-import { Flex, Grid, Tab, TabList, TabPanel, TabPanels, Tabs, Text, useToast } from "@chakra-ui/react";
+import { Grid, Tab, TabList, TabPanel, TabPanels, Tabs, useToast } from "@chakra-ui/react";
 import PautaAberta from "./PautaAberta";
 import useAuthStore from "../../hooks/useAuthStore";
 import { useNavigate } from "react-router-dom";
@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import PautaEmAndamentoRespostaModel from "../../models/PautaEmAndamentoRespostaModel";
 import { CategoriasMappper } from "../../mappers/CategoriasMappper";
 import obterPautasAbertasService from "../../services/obterPautasAbertas.service";
-import PaginaModel from "../../models/PaginaModel";
 
 const PautasAbertas = () => {
     const toast = useToast();
@@ -14,22 +13,13 @@ const PautasAbertas = () => {
     const navigate = useNavigate();
     const [tabAtiva, setTabAtiva] = useState(0);
     const [pautas, setPautas] = useState<PautaEmAndamentoRespostaModel[]>([]);
-    const [pagina, setPagina] = useState<PaginaModel>({
-        paginaAtual: 0,
-        isPrimeiro: true,
-        isUltimo: false
-    });
+
 
     useEffect(() => {
         const categoria = CategoriasMappper[tabAtiva];
-        obterPautasAbertasService(categoria.type, setAutenticado, setAdmin, navigate, pagina.paginaAtual, 6)
+        obterPautasAbertasService(categoria.type, setAutenticado, setAdmin, navigate)
             .then((data) => {
-                setPautas(data.content);
-                setPagina({
-                    paginaAtual: data.number,
-                    isPrimeiro: data.first,
-                    isUltimo: data.last
-                })
+                setPautas(data);
             })
             .catch(() => {
                 setPautas([]);
@@ -41,10 +31,10 @@ const PautasAbertas = () => {
                     isClosable: true,
                 });
             });
-    }, [tabAtiva, pagina.paginaAtual]); 
+    }, [tabAtiva]); 
 
     return (
-        <>
+        
             <Tabs color={'cinza4'} colorScheme="gray" onChange={(index) => setTabAtiva(index)}>
                 <TabList>
                     {CategoriasMappper.map((item, index) => (
@@ -67,36 +57,7 @@ const PautasAbertas = () => {
                     ))}
                 </TabPanels>
             </Tabs>
-            <Flex direction={'row'} justifyContent={'center'}>
-                {!pagina.isPrimeiro && <Text as={'a'} 
-                        color={'cinza4'} 
-                        fontFamily={'Poppins'} 
-                        padding={'0.8em 1em 0.8em 1em'}
-                        overflow={'auto'}
-                        maxHeight={'7em'}
-                        _hover={{ textDecoration: 'underline' }}
-                        onClick={() => setPagina({...pagina, paginaAtual: pagina.paginaAtual - 1})}>
-                        Anterior
-                </Text>} 
-                {!pagina.isPrimeiro && !pagina.isUltimo && <Text color={'cinza4'} 
-                        fontFamily={'Poppins'} 
-                        padding={'0.8em 1em 0.8em 1em'}
-                        overflow={'auto'}
-                        maxHeight={'7em'}>
-                        |
-                </Text>}
-                {!pagina.isUltimo && <Text as={'a'} 
-                        color={'cinza4'} 
-                        fontFamily={'Poppins'} 
-                        padding={'0.8em 1em 0.8em 1em'}
-                        overflow={'auto'}
-                        maxHeight={'7em'}
-                        _hover={{ textDecoration: 'underline' }}
-                        onClick={() => setPagina({...pagina, paginaAtual: pagina.paginaAtual + 1})}>
-                        Próximo
-                </Text>}
-            </Flex>
-            </>
+            
     );
 };
 

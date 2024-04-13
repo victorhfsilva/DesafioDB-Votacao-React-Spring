@@ -1,4 +1,3 @@
-import Page from "../../../models/PageModel";
 import PautaEmAndamentoRespostaModel from "../../../models/PautaEmAndamentoRespostaModel";
 import '@testing-library/jest-dom';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
@@ -11,42 +10,13 @@ import AbrirPautas from "../../../pages/AbrirPauta";
 const mockSetAutenticado = jest.fn();
 const mockSetAdmin = jest.fn();
 
-const pautaEmAndamentoResposta: Page<PautaEmAndamentoRespostaModel> = {
-    totalElements: 10,
-    totalPages: 2,
-    size: 6,
-    content: [
-        {
-            id: 1,
-            titulo: "Titulo 1",
-            resumo: "Resumo 1",
-            descricao: "Descricao 1",
-            categoria: "FINANCAS"
-        }
-    ],
-    number: 0,
-    sort: {
-        empty: false,
-        unsorted: false,
-        sorted: true
-    },
-    pageable: {
-        offset: 0,
-        sort: {
-            empty: false,
-            unsorted: false,
-            sorted: true
-        },
-        paged: true,
-        unpaged: false,
-        pageSize: 6,
-        pageNumber: 0
-    },
-    first: true,
-    last: false,
-    numberOfElements: 6,
-    empty: false
-};
+const pautaEmAndamentoResposta: PautaEmAndamentoRespostaModel[] = [{
+        id: 1,
+        titulo: "Titulo 1",
+        resumo: "Resumo 1",
+        descricao: "Descricao 1",
+        categoria: "FINANCAS"
+    }];
 
 jest.mock('../../../hooks/useAuthStore', () => ({
     __esModule: true,
@@ -80,7 +50,7 @@ describe('Testes de obtenção de pautas fechadas', () => {
             </ChakraProvider>
         );
     
-        await waitFor(() => expect(obterPautasFechadasService).toHaveBeenCalledWith("", mockSetAutenticado, mockSetAdmin, mockNavigate, 0 ,6))
+        await waitFor(() => expect(obterPautasFechadasService).toHaveBeenCalledWith("", mockSetAutenticado, mockSetAdmin, mockNavigate))
     
         const titulos = screen.queryAllByText('Titulo 1');
         expect(titulos[0]).toBeInTheDocument();
@@ -96,7 +66,7 @@ describe('Testes de obtenção de pautas fechadas', () => {
             </ChakraProvider>
         );
     
-        await waitFor(() => expect(obterPautasFechadasService).toHaveBeenCalledWith("", mockSetAutenticado, mockSetAdmin, mockNavigate, 0 ,6))
+        await waitFor(() => expect(obterPautasFechadasService).toHaveBeenCalledWith("", mockSetAutenticado, mockSetAdmin, mockNavigate))
     
         const botaoSobre = screen.queryAllByText('Sobre');
         expect(botaoSobre[0]).toBeInTheDocument();
