@@ -1,6 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import Header from "../components/Header";
-import Home from "../pages/Home";
 import NotFound from "../pages/NotFound";
 import Login from "../pages/Login";
 import AbrirPauta from "../pages/AbrirPauta";
@@ -20,11 +19,6 @@ const PageRouter = () => {
                 <Route path="*" element={<NotFound />} />
 
                 <Route path="/" element={
-                    <UsuarioRoute>
-                        <Home />
-                    </UsuarioRoute> 
-                }/>
-                <Route path="/pautasAbertas" element={
                     <UsuarioRoute>
                         <PautasAbertas />
                     </UsuarioRoute>
