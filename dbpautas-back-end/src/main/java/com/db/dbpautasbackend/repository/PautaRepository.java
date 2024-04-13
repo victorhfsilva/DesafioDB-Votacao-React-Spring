@@ -8,18 +8,20 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface PautaRepository extends JpaRepository<Pauta, Long> {
 
     @Query("SELECT p FROM Pauta p WHERE p.aberta = false")
-    Page<Pauta> findPautasFechadas(Pageable pageable);
+    List<Pauta> findPautasFechadas();
 
     @Query("SELECT p FROM Pauta p WHERE p.aberta = false AND p.categoria = :categoria")
-    Page<Pauta> findPautasFechadasPorCategoria(Categoria categoria, Pageable pageable);
+    List<Pauta> findPautasFechadasPorCategoria(Categoria categoria);
 
     @Query("SELECT p FROM Pauta p WHERE p.aberta = true")
-    Page<Pauta> findPautasAbertas(Pageable pageable);
+    List<Pauta> findPautasAbertas();
 
     @Query("SELECT p FROM Pauta p WHERE p.aberta = true AND p.categoria = :categoria")
-    Page<Pauta> findPautasAbertasPorCategoria(Categoria categoria, Pageable pageable);
+    List<Pauta> findPautasAbertasPorCategoria(Categoria categoria);
 }

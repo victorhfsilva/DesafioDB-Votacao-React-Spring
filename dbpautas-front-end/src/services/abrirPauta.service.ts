@@ -1,15 +1,14 @@
 import axios from "axios";
 import api from "../libs/api";
-import VotoModel from "../models/VotoModel";
 import logoutService from "./logout.service";
 
-const votarEmPautaService = async (id: number,
-    voto: VotoModel,
+const abrirPautaService = async (id: number,
+    minutos: number,
     setAutenticado: (isAutenticado: boolean) => void,
     setAdmin: (isAdmin: boolean) => void,
     navigate: (path: string) => void,
 ) => {
-    return api.patch('/pauta/votar/'+`${id}`+`?voto=${voto}`, {}, {
+    return api.patch('/pauta/abrir/'+`${id}`+`?minutos=${minutos}`, {}, {
         headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`
         }
@@ -23,4 +22,4 @@ const votarEmPautaService = async (id: number,
     });
 }
 
-export default votarEmPautaService;
+export default abrirPautaService;

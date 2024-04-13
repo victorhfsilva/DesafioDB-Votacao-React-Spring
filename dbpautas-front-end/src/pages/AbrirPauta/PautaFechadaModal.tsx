@@ -1,9 +1,10 @@
-import { Button, Flex, Heading, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, useToast } from "@chakra-ui/react";
+import { Button, Flex, Heading, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Text, useToast } from "@chakra-ui/react";
 import PautaEmAndamentoRespostaModel from "../../models/PautaEmAndamentoRespostaModel";
 import { getCategoriaFormatada } from "../../mappers/CategoriasMappper";
-import votarEmPautaService from "../../services/votarEmPauta.service";
+import abrirPautaService from "../../services/abrirPauta.service";
+import { useState } from "react";
 
-interface PautaAbertaProps {
+interface PautaFechadaProps {
     pauta: PautaEmAndamentoRespostaModel;
     isOpen: boolean;
     onClose: () => void;
@@ -12,50 +13,36 @@ interface PautaAbertaProps {
     navigate: (path: string) => void;
 }
 
-const PautaAbertaModal: React.FC<PautaAbertaProps> = ({pauta, isOpen, onClose, setAutenticado, setAdmin, navigate}) => {
+const PautaFechadaModal: React.FC<PautaFechadaProps> = ({pauta, isOpen, onClose, setAutenticado, setAdmin, navigate}) => {
 
     const toast = useToast();
 
-    const onVotoSim = () => {
-    votarEmPautaService(pauta.id, "SIM", setAutenticado, setAdmin, navigate).then(() => {
+    const [minutos, setMinutos] = useState(1);
+
+    const handleMinutosChange = (valueAsString: string, valueAsNumber: number) => {
+        setMinutos(valueAsNumber);
+    };
+
+    const onAbrir = () => {
+    abrirPautaService(pauta.id, minutos, setAutenticado, setAdmin, navigate).then(() => {
             toast({
-                title: "Voto realizado com sucesso.",
-                description: "Obrigado por sua votação.",
+                title: "Pauta aberta com sucesso.",
+                description: "A pauta está aberta para votação.",
                 status: "success",
                 duration: 9000,
                 isClosable: true,
             });
         onClose();
-        navigate("/");
+        navigate("/pautasAbertas");
     }).catch(() => {
         toast({
-            title: "Não foi possível realizar a votação.",
+            title: "Não foi possível abrir a pauta.",
             description: "Por favor, tente novamente.",
             status: "error",
             duration: 9000,
             isClosable: true,
         })
     })};
-
-    const onVotoNao = () => {
-        votarEmPautaService(pauta.id, "NAO", setAutenticado, setAdmin, navigate).then(() => {
-                toast({
-                    title: "Voto realizado com sucesso.",
-                    description: "Obrigado por sua votação.",
-                    status: "success",
-                    duration: 9000,
-                    isClosable: true,
-                });
-            onClose();
-        }).catch(() => {
-            toast({
-                title: "Não foi possível realizar a votação.",
-                description: "Por favor, tente novamente.",
-                status: "error",
-                duration: 9000,
-                isClosable: true,
-            })
-        })};
 
     return(
         <Modal isOpen={isOpen} onClose={onClose}>
@@ -85,16 +72,19 @@ const PautaAbertaModal: React.FC<PautaAbertaProps> = ({pauta, isOpen, onClose, s
                         <br />
                         <br />
                         <b>Categoria:</b> {getCategoriaFormatada(pauta.categoria)}
-                    </Text>    
-                    
+                    </Text>                    
                 </ModalBody>
                 <ModalFooter>
+                    <NumberInput _placeholder={'Tempo de Votação (minutos)'} defaultValue={1} min={1} max={43200} value={minutos} onChange={handleMinutosChange}>
+                        <NumberInputField />
+                        <NumberInputStepper>
+                            <NumberIncrementStepper />
+                            <NumberDecrementStepper />
+                        </NumberInputStepper>
+                    </NumberInput>    
                     <Flex direction={'row'} justifyContent={'flex-end'}>
-                        <Button colorScheme='red' variant={'outline'} mr={3} onClick={onVotoNao}>
-                            Não
-                        </Button>
-                        <Button colorScheme='green' mr={3} onClick={onVotoSim}>
-                            Sim
+                        <Button colorScheme='gray' mr={3} onClick={onAbrir}>
+                            Abrir
                         </Button>
                     </Flex>
                 </ModalFooter>
@@ -104,4 +94,4 @@ const PautaAbertaModal: React.FC<PautaAbertaProps> = ({pauta, isOpen, onClose, s
 
 }
 
-export default PautaAbertaModal;
+export default PautaFechadaModal;

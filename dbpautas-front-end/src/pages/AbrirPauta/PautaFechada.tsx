@@ -1,18 +1,26 @@
 import { Button, Flex, Heading, Text, useDisclosure } from "@chakra-ui/react";
-import PautaFinalizadaRespostaModel from "../../models/PautaFinalizadaRespostaModel";
-import PautaFinalizadaModal from "./PautaFinalizadaModal";
-import { getDecisaoFormatada } from "../../mappers/DecisoesMapper";
+import PautaEmAndamentoRespostaModel from "../../models/PautaEmAndamentoRespostaModel";
+import PautaFechadaModal from "./PautaFechadaModal";
 
-interface PautaFinalizadaProps {
-    pauta: PautaFinalizadaRespostaModel;
+
+interface PautaEmAndamentoProps {
+    pauta: PautaEmAndamentoRespostaModel;
+    setAutenticado: (isAutenticado: boolean) => void;
+    setAdmin: (isAdmin: boolean) => void;
+    navigate: (path: string) => void;
 }
 
-const PautaFinalizada: React.FC<PautaFinalizadaProps>  = ({pauta}) => {
+const PautaFechada: React.FC<PautaEmAndamentoProps>  = ({pauta, setAutenticado, setAdmin, navigate}) => {
     const {isOpen, onOpen, onClose} = useDisclosure();
 
-    return (
+    return(
         <>
-            <PautaFinalizadaModal pauta={pauta} isOpen={isOpen} onClose={onClose}/>
+            <PautaFechadaModal pauta={pauta} 
+                isOpen={isOpen} 
+                onClose={onClose}
+                setAutenticado={setAutenticado}
+                setAdmin={setAdmin}
+                navigate={navigate}/>
             <Flex 
             background={'cinza1'} 
             width={'20em'} 
@@ -25,11 +33,7 @@ const PautaFinalizada: React.FC<PautaFinalizadaProps>  = ({pauta}) => {
                     <Text color={'cinza4'} fontFamily={'Poppins'} padding={'0.8em 1em 0.8em 1em'}>
                         #{pauta.id}
                     </Text>
-                    <Text color={'cinza4'} fontFamily={'Poppins'} padding={'0.8em 1em 0.8em 1em'}>
-                    {getDecisaoFormatada(pauta.decisao)}
-                    </Text>
                 </Flex>
-
                 <Heading  
                     textAlign={'left'}
                     padding={'0em 1em 0em 0.8em'} 
@@ -48,10 +52,7 @@ const PautaFinalizada: React.FC<PautaFinalizadaProps>  = ({pauta}) => {
                     maxHeight={'7em'}>
                     <b>Resumo:</b> {pauta.resumo}
                 </Text>
-                <Flex width={'100%'} direction={'row'} justifyContent={'space-between'}>
-                    <Text color={'cinza4'} fontFamily={'Poppins'} padding={'0.8em 1em 0.8em 1em'}>
-                        Sim: {pauta.votosSim} | Não: {pauta.votosNao}
-                    </Text>
+                <Flex width={'100%'} direction={'row'} justifyContent={'flex-end'}>
                     <Button 
                         width={'26%'} 
                         background={'cinza2'} 
@@ -67,4 +68,4 @@ const PautaFinalizada: React.FC<PautaFinalizadaProps>  = ({pauta}) => {
     )
 }
 
-export default PautaFinalizada;
+export default PautaFechada;
