@@ -54,7 +54,7 @@ public class PautaController {
         return ResponseEntity.status(HttpStatus.OK).body(true);
     }
 
-    @GetMapping("/fechada")
+    @GetMapping("/fechada/")
     @Operation(summary = "Obtêm uma página de pautas fechadas")
     public ResponseEntity<Page<PautaEmAndamentoDTO>> buscarPautasFechadas(
             @RequestParam(defaultValue = "0") final Integer pagina,

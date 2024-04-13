@@ -1,21 +1,28 @@
 import axios from "axios";
 import api from "../libs/api";
-import VotoModel from "../models/VotoModel";
+import CategoriaModel from "../models/CategoriaModel";
+import Page from "../models/PageModel";
+import PautaEmAndamentoRespostaModel from "../models/PautaEmAndamentoRespostaModel";
 import logoutService from "./logout.service";
 
-const votarEmPautaService = async (id: number,
-    voto: VotoModel,
+const obterPautasFechadasService = async (categoria: CategoriaModel | "",
     setAutenticado: (isAutenticado: boolean) => void,
     setAdmin: (isAdmin: boolean) => void,
     navigate: (path: string) => void,
+    pagina: number = 0,
+    tamanho: number = 6
 ) => {
-    return api.patch('/pauta/votar/'+`${id}`+`?voto=${voto}`, {}, {
+    return api.get('/pauta/fechada/'+categoria, {
         headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`
+        },
+        params: {
+            pagina: pagina,
+            tamanho: tamanho
         }
     }).then(response => {
-            return response.data as boolean;
-        }).catch((error) => {
+            return response.data as Page<PautaEmAndamentoRespostaModel>;
+        }).catch((error) =>{
             if (axios.isAxiosError(error) && error.response && error.response.status === 403) {
                 logoutService(setAutenticado, setAdmin, navigate);
             }
@@ -23,4 +30,4 @@ const votarEmPautaService = async (id: number,
     });
 }
 
-export default votarEmPautaService;
+export default obterPautasFechadasService;
