@@ -33,7 +33,7 @@ const PautaFechadaModal: React.FC<PautaFechadaProps> = ({pauta, isOpen, onClose,
                 isClosable: true,
             });
         onClose();
-        navigate("/pautasAbertas");
+        navigate("/");
     }).catch(() => {
         toast({
             title: "Não foi possível abrir a pauta.",

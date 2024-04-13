@@ -49,6 +49,7 @@ const PautaFechada: React.FC<PautaEmAndamentoProps>  = ({pauta, setAutenticado, 
                     fontFamily={'Poppins'} 
                     padding={'0.8em 1em 0.8em 1em'}
                     overflow={'auto'}
+                    maxWidth={'100%'}
                     maxHeight={'7em'}>
                     <b>Resumo:</b> {pauta.resumo}
                 </Text>

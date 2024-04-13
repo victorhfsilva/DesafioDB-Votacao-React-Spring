@@ -47,6 +47,7 @@ const PautaAberta: React.FC<PautaEmAndamentoProps>  = ({pauta, setAutenticado, s
                 <Text color={'cinza4'} 
                     fontFamily={'Poppins'} 
                     padding={'0.8em 1em 0.8em 1em'}
+                    maxWidth={'100%'}
                     overflow={'auto'}
                     maxHeight={'7em'}>
                     <b>Resumo:</b> {pauta.resumo}
