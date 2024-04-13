@@ -121,6 +121,7 @@ class PautaControllerTest {
 
     @Test
     @DisplayName("Dado uma lista de pautas, quando o usuário buscar por pautas abertas, deve retornar as pautas corretamente.")
+    @WithMockUser(username = "admin", authorities = {"ADMIN"})
     void buscarPautasAbertaTest() throws Exception {
         Pauta pautaEsperada = PautaFixture.builderDePautaAberta();
         List<Pauta> pautas = List.of(pautaEsperada);
@@ -132,6 +133,7 @@ class PautaControllerTest {
 
     @Test
     @DisplayName("Dado uma lista de pautas, quando o usuário buscar por pautas abertas filtradas por categoria, deve retornar as pautas corretamente.")
+    @WithMockUser(username = "admin", authorities = {"ADMIN"})
     void buscarPautasAbertaPorCategoriaTest() throws Exception {
         Pauta pautaEsperada = PautaFixture.builderDePautaAberta();
         List<Pauta> pautas = List.of(pautaEsperada);
@@ -145,6 +147,7 @@ class PautaControllerTest {
 
     @Test
     @DisplayName("Dado uma lista de pautas, quando o usuário buscar por pautas finalizadas, deve retornar as pautas corretamente.")
+    @WithMockUser(username = "admin", authorities = {"ADMIN"})
     void buscarPautasFinalizadasTest() throws Exception {
         Pauta pautaEsperada = PautaFixture.builderDePautaAprovada();
         List<Pauta> pautas = List.of(pautaEsperada);
@@ -158,6 +161,7 @@ class PautaControllerTest {
 
     @Test
     @DisplayName("Dado uma lista de pautas, quando o usuário buscar por pautas finalizadas filtradas por categoria, deve retornar as pautas corretamente.")
+    @WithMockUser(username = "admin", authorities = {"ADMIN"})
     void buscarPautasFinalizadasPorCategoriaTest() throws Exception {
         Pauta pautaEsperada = PautaFixture.builderDePautaAprovada();
         List<Pauta> pautas = List.of(pautaEsperada);
