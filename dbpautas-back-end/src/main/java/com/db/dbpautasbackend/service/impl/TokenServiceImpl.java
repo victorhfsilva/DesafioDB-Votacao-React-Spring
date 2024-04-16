@@ -2,6 +2,7 @@ package com.db.dbpautasbackend.service.impl;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.db.dbpautasbackend.exception.FalhaNaAutenticacaoException;
 import com.db.dbpautasbackend.repository.UsuarioRepository;
 import com.db.dbpautasbackend.service.TokenService;
 import lombok.AllArgsConstructor;
@@ -49,6 +50,15 @@ public class TokenServiceImpl implements TokenService {
                 .build()
                 .verify(token)
                 .getSubject();
+    }
+
+    @Override
+    public String extrairToken(String authorizationHeader) {
+        if (authorizationHeader != null) {
+            return authorizationHeader.replace("Bearer ", "");
+        } else {
+            return "";
+        }
     }
 
 }

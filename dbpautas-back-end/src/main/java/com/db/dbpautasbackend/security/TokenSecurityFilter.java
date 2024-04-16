@@ -1,7 +1,6 @@
 package com.db.dbpautasbackend.security;
 
 import com.db.dbpautasbackend.service.TokenService;
-import com.db.dbpautasbackend.utils.TokenUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,14 +21,13 @@ public class TokenSecurityFilter extends OncePerRequestFilter {
 
     private TokenService tokenService;
     private UserDetailsService userDetailsService;
-    private TokenUtils tokenUtils;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
         String authorizationHeader = request.getHeader("Authorization");
-        String token = tokenUtils.extrairToken(authorizationHeader);
+        String token = tokenService.extrairToken(authorizationHeader);
 
         if (tokenService.isTokenValido(token)){
             String subject = tokenService.extrairSujeito(token);
