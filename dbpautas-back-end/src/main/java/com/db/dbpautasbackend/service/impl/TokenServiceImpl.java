@@ -1,9 +1,9 @@
-package com.db.dbpautasbackend.service;
+package com.db.dbpautasbackend.service.impl;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.db.dbpautasbackend.repository.UsuarioRepository;
-import com.db.dbpautasbackend.service.interfaces.TokenService;
+import com.db.dbpautasbackend.service.TokenService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

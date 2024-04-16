@@ -3,8 +3,9 @@ package com.db.dbpautasbackend.service;
 
 import com.db.dbpautasbackend.fixture.TokenFixture;
 import com.db.dbpautasbackend.fixture.UserDetailsInfoFixture;
-import com.db.dbpautasbackend.info.UserDetailsInfoImpl;
+import com.db.dbpautasbackend.info.impl.UserDetailsInfoImpl;
 import com.db.dbpautasbackend.repository.UsuarioRepository;
+import com.db.dbpautasbackend.service.impl.TokenServiceImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;

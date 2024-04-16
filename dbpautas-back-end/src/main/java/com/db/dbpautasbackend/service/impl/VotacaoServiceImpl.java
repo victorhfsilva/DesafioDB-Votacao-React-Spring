@@ -1,10 +1,10 @@
-package com.db.dbpautasbackend.service;
+package com.db.dbpautasbackend.service.impl;
 
 import com.db.dbpautasbackend.enums.Voto;
 import com.db.dbpautasbackend.model.Pauta;
 import com.db.dbpautasbackend.model.Usuario;
 import com.db.dbpautasbackend.repository.PautaRepository;
-import com.db.dbpautasbackend.service.interfaces.VotacaoService;
+import com.db.dbpautasbackend.service.VotacaoService;
 import com.db.dbpautasbackend.validators.PautaValidators;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

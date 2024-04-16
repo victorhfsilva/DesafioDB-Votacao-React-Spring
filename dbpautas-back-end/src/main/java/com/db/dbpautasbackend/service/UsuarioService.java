@@ -1,4 +1,4 @@
-package com.db.dbpautasbackend.service.interfaces;
+package com.db.dbpautasbackend.service;
 
 import com.db.dbpautasbackend.model.Usuario;
 import org.springframework.data.domain.Page;

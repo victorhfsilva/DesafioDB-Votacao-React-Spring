@@ -1,6 +1,6 @@
 package com.db.dbpautasbackend.security;
 
-import com.db.dbpautasbackend.service.interfaces.TokenService;
+import com.db.dbpautasbackend.service.TokenService;
 import com.db.dbpautasbackend.utils.TokenUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

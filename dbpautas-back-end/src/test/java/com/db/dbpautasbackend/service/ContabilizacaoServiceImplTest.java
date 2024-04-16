@@ -3,6 +3,7 @@ package com.db.dbpautasbackend.service;
 import com.db.dbpautasbackend.enums.Decisao;
 import com.db.dbpautasbackend.fixture.PautaFixture;
 import com.db.dbpautasbackend.model.Pauta;
+import com.db.dbpautasbackend.service.impl.ContabilizacaoServiceImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;

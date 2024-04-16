@@ -1,7 +1,7 @@
 package com.db.dbpautasbackend.utils;
 
 import com.db.dbpautasbackend.exception.FalhaNaAutenticacaoException;
-import com.db.dbpautasbackend.service.interfaces.TokenService;
+import com.db.dbpautasbackend.service.TokenService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 

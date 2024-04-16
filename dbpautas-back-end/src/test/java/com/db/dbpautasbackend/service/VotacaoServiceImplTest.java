@@ -9,6 +9,7 @@ import com.db.dbpautasbackend.fixture.UsuarioFixture;
 import com.db.dbpautasbackend.model.Pauta;
 import com.db.dbpautasbackend.model.Usuario;
 import com.db.dbpautasbackend.repository.PautaRepository;
+import com.db.dbpautasbackend.service.impl.VotacaoServiceImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

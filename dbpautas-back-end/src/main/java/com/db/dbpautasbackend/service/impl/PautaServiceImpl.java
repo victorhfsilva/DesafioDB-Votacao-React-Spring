@@ -1,4 +1,4 @@
-package com.db.dbpautasbackend.service;
+package com.db.dbpautasbackend.service.impl;
 
 import com.db.dbpautasbackend.enums.Categoria;
 import com.db.dbpautasbackend.enums.Voto;
@@ -6,13 +6,10 @@ import com.db.dbpautasbackend.model.Pauta;
 import com.db.dbpautasbackend.model.Usuario;
 import com.db.dbpautasbackend.repository.PautaRepository;
 import com.db.dbpautasbackend.repository.UsuarioRepository;
-import com.db.dbpautasbackend.service.interfaces.PautaService;
-import com.db.dbpautasbackend.service.interfaces.VotacaoService;
+import com.db.dbpautasbackend.service.PautaService;
+import com.db.dbpautasbackend.service.VotacaoService;
 import com.db.dbpautasbackend.validators.PautaValidators;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;

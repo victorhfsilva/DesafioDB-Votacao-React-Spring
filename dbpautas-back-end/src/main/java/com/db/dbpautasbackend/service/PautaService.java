@@ -1,4 +1,4 @@
-package com.db.dbpautasbackend.service.interfaces;
+package com.db.dbpautasbackend.service;
 
 import com.db.dbpautasbackend.enums.Categoria;
 import com.db.dbpautasbackend.enums.Voto;

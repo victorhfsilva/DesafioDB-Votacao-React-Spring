@@ -1,4 +1,4 @@
-package com.db.dbpautasbackend.service.interfaces;
+package com.db.dbpautasbackend.service;
 
 public interface TokenService {
     String gerarToken(String cpf);
