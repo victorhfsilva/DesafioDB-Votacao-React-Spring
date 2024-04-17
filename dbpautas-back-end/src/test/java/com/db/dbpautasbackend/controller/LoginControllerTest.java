@@ -4,7 +4,7 @@ import com.db.dbpautasbackend.dto.LoginDTO;
 import com.db.dbpautasbackend.dto.LoginRespostaDTO;
 import com.db.dbpautasbackend.fixture.LoginDTOFixture;
 import com.db.dbpautasbackend.fixture.LoginRespostaDTOFixture;
-import com.db.dbpautasbackend.service.LoginServiceImpl;
+import com.db.dbpautasbackend.service.impl.LoginServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

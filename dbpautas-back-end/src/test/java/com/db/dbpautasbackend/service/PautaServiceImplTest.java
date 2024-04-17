@@ -7,7 +7,7 @@ import com.db.dbpautasbackend.model.Pauta;
 import com.db.dbpautasbackend.model.Usuario;
 import com.db.dbpautasbackend.repository.PautaRepository;
 import com.db.dbpautasbackend.repository.UsuarioRepository;
-import com.db.dbpautasbackend.service.interfaces.VotacaoService;
+import com.db.dbpautasbackend.service.impl.PautaServiceImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,6 +19,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -32,9 +33,11 @@ class PautaServiceImplTest {
     private UsuarioRepository usuarioRepository;
     @Mock
     private VotacaoService votacaoService;
-
     @Mock
     private Authentication authentication;
+    @Mock
+    private ValidacaoPautaService validacaoPautaService;
+
 
     @Test
     @DisplayName("Dado uma pauta fechada, quando aberta com sucesso, deve retornar a pauta correta.")
@@ -46,6 +49,7 @@ class PautaServiceImplTest {
         when(pautaRepository.save(any())).thenReturn(pautaAbertaEsperada);
 
         Pauta pautaAbertaObtida = pautaService.abrirPauta(1L, pautaAbertaEsperada.getTempoDeSessaoEmMinutos());
+        verify(validacaoPautaService).validaPautaFechada(pauta);
         assertEquals(pautaAbertaEsperada.isAberta(), pautaAbertaObtida.isAberta());
     }
 

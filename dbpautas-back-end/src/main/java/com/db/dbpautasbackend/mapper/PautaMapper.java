@@ -4,8 +4,7 @@ import com.db.dbpautasbackend.dto.PautaEmAndamentoDTO;
 import com.db.dbpautasbackend.dto.PautaFinalizadaDTO;
 import com.db.dbpautasbackend.dto.RegistrarPautaDTO;
 import com.db.dbpautasbackend.model.Pauta;
-import com.db.dbpautasbackend.service.interfaces.ContabilizacaoService;
-import org.springframework.data.domain.Page;
+import com.db.dbpautasbackend.service.ContabilizacaoService;
 
 import java.util.List;
 

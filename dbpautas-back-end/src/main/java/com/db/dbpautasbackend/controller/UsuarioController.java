@@ -3,7 +3,7 @@ package com.db.dbpautasbackend.controller;
 import com.db.dbpautasbackend.dto.RegistrarUsuarioDTO;
 import com.db.dbpautasbackend.mapper.UsuarioMapper;
 import com.db.dbpautasbackend.model.Usuario;
-import com.db.dbpautasbackend.service.interfaces.UsuarioService;
+import com.db.dbpautasbackend.service.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;

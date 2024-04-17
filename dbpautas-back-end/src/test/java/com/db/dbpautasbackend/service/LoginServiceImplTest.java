@@ -3,7 +3,7 @@ package com.db.dbpautasbackend.service;
 import com.db.dbpautasbackend.dto.LoginDTO;
 import com.db.dbpautasbackend.enums.Papel;
 import com.db.dbpautasbackend.fixture.LoginDTOFixture;
-import com.db.dbpautasbackend.service.interfaces.TokenService;
+import com.db.dbpautasbackend.service.impl.LoginServiceImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

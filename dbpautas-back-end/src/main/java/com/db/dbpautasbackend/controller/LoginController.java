@@ -2,7 +2,7 @@ package com.db.dbpautasbackend.controller;
 
 import com.db.dbpautasbackend.dto.LoginDTO;
 import com.db.dbpautasbackend.dto.LoginRespostaDTO;
-import com.db.dbpautasbackend.service.interfaces.LoginService;
+import com.db.dbpautasbackend.service.LoginService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;

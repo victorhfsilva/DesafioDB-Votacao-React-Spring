@@ -1,4 +1,4 @@
-package com.db.dbpautasbackend.info.interfaces;
+package com.db.dbpautasbackend.info;
 
 import com.db.dbpautasbackend.enums.Papel;
 

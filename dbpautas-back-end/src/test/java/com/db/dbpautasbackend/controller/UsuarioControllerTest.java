@@ -4,7 +4,7 @@ import com.db.dbpautasbackend.dto.RegistrarUsuarioDTO;
 import com.db.dbpautasbackend.fixture.RegistrarUsuarioDTOFixture;
 import com.db.dbpautasbackend.mapper.UsuarioMapper;
 import com.db.dbpautasbackend.model.Usuario;
-import com.db.dbpautasbackend.service.interfaces.UsuarioService;
+import com.db.dbpautasbackend.service.UsuarioService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

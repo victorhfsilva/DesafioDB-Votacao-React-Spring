@@ -1,10 +1,10 @@
-package com.db.dbpautasbackend.service;
+package com.db.dbpautasbackend.service.impl;
 
 import com.db.dbpautasbackend.dto.LoginDTO;
 import com.db.dbpautasbackend.dto.LoginRespostaDTO;
 import com.db.dbpautasbackend.enums.Papel;
-import com.db.dbpautasbackend.service.interfaces.LoginService;
-import com.db.dbpautasbackend.service.interfaces.TokenService;
+import com.db.dbpautasbackend.service.LoginService;
+import com.db.dbpautasbackend.service.TokenService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

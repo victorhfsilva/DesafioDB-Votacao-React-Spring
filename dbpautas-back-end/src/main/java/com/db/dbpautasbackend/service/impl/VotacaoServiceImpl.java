@@ -1,11 +1,11 @@
-package com.db.dbpautasbackend.service;
+package com.db.dbpautasbackend.service.impl;
 
 import com.db.dbpautasbackend.enums.Voto;
 import com.db.dbpautasbackend.model.Pauta;
 import com.db.dbpautasbackend.model.Usuario;
 import com.db.dbpautasbackend.repository.PautaRepository;
-import com.db.dbpautasbackend.service.interfaces.VotacaoService;
-import com.db.dbpautasbackend.validators.PautaValidators;
+import com.db.dbpautasbackend.service.ValidacaoPautaService;
+import com.db.dbpautasbackend.service.VotacaoService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
@@ -15,13 +15,14 @@ import java.util.ArrayList;
 public class VotacaoServiceImpl implements VotacaoService {
 
     private PautaRepository pautaRepository;
+    private ValidacaoPautaService validacaoPautaService;
 
     @Override
     public Pauta votar(Pauta pauta, Usuario usuario, Voto voto) {
         inicializaVotacao(pauta);
-        PautaValidators.validaPautaAberta(pauta);
-        PautaValidators.validaSessaoFinalizada(pauta);
-        PautaValidators.validaSePrimeiroVoto(pauta, usuario);
+        validacaoPautaService.validaPautaAberta(pauta);
+        validacaoPautaService.validaPautaFinalizada(pauta);
+        validacaoPautaService.validaSePrimeiroVoto(pauta, usuario);
         return votacao(pauta, usuario, voto);
     }
 

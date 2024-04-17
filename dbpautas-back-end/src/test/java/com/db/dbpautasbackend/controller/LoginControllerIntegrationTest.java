@@ -4,7 +4,7 @@ import com.db.dbpautasbackend.dto.LoginDTO;
 import com.db.dbpautasbackend.dto.LoginRespostaDTO;
 import com.db.dbpautasbackend.enums.Papel;
 import com.db.dbpautasbackend.fixture.LoginDTOFixture;
-import com.db.dbpautasbackend.service.interfaces.TokenService;
+import com.db.dbpautasbackend.service.TokenService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -20,15 +20,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
-
 import java.util.stream.Stream;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
-class LoginControllerTI {
+class LoginControllerIntegrationTest {
 
     @LocalServerPort
     private int port;
