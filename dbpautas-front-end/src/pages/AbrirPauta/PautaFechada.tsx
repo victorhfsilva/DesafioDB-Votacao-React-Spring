@@ -5,12 +5,10 @@ import PautaFechadaModal from "./PautaFechadaModal";
 
 interface PautaEmAndamentoProps {
     pauta: PautaEmAndamentoRespostaModel;
-    setAutenticado: (isAutenticado: boolean) => void;
-    setAdmin: (isAdmin: boolean) => void;
     navigate: (path: string) => void;
 }
 
-const PautaFechada: React.FC<PautaEmAndamentoProps>  = ({pauta, setAutenticado, setAdmin, navigate}) => {
+const PautaFechada: React.FC<PautaEmAndamentoProps>  = ({pauta, navigate}) => {
     const {isOpen, onOpen, onClose} = useDisclosure();
 
     return(
@@ -18,8 +16,6 @@ const PautaFechada: React.FC<PautaEmAndamentoProps>  = ({pauta, setAutenticado, 
             <PautaFechadaModal pauta={pauta} 
                 isOpen={isOpen} 
                 onClose={onClose}
-                setAutenticado={setAutenticado}
-                setAdmin={setAdmin}
                 navigate={navigate}/>
             <Flex 
             background={'cinza1'} 

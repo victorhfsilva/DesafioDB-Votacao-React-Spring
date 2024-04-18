@@ -45,8 +45,6 @@ const PageRouter = () => {
                         <RegistrarUsuario />
                     </AdminRoute>
                 } />
-
-
             </Routes>
             </AxiosInterceptor>
         </BrowserRouter>

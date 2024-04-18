@@ -1,7 +1,6 @@
 package com.db.dbpautasbackend.advicer;
 
-import com.db.dbpautasbackend.dto.ErroValidacaoDTO;
-import com.db.dbpautasbackend.enums.Erro;
+import com.db.dbpautasbackend.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -10,23 +9,57 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.NoSuchElementException;
 
 @ControllerAdvice
 public class ExceptionHandlerAdvice {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErroValidacaoDTO> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
-        Map<String, String> errors = new HashMap<>();
-        ex.getBindingResult().getAllErrors().forEach((error) -> {
-            String fieldName = ((FieldError) error).getField();
-            String errorMessage = error.getDefaultMessage();
-            errors.put(fieldName, errorMessage);
-        });
-
-        return ResponseEntity.badRequest().body(new ErroValidacaoDTO(Erro.ERRO_VALIDACAO, errors));
+    public ResponseEntity<String> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
+        FieldError fieldError = ex.getBindingResult().getFieldError();
+        return ResponseEntity.badRequest().body("O campo " + fieldError.getField() + " é inválido.");
     }
 
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(CpfIrregularException.class)
+    public ResponseEntity<String> handleCpfIrregularException(CpfIrregularException ex) {
+        return ResponseEntity.badRequest().body("O estado deste cpf é irregular.");
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(VotoInvalidoException.class)
+    public ResponseEntity<String> handleVotoInvalidoException(VotoInvalidoException ex) {
+        return ResponseEntity.badRequest().body("Você já votou nesta pauta.");
+    }
+
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(PautaAbertaException.class)
+    public ResponseEntity<String> handlePautaAbertaException(PautaAbertaException ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body("Esta pauta já foi aberta.");
+    }
+
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(PautaFechadaException.class)
+    public ResponseEntity<String> handlePautaFechadaException(PautaFechadaException ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body("Esta pauta se encontra fechada.");
+    }
+
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(PautaFinalizadaException.class)
+    public ResponseEntity<String> handlePautaFinalizadaException(PautaFinalizadaException ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body("A votação desta pauta já foi finalizada.");
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(NoSuchElementException.class)
+    public ResponseEntity<String> handleNoSuchElementException(NoSuchElementException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("O recurso solicitado não foi encontrado.");
+    }
+
+    @ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
+    @ExceptionHandler(ClienteIndisponivelException.class)
+    public ResponseEntity<String> handleClienteIndisponivelException(ClienteIndisponivelException ex) {
+        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body("Não foi possível validar dados no momento.");
+    }
 }

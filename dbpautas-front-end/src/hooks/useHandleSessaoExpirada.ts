@@ -1,23 +1,16 @@
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "./useAuthStore";
-import { useToast } from "@chakra-ui/react";
 import logoutService from "../services/logout.service";
+import useHandleExcecao from "./useHandleExcecao";
 
 
 function useHandleSessaoExpirada() {
     const { setAutenticado, setAdmin } = useAuthStore();
     const navigate = useNavigate();
-    const toast = useToast();
+    const handleExcecao = useHandleExcecao();
 
     return function handleSessaoExpirada() {
-        toast({
-            title: "Sua sessão expirou",
-            description: "Por favor, faça login novamente",
-            status: "error",
-            duration: 9000,
-            isClosable: true,
-        });
-
+        handleExcecao("Sua sessão expirou", "Por favor, faça login novamente.");
         logoutService(setAutenticado, setAdmin, () => navigate('/login'));
     }
 }

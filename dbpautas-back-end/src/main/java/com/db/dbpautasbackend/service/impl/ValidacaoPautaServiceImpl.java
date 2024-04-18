@@ -2,7 +2,7 @@ package com.db.dbpautasbackend.service.impl;
 
 import com.db.dbpautasbackend.exception.PautaAbertaException;
 import com.db.dbpautasbackend.exception.PautaFechadaException;
-import com.db.dbpautasbackend.exception.SessaoFinalizadaException;
+import com.db.dbpautasbackend.exception.PautaFinalizadaException;
 import com.db.dbpautasbackend.exception.VotoInvalidoException;
 import com.db.dbpautasbackend.model.Pauta;
 import com.db.dbpautasbackend.model.Usuario;
@@ -21,7 +21,7 @@ public class ValidacaoPautaServiceImpl implements ValidacaoPautaService {
         LocalDateTime agora = LocalDateTime.now();
         long minutosPassados = Duration.between(abertoAs, agora).toMinutes();
         if (minutosPassados > tempoDeSessaoEmMinutos) {
-            throw new SessaoFinalizadaException("O tempo de sessão já expirou. Sessão finalizada.");
+            throw new PautaFinalizadaException("O tempo de sessão já expirou. Sessão finalizada.");
         }
     }
 
