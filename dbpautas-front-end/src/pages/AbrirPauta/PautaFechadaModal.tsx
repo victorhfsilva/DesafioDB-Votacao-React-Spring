@@ -17,7 +17,7 @@ const PautaFechadaModal: React.FC<PautaFechadaProps> = ({pauta, isOpen, onClose,
 
     const [minutos, setMinutos] = useState(1);
 
-    const handleMinutosChange = (valueAsString: string, valueAsNumber: number) => {
+    const handleMinutosChange = (_valueAsString: string, valueAsNumber: number) => {
         setMinutos(valueAsNumber);
     };
 

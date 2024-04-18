@@ -1,99 +1,78 @@
-# votacao-react-java
+# Desafio Votação - Start DB
 
-## Objetivo
+Este desafio foi parte do treinamento oferecido pela DB no Start DB 2023. 
 
-Imagine que você deve criar uma solução web para gerenciar e participar de sessões de votação.
+## Sobre
 
-Essa solução deve ser executada na nuvem e promover as seguintes funcionalidades através de uma API REST:
+O projeto consistia em desenvolver um MVP que solucionasse este [desafio](DESAFIO.md).
 
-- Cadastrar uma nova pauta
-- Abrir uma sessão de votação em uma **pauta** (a sessão de votação deve ficar aberta por um tempo determinado na chamada de abertura ou 1 minuto por *default*)
-- Receber votos nas pautas (os votos são apenas 'Sim'/'Não'. Cada usuário é identificado por um id único e pode votar apenas uma vez por pauta)
-- Contabilizar os votos e dar o resultado da votação na pauta
+## Execução
 
-Para fins de exercício a solução deve ser construída em Java (SpringBoot) no backend e React no frontend. Frameworks e bibliotecas são de livre escolha (desde que não infrinja direitos de uso).
+Para executar a aplicação basta executar o comando a seguir na pasta raiz deste diretório.
 
-É importante que as pautas e os votos sejam persistidos e que não sejam perdidos com o restart da aplicação.
+```bash
+docker-compose up
+```
 
-O foco dessa avaliação é a comunicação entre o backend e o frontend. Essa comunicação é feita através de mensagens no formato JSON, onde essas mensagens serão interpretadas pelo cliente para montar as telas onde o usuário vai interagir com o sistema. O formato fica a seu criterio e as telas estão descritas no anexo 1.
+Para fazer o primeiro acesso a aplicação e registrar novos usuários pode-se utilizar a conta a seguir:
 
-## Como proceder
+- **Cpf:** admin
+- **Senha:** admin
 
-Por favor, realize o FORK desse repositório e implemente sua solução no FORK em seu repositório GitHub, ao final, notifique da conclusão para que possamos analisar o código implementado.
+## Tecnologias Utilizadas
 
-Lembre-se de deixar todas as orientações necessárias para executar o seu código.
+### Back-End
 
-## Tarefas bônus
+- Java
+- Spring Boot
+- Spring Data JPA
+- Spring Web
+- Spring Security
+- Spring Cloud Open Feign
+- Lombok
+- Validation
+- Passay
+- PostgreSQL
+- H2
+- Flyway
+- Swagger
+- Docker
 
-### Tarefa Bônus 1 - Controle de usuários
+### Front-End
 
-- Criar cadastro de usuários para votação (apenas CPFs validos)
-- Adicionar usuários específicos como admin
-- Apenas usuários admin podem acessar alguns recursos
-    - Criar pautas
-    - Cadastrar usuários votantes
+- Typescript
+- React
+- Chakra UI
+- React Router Dom
+- Axios
+- Zustand
+- Jest
+- React Testing Library
+- Vite
 
-### Tarefa Bônus 2 - Performance
+## Configurações
 
-- Imagine que sua aplicação possa ser usada em cenários que existam centenas de milhares de votos. Ela deve se comportar de maneira performática nesses cenários
-- Testes de performance são uma boa maneira de garantir e observar como sua aplicação se comporta
+Para reproduzir as configurações locais do back-end pode-se editar o arquivo .env dentro da pasta `dbpautas-back-end` com as seguintes variáveis de ambiente:
 
-### Tarefa Bônus 3 - Versionamento da API
+```
+DEV_DB_URL=jdbc:postgresql://localhost:5432/{banco de dados de desenvolvimento}
+POSTGRES_USER={usuário do banco de dados}
+POSTGRES_PWD={senha do banco de dados}
+JWT_SECRET={senha utilizada para gerar os tokens jwt}
+JWT_ISSUER={issuer dos tokens}
+VALIDATION_CPF_ACTIVE={true | false}
+```
 
-- Como você versionaria a API da sua aplicação? Que estratégia usar?
+A variável `VALIDATION_CPF_ACTIVE` habilita ou desabilita a verificação da regularidade dos CPFs na api [CPF.CNPJ](https://www.cpfcnpj.com.br/).
 
-## Dicas e observações
+O token utilizado nesta API é um token de teste que sempre retorna cpf irregular. Para utilizá-lo em produção favor substituir o token da api por um válido em `CpfCnpjClient`.
 
-- Teste bem sua solução, evite bugs;
-- Não inicie o teste sem sanar todas as dúvidas;
-- Iremos executar a aplicação para testá-la, cuide com qualquer dependência externa e deixe claro caso haja instruções especiais para execução do mesmo;
+Lembre-se de criar o banco de dados de teste previamente e substituir as configurações entre chaves pelas específicas ao seu ambiente de desenvolvimento.
 
-## Anexo 1
+## Débitos Técnicos
 
-### Introdução
+- Configurar a responsividade das páginas.
 
-A seguir serão detalhados quais telas são necessárias para a conclusão do desafio, assim como os tipos de campos disponíveis para a interação do usuário.
+## Bugs
 
-### Tipo de tela – FORMULARIO
-
-Criar um formulário para cadastro de uma pauta com o tempo de sessão.
-
-### Tipo de tela – SELECAO
-
-Exibir uma lista de pautas para que o usuário acesse e consiga votar.
-
-Apenas pautas com sessão disponíveis devem ser exibidas.
-
-Deve ser possível filtrar uma pauta por **categoria**
-
-### Tipo de tela – VOTACAO
-
-Exibir os dados da pauta e as opções de voto disponíveis.
-
-Ao acessar a votação uma sessão precisa estar aberta para a pauta em questão.
-
-Pautas com sessão expiradas não podem receber votos.
-
-A votação pode ser acessada por qualquer pessoa com link, sendo necessário informar o CFP antes de votar.
-
-### Tipo de tela – DETALHES
-
-Exibir os dados da pauta, quantidade de votos total e se a mesma foi aprovada.
-
-Ao acessar os detalhes deve exibir se a sessão já terminou.
-
-## O que será analisado
-
-- Simplicidade no design da solução (evitar over engineering)
-- Organização do código
-- Arquitetura do projeto
-- Boas práticas de programação (manutenibilidade, legibilidade etc)
-- Possíveis bugs
-- Tratamento de erros e exceções
-- Explicação breve do porquê das escolhas tomadas durante o desenvolvimento da solução
-- Uso de testes automatizados e ferramentas de qualidade
-- Limpeza do código
-- Documentação do código e da API
-- Logs da aplicação
-- Mensagens e organização dos commits
-- Layout responsivo
+- Quando o front-end é executado sobre uma imagem do Nginx definida no Dockerfile do front-end, as pautas não são carregadas automaticamente ao navegar para suas respectivas páginas. É necessário antes selecionar uma categoria e só então as pautas serão carregadas. Executando localmente o erro não ocorre. 

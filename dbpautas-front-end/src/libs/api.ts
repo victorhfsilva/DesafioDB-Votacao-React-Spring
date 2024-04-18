@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from "axios";
 import { useEffect } from "react";
 import useHandleSessaoExpirada from "../hooks/useHandleSessaoExpirada";
 import useHandleExcecao from "../hooks/useHandleExcecao";
@@ -14,11 +14,10 @@ const AxiosInterceptor = ({children}: {children: React.ReactNode}) => {
 
   useEffect(() => {
     
-    const reqConfigInterceptor = (config: AxiosRequestConfig) => {
-      config.headers = config.headers || {};
+    const reqConfigInterceptor = (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
       const token = localStorage.getItem('token');
       if (token) {
-        config.headers['Authorization'] = `Bearer ${token}`;
+          config.headers['Authorization'] = `Bearer ${token}`;
       }
       return config;
     };
