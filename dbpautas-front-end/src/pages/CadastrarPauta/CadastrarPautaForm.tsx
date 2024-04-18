@@ -3,14 +3,8 @@ import CadastrarPautaRequisicaoModel from "../../models/CadastrarPautaRequisicao
 import { useState } from "react";
 import cadastrarPautaService from "../../services/cadastrarPauta.service";
 import { useNavigate } from "react-router-dom";
-import useAuthStore from "../../hooks/useAuthStore";
-import { useToast } from "@chakra-ui/react";
 
 const CadastrarPautaForm = () => {
-
-    const toast = useToast();
-    
-    const { setAutenticado, setAdmin } = useAuthStore();
 
     const navigate = useNavigate();
 
@@ -31,16 +25,8 @@ const CadastrarPautaForm = () => {
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        cadastrarPautaService(cadastrarPautaForm, setAutenticado, setAdmin, navigate).then((data) => {
+        cadastrarPautaService(cadastrarPautaForm).then((data) => {
             if (data) navigate('/abrirPauta');
-        }).catch(() => {
-            toast({
-                title: "Não foi possível cadastrar a pauta.",
-                description: "Por favor, tente novamente",
-                status: "error",
-                duration: 9000,
-                isClosable: true,
-            });
         });
     };
 

@@ -1,6 +1,5 @@
-import { Grid, Tab, TabList, TabPanel, TabPanels, Tabs, useToast } from "@chakra-ui/react";
+import { Grid, Tab, TabList, TabPanel, TabPanels, Tabs} from "@chakra-ui/react";
 import PautaAberta from "./PautaAberta";
-import useAuthStore from "../../hooks/useAuthStore";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import PautaEmAndamentoRespostaModel from "../../models/PautaEmAndamentoRespostaModel";
@@ -8,33 +7,19 @@ import { CategoriasMappper } from "../../mappers/CategoriasMappper";
 import obterPautasAbertasService from "../../services/obterPautasAbertas.service";
 
 const PautasAbertas = () => {
-    const toast = useToast();
-    const { setAutenticado, setAdmin } = useAuthStore();
     const navigate = useNavigate();
     const [tabAtiva, setTabAtiva] = useState(0);
     const [pautas, setPautas] = useState<PautaEmAndamentoRespostaModel[]>([]);
 
-
     useEffect(() => {
         const categoria = CategoriasMappper[tabAtiva];
-        obterPautasAbertasService(categoria.type, setAutenticado, setAdmin, navigate)
+        obterPautasAbertasService(categoria.type)
             .then((data) => {
                 setPautas(data);
-            })
-            .catch(() => {
-                setPautas([]);
-                toast({
-                    title: "Não foi possível carregar as pautas.",
-                    description: "Por favor, tente novamente",
-                    status: "error",
-                    duration: 9000,
-                    isClosable: true,
-                });
             });
     }, [tabAtiva]); 
 
-    return (
-        
+    return (   
             <Tabs color={'cinza4'} colorScheme="gray" onChange={(index) => setTabAtiva(index)}>
                 <TabList>
                     {CategoriasMappper.map((item, index) => (
@@ -47,17 +32,14 @@ const PautasAbertas = () => {
                             <Grid templateColumns='repeat(3, 1fr)'>
                                 {pautas.map((pauta, idx) => (
                                     <PautaAberta key={idx}     
-                                        pauta={pauta} 
-                                        setAutenticado={setAutenticado} 
-                                        setAdmin={setAdmin} 
+                                        pauta={pauta}
                                         navigate={navigate}  />
                                 ))}
                             </Grid>
                         </TabPanel>
                     ))}
                 </TabPanels>
-            </Tabs>
-            
+            </Tabs>   
     );
 };
 

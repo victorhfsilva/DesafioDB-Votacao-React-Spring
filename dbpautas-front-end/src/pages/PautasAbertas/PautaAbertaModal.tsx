@@ -7,17 +7,15 @@ interface PautaAbertaProps {
     pauta: PautaEmAndamentoRespostaModel;
     isOpen: boolean;
     onClose: () => void;
-    setAutenticado: (isAutenticado: boolean) => void;
-    setAdmin: (isAdmin: boolean) => void;
     navigate: (path: string) => void;
 }
 
-const PautaAbertaModal: React.FC<PautaAbertaProps> = ({pauta, isOpen, onClose, setAutenticado, setAdmin, navigate}) => {
+const PautaAbertaModal: React.FC<PautaAbertaProps> = ({pauta, isOpen, onClose, navigate}) => {
 
     const toast = useToast();
 
     const onVotoSim = () => {
-    votarEmPautaService(pauta.id, "SIM", setAutenticado, setAdmin, navigate).then(() => {
+    votarEmPautaService(pauta.id, "SIM").then(() => {
             toast({
                 title: "Voto realizado com sucesso.",
                 description: "Obrigado por sua votação.",
@@ -27,18 +25,10 @@ const PautaAbertaModal: React.FC<PautaAbertaProps> = ({pauta, isOpen, onClose, s
             });
         onClose();
         navigate("/");
-    }).catch(() => {
-        toast({
-            title: "Não foi possível realizar a votação.",
-            description: "Por favor, tente novamente.",
-            status: "error",
-            duration: 9000,
-            isClosable: true,
-        })
     })};
 
     const onVotoNao = () => {
-        votarEmPautaService(pauta.id, "NAO", setAutenticado, setAdmin, navigate).then(() => {
+        votarEmPautaService(pauta.id, "NAO").then(() => {
                 toast({
                     title: "Voto realizado com sucesso.",
                     description: "Obrigado por sua votação.",
@@ -47,14 +37,6 @@ const PautaAbertaModal: React.FC<PautaAbertaProps> = ({pauta, isOpen, onClose, s
                     isClosable: true,
                 });
             onClose();
-        }).catch(() => {
-            toast({
-                title: "Não foi possível realizar a votação.",
-                description: "Por favor, tente novamente.",
-                status: "error",
-                duration: 9000,
-                isClosable: true,
-            })
         })};
 
     return(

@@ -9,8 +9,6 @@ interface PautaFinalizadaProps {
     onClose: () => void;
 }
 
-
-
 const PautaFinalizadaModal: React.FC<PautaFinalizadaProps> = ({pauta, isOpen, onClose}) => {
     return(
         <Modal isOpen={isOpen} onClose={onClose}>
