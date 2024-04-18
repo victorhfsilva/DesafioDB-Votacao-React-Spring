@@ -50,7 +50,7 @@ Para fazer o primeiro acesso a aplicação e registrar novos usuários pode-se u
 - React Testing Library
 - Vite
 
-## Variáveis de Ambiente
+## Configurações
 
 Para reproduzir as configurações locais do back-end pode-se editar o arquivo .env dentro da pasta `dbpautas-back-end` com as seguintes variáveis de ambiente:
 
@@ -72,3 +72,7 @@ Lembre-se de criar o banco de dados de teste previamente e substituir as configu
 ## Débitos Técnicos
 
 - Configurar a responsividade das páginas.
+
+## Bugs
+
+- Quando o front-end é executado sobre uma imagem do Nginx definida no Dockerfile do front-end, as pautas não são carregadas automaticamente ao navegar para suas respectivas páginas. É necessário antes selecionar uma categoria e só então as pautas serão carregadas. Executando localmente o erro não ocorre. 
