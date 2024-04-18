@@ -1,17 +1,12 @@
-import { Button, Flex, Heading, Input, Select, useToast } from '@chakra-ui/react';
+import { Button, Flex, Heading, Input, Select, Text} from '@chakra-ui/react';
 import RegistrarUsuarioRequisicaoModel from '../../models/RegistrarUsuarioRequisicaoModel';
 import { useState } from 'react';
-import useAuthStore from '../../hooks/useAuthStore';
 import { useNavigate } from 'react-router-dom';
 import registrarUsuarioService from '../../services/registrarUsuario.service';
-import axios from 'axios';
 
 
 const RegistrarUsuarioForm = () => {
     
-    const toast = useToast();
-    
-    const { setAutenticado, setAdmin } = useAuthStore();
 
     const navigate = useNavigate();
 
@@ -39,26 +34,8 @@ const RegistrarUsuarioForm = () => {
     
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        registrarUsuarioService(registrarUsuarioForm, setAutenticado, setAdmin, navigate).then((data) => {
+        registrarUsuarioService(registrarUsuarioForm).then((data) => {
             if (data) navigate('/');
-        }).catch((error) => {
-            if (axios.isAxiosError(error) && error.response && error.response.status === 400){
-                toast({
-                    title: "Não foi possível registrar o usuário.",
-                    description: "Campos inválidos, verifique os dados informados.",
-                    status: "error",
-                    duration: 9000,
-                    isClosable: true,
-                });
-            } else {
-                toast({
-                    title: "Não foi possível registrar o usuário.",
-                    description: "Por favor, tente novamente",
-                    status: "error",
-                    duration: 9000,
-                    isClosable: true,
-                });
-            }
         });
     }
 
@@ -67,7 +44,7 @@ const RegistrarUsuarioForm = () => {
             <form onSubmit={handleSubmit}>
                 <Flex 
                     background={'cinza1'} 
-                    height={'31em'}
+                    height={'35em'}
                     width={'24em'} 
                     align={'center'} 
                     margin={'4vw'} 
@@ -152,6 +129,12 @@ const RegistrarUsuarioForm = () => {
                                 <option value='USUARIO'>Usuário</option>
                                 <option value='ADMIN'>Administrador</option>
                         </Select>
+                        <Text color={'cinza4'} 
+                            fontFamily={'Poppins'} 
+                            padding={'0.8em 0em 0em 0em'}
+                            fontSize={'0.6em'}>
+                            A senha deve conter um número, uma letra maiúscula, uma letra minúscula, um caractere especial e no mínimo 8 dígitos.
+                        </Text>
                     </Flex>
                     
                     <Flex width={'100%'} direction={'column'} align={'flex-end'} paddingRight={'3vw'}>

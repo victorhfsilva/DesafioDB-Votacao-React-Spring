@@ -8,12 +8,10 @@ interface PautaFechadaProps {
     pauta: PautaEmAndamentoRespostaModel;
     isOpen: boolean;
     onClose: () => void;
-    setAutenticado: (isAutenticado: boolean) => void;
-    setAdmin: (isAdmin: boolean) => void;
     navigate: (path: string) => void;
 }
 
-const PautaFechadaModal: React.FC<PautaFechadaProps> = ({pauta, isOpen, onClose, setAutenticado, setAdmin, navigate}) => {
+const PautaFechadaModal: React.FC<PautaFechadaProps> = ({pauta, isOpen, onClose, navigate}) => {
 
     const toast = useToast();
 
@@ -24,7 +22,7 @@ const PautaFechadaModal: React.FC<PautaFechadaProps> = ({pauta, isOpen, onClose,
     };
 
     const onAbrir = () => {
-    abrirPautaService(pauta.id, minutos, setAutenticado, setAdmin, navigate).then(() => {
+    abrirPautaService(pauta.id, minutos).then(() => {
             toast({
                 title: "Pauta aberta com sucesso.",
                 description: "A pauta está aberta para votação.",
@@ -34,14 +32,6 @@ const PautaFechadaModal: React.FC<PautaFechadaProps> = ({pauta, isOpen, onClose,
             });
         onClose();
         navigate("/");
-    }).catch(() => {
-        toast({
-            title: "Não foi possível abrir a pauta.",
-            description: "Por favor, tente novamente.",
-            status: "error",
-            duration: 9000,
-            isClosable: true,
-        })
     })};
 
     return(
@@ -91,7 +81,6 @@ const PautaFechadaModal: React.FC<PautaFechadaProps> = ({pauta, isOpen, onClose,
             </ModalContent>
         </Modal>
     )
-
 }
 
 export default PautaFechadaModal;

@@ -21,10 +21,8 @@ public class SenhaValidator implements ConstraintValidator<ValidPassword, String
                 new CharacterRule(EnglishCharacterData.UpperCase, 1),
                 new CharacterRule(EnglishCharacterData.LowerCase, 1),
                 new CharacterRule(EnglishCharacterData.Digit, 1),
-                new CharacterRule(EnglishCharacterData.Special, 1),
-                new IllegalSequenceRule(EnglishSequenceData.Alphabetical, 3, false),
-                new IllegalSequenceRule(EnglishSequenceData.Numerical, 3, false),
-                new WhitespaceRule()));
+                new CharacterRule(EnglishCharacterData.Special, 1)
+        ));
 
         RuleResult result = validator.validate(new PasswordData(password));
         if (result.isValid()) {

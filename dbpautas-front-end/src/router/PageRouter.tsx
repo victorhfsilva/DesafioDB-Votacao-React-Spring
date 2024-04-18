@@ -9,10 +9,12 @@ import PautasFinalizadas from "../pages/PautasFinalizadas";
 import RegistrarUsuario from "../pages/RegistrarUsuario";
 import UsuarioRoute from "./UsuarioRoute";
 import AdminRoute from "./AdminRoute";
+import { AxiosInterceptor } from "../libs/api";
 
 const PageRouter = () => {
     return (
         <BrowserRouter>
+            <AxiosInterceptor>
             <Header/>
             <Routes>
                 <Route path="/login" element={<Login />} />
@@ -43,9 +45,8 @@ const PageRouter = () => {
                         <RegistrarUsuario />
                     </AdminRoute>
                 } />
-
-
             </Routes>
+            </AxiosInterceptor>
         </BrowserRouter>
     )
 }

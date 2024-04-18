@@ -6,9 +6,6 @@ import defaultTheme from "../../../themes/default"
 import obterPautasFinalizadasService from "../../../services/obterPautasFinalizadas.service";
 import '@testing-library/jest-dom';
 
-const mockSetAutenticado = jest.fn();
-const mockSetAdmin = jest.fn();
-
 const pautaFinalizadaResposta: PautaFinalizadaRespostaModel[] = [{
             id: 1,
             titulo: "Titulo 1",
@@ -20,26 +17,12 @@ const pautaFinalizadaResposta: PautaFinalizadaRespostaModel[] = [{
             decisao: "APROVADO"
         }];
 
-jest.mock('../../../hooks/useAuthStore', () => ({
-    __esModule: true,
-    default: () => ({
-      setAutenticado: mockSetAutenticado,
-      setAdmin: mockSetAdmin,
-    }),
-}));
-
 jest.mock('../../../services/obterPautasFinalizadas.service', () => {
     return jest.fn().mockResolvedValue(pautaFinalizadaResposta)
 });
 
-const mockNavigate = jest.fn();
 
-jest.mock('react-router-dom', () => ({
-    ...jest.requireActual('react-router-dom'),
-    useNavigate: () => mockNavigate,
-}));
-
-describe("Teste de obtenção de pautas finalizadas", () => {
+describe("Teste da página de pautas finalizadas", () => {
     it('deveria carregar pautas finalizadas com sucesso', async (): Promise<void> => {
         render(
             <ChakraProvider theme={defaultTheme}>
@@ -47,7 +30,7 @@ describe("Teste de obtenção de pautas finalizadas", () => {
             </ChakraProvider>
         );
     
-        await waitFor(() => expect(obterPautasFinalizadasService).toHaveBeenCalledWith("", mockSetAutenticado, mockSetAdmin, mockNavigate))
+        await waitFor(() => expect(obterPautasFinalizadasService).toHaveBeenCalledWith(""))
     
         const titulos = screen.queryAllByText('Titulo 1');
         expect(titulos[0]).toBeInTheDocument();
@@ -66,14 +49,14 @@ describe("Teste de obtenção de pautas finalizadas", () => {
             </ChakraProvider>
         );
     
-        await waitFor(() => expect(obterPautasFinalizadasService).toHaveBeenCalledWith("", mockSetAutenticado, mockSetAdmin, mockNavigate))
+        await waitFor(() => expect(obterPautasFinalizadasService).toHaveBeenCalledWith(""))
     
         const botaoSobre = screen.queryAllByText('Sobre');
         expect(botaoSobre[0]).toBeInTheDocument();
         fireEvent.click(botaoSobre[0]);
 
-        const descricao = screen.queryAllByText('Descricao 1');
-        expect(descricao[0]).toBeInTheDocument();
+        const botaoClose = screen.queryAllByText('Close');
+        expect(botaoClose[0]).toBeInTheDocument();
     
     });
 })

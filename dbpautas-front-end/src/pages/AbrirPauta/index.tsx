@@ -1,5 +1,4 @@
-import { Grid, Tab, TabList, TabPanel, TabPanels, Tabs, useToast } from "@chakra-ui/react";
-import useAuthStore from "../../hooks/useAuthStore";
+import { Grid, Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import PautaEmAndamentoRespostaModel from "../../models/PautaEmAndamentoRespostaModel";
@@ -9,28 +8,16 @@ import obterPautasFechadasService from "../../services/obterPautasFechadas.servi
 
 
 const AbrirPautas = () => {
-    const toast = useToast();
-    const { setAutenticado, setAdmin } = useAuthStore();
     const navigate = useNavigate();
     const [tabAtiva, setTabAtiva] = useState(0);
     const [pautas, setPautas] = useState<PautaEmAndamentoRespostaModel[]>([]);
 
     useEffect(() => {
         const categoria = CategoriasMappper[tabAtiva];
-        obterPautasFechadasService(categoria.type, setAutenticado, setAdmin, navigate)
+        obterPautasFechadasService(categoria.type)
             .then((data) => {
                 setPautas(data);
             })
-            .catch(() => {
-                setPautas([]);
-                toast({
-                    title: "Não foi possível carregar as pautas.",
-                    description: "Por favor, tente novamente",
-                    status: "error",
-                    duration: 9000,
-                    isClosable: true,
-                });
-            });
     }, [tabAtiva]); 
 
     return (
@@ -47,8 +34,6 @@ const AbrirPautas = () => {
                             {pautas.map((pauta, idx) => (
                                 <PautaFechada key={idx}     
                                     pauta={pauta} 
-                                    setAutenticado={setAutenticado} 
-                                    setAdmin={setAdmin} 
                                     navigate={navigate}  />
                             ))}
                         </Grid>

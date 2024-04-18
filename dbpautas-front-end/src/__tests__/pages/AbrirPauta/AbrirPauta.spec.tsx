@@ -7,9 +7,6 @@ import obterPautasFechadasService from "../../../services/obterPautasFechadas.se
 import abrirPautaService from "../../../services/abrirPauta.service";
 import AbrirPautas from "../../../pages/AbrirPauta";
 
-const mockSetAutenticado = jest.fn();
-const mockSetAdmin = jest.fn();
-
 const pautaEmAndamentoResposta: PautaEmAndamentoRespostaModel[] = [{
         id: 1,
         titulo: "Titulo 1",
@@ -17,14 +14,6 @@ const pautaEmAndamentoResposta: PautaEmAndamentoRespostaModel[] = [{
         descricao: "Descricao 1",
         categoria: "FINANCAS"
     }];
-
-jest.mock('../../../hooks/useAuthStore', () => ({
-    __esModule: true,
-    default: () => ({
-      setAutenticado: mockSetAutenticado,
-      setAdmin: mockSetAdmin,
-    }),
-}));
 
 jest.mock('../../../services/obterPautasFechadas.service', () => {
     return jest.fn().mockResolvedValue(pautaEmAndamentoResposta)
@@ -41,7 +30,7 @@ jest.mock('react-router-dom', () => ({
     useNavigate: () => mockNavigate,
 }));
 
-describe('Testes de obtenção de pautas fechadas', () => {
+describe('Testes da página de abrir pautas', () => {
 
     it('deveria carregar pautas fechadas com sucesso', async (): Promise<void> => {
         render(
@@ -50,7 +39,7 @@ describe('Testes de obtenção de pautas fechadas', () => {
             </ChakraProvider>
         );
     
-        await waitFor(() => expect(obterPautasFechadasService).toHaveBeenCalledWith("", mockSetAutenticado, mockSetAdmin, mockNavigate))
+        await waitFor(() => expect(obterPautasFechadasService).toHaveBeenCalledWith(""))
     
         const titulos = screen.queryAllByText('Titulo 1');
         expect(titulos[0]).toBeInTheDocument();
@@ -66,7 +55,7 @@ describe('Testes de obtenção de pautas fechadas', () => {
             </ChakraProvider>
         );
     
-        await waitFor(() => expect(obterPautasFechadasService).toHaveBeenCalledWith("", mockSetAutenticado, mockSetAdmin, mockNavigate))
+        await waitFor(() => expect(obterPautasFechadasService).toHaveBeenCalledWith(""))
     
         const botaoSobre = screen.queryAllByText('Sobre');
         expect(botaoSobre[0]).toBeInTheDocument();
@@ -76,7 +65,8 @@ describe('Testes de obtenção de pautas fechadas', () => {
         expect(botaoAbrir).toBeInTheDocument();
         if (botaoAbrir) fireEvent.click(botaoAbrir);
         
-        await waitFor(() => expect(abrirPautaService).toHaveBeenCalledWith(1, 1, mockSetAutenticado, mockSetAdmin, mockNavigate))
+        await waitFor(() => expect(abrirPautaService).toHaveBeenCalledWith(1, 1))
+        await waitFor(() => expect(mockNavigate).toHaveBeenCalledWith('/'));
 
     });
 

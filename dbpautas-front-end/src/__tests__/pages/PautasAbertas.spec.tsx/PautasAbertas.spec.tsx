@@ -7,8 +7,6 @@ import defaultTheme from "../../../themes/default"
 import obterPautasAbertasService from "../../../services/obterPautasAbertas.service";
 import votarEmPautaService from "../../../services/votarEmPauta.service";
 
-const mockSetAutenticado = jest.fn();
-const mockSetAdmin = jest.fn();
 
 const pautaEmAndamentoResposta: PautaEmAndamentoRespostaModel[] = [{
         id: 1,
@@ -18,13 +16,12 @@ const pautaEmAndamentoResposta: PautaEmAndamentoRespostaModel[] = [{
         categoria: "FINANCAS"
     }];
 
-jest.mock('../../../hooks/useAuthStore', () => ({
-    __esModule: true,
-    default: () => ({
-      setAutenticado: mockSetAutenticado,
-      setAdmin: mockSetAdmin,
-    }),
-}));
+const mockNavigate = jest.fn();
+
+jest.mock('react-router-dom', () => ({
+    ...jest.requireActual('react-router-dom'),
+    useNavigate: () => mockNavigate,
+  }));
 
 jest.mock('../../../services/obterPautasAbertas.service', () => {
     return jest.fn().mockResolvedValue(pautaEmAndamentoResposta)
@@ -33,13 +30,6 @@ jest.mock('../../../services/obterPautasAbertas.service', () => {
 jest.mock('../../../services/votarEmPauta.service', () => {
     return jest.fn().mockResolvedValue(true)
 });
-
-const mockNavigate = jest.fn();
-
-jest.mock('react-router-dom', () => ({
-    ...jest.requireActual('react-router-dom'),
-    useNavigate: () => mockNavigate,
-}));
 
 describe('Testes de obtenção de pautas abertas', () => {
 
@@ -50,7 +40,7 @@ describe('Testes de obtenção de pautas abertas', () => {
             </ChakraProvider>
         );
     
-        await waitFor(() => expect(obterPautasAbertasService).toHaveBeenCalledWith("", mockSetAutenticado, mockSetAdmin, mockNavigate))
+        await waitFor(() => expect(obterPautasAbertasService).toHaveBeenCalledWith(""))
     
         const titulos = screen.queryAllByText('Titulo 1');
         expect(titulos[0]).toBeInTheDocument();
@@ -66,7 +56,7 @@ describe('Testes de obtenção de pautas abertas', () => {
             </ChakraProvider>
         );
     
-        await waitFor(() => expect(obterPautasAbertasService).toHaveBeenCalledWith("", mockSetAutenticado, mockSetAdmin, mockNavigate))
+        await waitFor(() => expect(obterPautasAbertasService).toHaveBeenCalledWith(""))
     
         const botaoSobre = screen.queryAllByText('Sobre');
         expect(botaoSobre[0]).toBeInTheDocument();
@@ -76,7 +66,8 @@ describe('Testes de obtenção de pautas abertas', () => {
         expect(botaoSim).toBeInTheDocument();
         if (botaoSim) fireEvent.click(botaoSim);
         
-        await waitFor(() => expect(votarEmPautaService).toHaveBeenCalledWith(1, "SIM", mockSetAutenticado, mockSetAdmin, mockNavigate))
+        await waitFor(() => expect(votarEmPautaService).toHaveBeenCalledWith(1, "SIM"))
+        await waitFor(() => expect(mockNavigate).toHaveBeenCalledWith('/'));
 
     });
 
@@ -88,7 +79,7 @@ describe('Testes de obtenção de pautas abertas', () => {
             </ChakraProvider>
         );
     
-        await waitFor(() => expect(obterPautasAbertasService).toHaveBeenCalledWith("", mockSetAutenticado, mockSetAdmin, mockNavigate))
+        await waitFor(() => expect(obterPautasAbertasService).toHaveBeenCalledWith(""))
     
         const botaoSobre = screen.queryAllByText('Sobre');
         expect(botaoSobre[0]).toBeInTheDocument();
@@ -98,7 +89,8 @@ describe('Testes de obtenção de pautas abertas', () => {
         expect(botaoNao).toBeInTheDocument();
         if (botaoNao) fireEvent.click(botaoNao);
         
-        await waitFor(() => expect(votarEmPautaService).toHaveBeenCalledWith(1, "NAO", mockSetAutenticado, mockSetAdmin, mockNavigate))
+        await waitFor(() => expect(votarEmPautaService).toHaveBeenCalledWith(1, "NAO"))
+        await waitFor(() => expect(mockNavigate).toHaveBeenCalledWith('/'));
 
     });
 });

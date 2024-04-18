@@ -2,7 +2,7 @@ package com.db.dbpautasbackend.service;
 
 import com.db.dbpautasbackend.exception.PautaAbertaException;
 import com.db.dbpautasbackend.exception.PautaFechadaException;
-import com.db.dbpautasbackend.exception.SessaoFinalizadaException;
+import com.db.dbpautasbackend.exception.PautaFinalizadaException;
 import com.db.dbpautasbackend.exception.VotoInvalidoException;
 import com.db.dbpautasbackend.fixture.PautaFixture;
 import com.db.dbpautasbackend.fixture.UsuarioFixture;
@@ -64,7 +64,7 @@ class ValidacaoPautaServiceImplTest {
     @DisplayName("Dado uma pauta finalizada, quando validada, deve lançar exceção.")
     void validarPautaFinalizadaTest() {
         Pauta pautaFinalizada = PautaFixture.builderDePautaFinalizada();
-        assertThrows(SessaoFinalizadaException.class, () ->
+        assertThrows(PautaFinalizadaException.class, () ->
                 validacaoPautaService.validaPautaFinalizada(pautaFinalizada)
         );
     }

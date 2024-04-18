@@ -10,6 +10,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @AllArgsConstructor
 @NoArgsConstructor
 @ResponseStatus(HttpStatus.CONFLICT)
-public class SessaoFinalizadaException extends RuntimeException{
+public class PautaFinalizadaException extends RuntimeException{
     private String mensagem;
 }
