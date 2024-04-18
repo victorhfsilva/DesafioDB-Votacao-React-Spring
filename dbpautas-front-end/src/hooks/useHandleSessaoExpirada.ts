@@ -10,7 +10,7 @@ function useHandleSessaoExpirada() {
     const handleExcecao = useHandleExcecao();
 
     return function handleSessaoExpirada() {
-        handleExcecao("Sua sessão expirou", "Por favor, faça login novamente.");
+        handleExcecao("Falha de autenticação", "Por favor, faça login novamente.");
         logoutService(setAutenticado, setAdmin, () => navigate('/login'));
     }
 }
