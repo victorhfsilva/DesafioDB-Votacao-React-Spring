@@ -67,7 +67,7 @@ A variável `VALIDATION_CPF_ACTIVE` habilita ou desabilita a verificação da re
 
 O token utilizado nesta API é um token de teste que sempre retorna cpf irregular. Para utilizá-lo em produção favor substituir o token da api por um válido em `CpfCnpjClient`.
 
-Lembre-se de criar o banco de dados de teste previamente e substituir as configurações entre chaves pelas específicas ao seu ambiente de desenvolvimento.
+Lembre-se de criar o banco de dados de desenvolvimento previamente e substituir as configurações entre chaves pelas específicas ao seu ambiente de desenvolvimento.
 
 ## Débitos Técnicos
 
