@@ -11,14 +11,6 @@ const PautasFinalizadas = () => {
     const [pautas, setPautas] = useState<PautaFinalizadaRespostaModel[]>([]);
 
     useEffect(() => {
-        const categoria = CategoriasMappper[0];
-        obterPautasFinalizadasService(categoria.type)
-            .then((data) => {
-                setPautas(data);
-            });
-    }, []);
-
-    useEffect(() => {
         const categoria = CategoriasMappper[tabAtiva];
         obterPautasFinalizadasService(categoria.type)
             .then((data) => {

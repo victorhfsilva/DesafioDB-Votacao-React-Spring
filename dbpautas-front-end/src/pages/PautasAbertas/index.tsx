@@ -12,14 +12,6 @@ const PautasAbertas = () => {
     const [pautas, setPautas] = useState<PautaEmAndamentoRespostaModel[]>([]);
 
     useEffect(() => {
-        const categoria = CategoriasMappper[0];
-        obterPautasAbertasService(categoria.type)
-            .then((data) => {
-                setPautas(data);
-            });
-    }, []);
-
-    useEffect(() => {
         const categoria = CategoriasMappper[tabAtiva];
         obterPautasAbertasService(categoria.type)
             .then((data) => {
