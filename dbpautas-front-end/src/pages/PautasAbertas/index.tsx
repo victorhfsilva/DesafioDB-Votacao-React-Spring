@@ -12,6 +12,14 @@ const PautasAbertas = () => {
     const [pautas, setPautas] = useState<PautaEmAndamentoRespostaModel[]>([]);
 
     useEffect(() => {
+        const categoria = CategoriasMappper[0];
+        obterPautasAbertasService(categoria.type)
+            .then((data) => {
+                setPautas(data);
+            });
+    }, []);
+
+    useEffect(() => {
         const categoria = CategoriasMappper[tabAtiva];
         obterPautasAbertasService(categoria.type)
             .then((data) => {
@@ -27,7 +35,7 @@ const PautasAbertas = () => {
                     ))}
                 </TabList>
                 <TabPanels>
-                    {CategoriasMappper.map((item, index) => (
+                    {CategoriasMappper.map((_item, index) => (
                         <TabPanel key={index}>
                             <Grid templateColumns='repeat(3, 1fr)'>
                                 {pautas.map((pauta, idx) => (

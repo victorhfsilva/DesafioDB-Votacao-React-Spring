@@ -1,0 +1,42 @@
+version: '2.4'
+
+services:
+  dbpautas-front-end:
+    build:
+      dockerfile: ./Dockerfile
+      context: ./dbpautas-front-end
+    image: victorhfsilva/dppautas-front-end
+    ports: 
+      - "5173:80"
+    networks:
+      - dbpautas-network 
+
+  dbpautas-db:
+    image: postgres
+    environment:
+        - POSTGRES_USER=${POSTGRES_USER}
+        - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+        - POSTGRES_DB=${POSTGRES_DEV_DB}
+    ports:
+      - "5433:5432"
+    restart: always
+    networks:
+      - dbpautas-network 
+    
+  dbpautas-back-end:
+    build:
+      dockerfile: ./Dockerfile
+      context: ./dbpautas-back-end
+    image: victorhfsilva/dbpautas-back-end
+    ports:
+      - "8080:8080"
+    env_file:
+      - ./dbpautas-back-end/.env
+    depends_on:
+      - dbpautas-db
+    networks:
+      - dbpautas-network 
+
+networks:
+  dbpautas-network:
+    driver: bridge

@@ -11,6 +11,14 @@ const PautasFinalizadas = () => {
     const [pautas, setPautas] = useState<PautaFinalizadaRespostaModel[]>([]);
 
     useEffect(() => {
+        const categoria = CategoriasMappper[0];
+        obterPautasFinalizadasService(categoria.type)
+            .then((data) => {
+                setPautas(data);
+            });
+    }, []);
+
+    useEffect(() => {
         const categoria = CategoriasMappper[tabAtiva];
         obterPautasFinalizadasService(categoria.type)
             .then((data) => {
@@ -26,7 +34,7 @@ const PautasFinalizadas = () => {
                 ))}
             </TabList>
             <TabPanels>
-                {CategoriasMappper.map((item, index) => (
+                {CategoriasMappper.map((_item, index) => (
                     <TabPanel key={index}>
                         <Grid templateColumns='repeat(3, 1fr)'>
                             {pautas.map((pauta, idx) => (

@@ -4,8 +4,6 @@ import com.db.dbpautasbackend.client.CpfCnpjClient;
 import com.db.dbpautasbackend.dto.CpfDTO;
 import com.db.dbpautasbackend.enums.Situacao;
 import com.db.dbpautasbackend.exception.CpfIrregularException;
-import com.db.dbpautasbackend.fixture.PautaFixture;
-import com.db.dbpautasbackend.model.Pauta;
 import com.db.dbpautasbackend.service.impl.ValidacaoUsuarioServiceImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

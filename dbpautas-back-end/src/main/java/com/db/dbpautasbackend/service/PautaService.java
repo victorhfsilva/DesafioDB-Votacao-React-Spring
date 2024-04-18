@@ -3,8 +3,6 @@ package com.db.dbpautasbackend.service;
 import com.db.dbpautasbackend.enums.Categoria;
 import com.db.dbpautasbackend.enums.Voto;
 import com.db.dbpautasbackend.model.Pauta;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
