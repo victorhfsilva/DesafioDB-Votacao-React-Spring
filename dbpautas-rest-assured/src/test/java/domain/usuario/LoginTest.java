@@ -32,4 +32,22 @@ public class LoginTest {
                 .and().assertThat().body("token", org.hamcrest.Matchers.notNullValue())
                 .and().assertThat().body("papel", org.hamcrest.Matchers.equalTo("ADMIN"));
     }
+
+    @Test
+    @DisplayName("Dado um cpf válido e senha errada, quando o usuário tenta logar, então o sistema deve retornar status 403.")
+    void testSenhaErradaLogin() {
+        Login login = Login.builder().cpf("admin").senha("senha errada").build();
+        request.body(login)
+                .when().post()
+                .then().statusCode(403);
+    }
+
+    @Test
+    @DisplayName("Dado um cpf não cadastrado, quando o usuário tenta logar, então o sistema deve retornar status 404.")
+    void testCpfNaoCadastradoLogin() {
+        Login login = Login.builder().cpf("cpf inexistente").senha("senha").build();
+        request.body(login)
+                .when().post()
+                .then().statusCode(404);
+    }
 }
