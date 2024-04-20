@@ -1,5 +1,6 @@
 package domain.usuario;
 
+import fixture.usuario.LoginFixture;
 import io.restassured.RestAssured;
 import io.restassured.specification.RequestSpecification;
 import org.example.domain.usuario.Login;
@@ -25,7 +26,7 @@ public class LoginTest {
     @Test
     @DisplayName("Dado um cpf e senha válidos, quando o usuário tenta logar, então o sistema deve retornar status 200, o token e o papel do usuário.")
     void testFelizLogin() {
-        Login login = Login.builder().cpf("admin").senha("admin").build();
+        Login login = LoginFixture.builderValido();
         request.body(login)
                 .when().post()
                 .then().statusCode(200)
@@ -36,7 +37,7 @@ public class LoginTest {
     @Test
     @DisplayName("Dado um cpf válido e senha errada, quando o usuário tenta logar, então o sistema deve retornar status 403.")
     void testSenhaErradaLogin() {
-        Login login = Login.builder().cpf("admin").senha("senha errada").build();
+        Login login = LoginFixture.builderSenhaErrada();
         request.body(login)
                 .when().post()
                 .then().statusCode(403);
@@ -45,7 +46,7 @@ public class LoginTest {
     @Test
     @DisplayName("Dado um cpf não cadastrado, quando o usuário tenta logar, então o sistema deve retornar status 404.")
     void testCpfNaoCadastradoLogin() {
-        Login login = Login.builder().cpf("cpf inexistente").senha("senha").build();
+        Login login = LoginFixture.builderCpfInexistente();
         request.body(login)
                 .when().post()
                 .then().statusCode(404);
