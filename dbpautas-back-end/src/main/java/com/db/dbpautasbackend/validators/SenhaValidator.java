@@ -16,6 +16,10 @@ public class SenhaValidator implements ConstraintValidator<ValidPassword, String
 
     @Override
     public boolean isValid(String password, ConstraintValidatorContext context) {
+        if (password == null) {
+            return false;
+        }
+
         PasswordValidator validator = new PasswordValidator(Arrays.asList(
                 new LengthRule(8, 30),
                 new CharacterRule(EnglishCharacterData.UpperCase, 1),

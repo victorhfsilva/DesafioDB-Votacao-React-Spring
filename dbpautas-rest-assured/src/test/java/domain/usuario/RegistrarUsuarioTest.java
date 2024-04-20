@@ -12,10 +12,8 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-
 import java.nio.charset.StandardCharsets;
 import java.util.stream.Stream;
-
 import static org.hamcrest.Matchers.equalTo;
 
 public class RegistrarUsuarioTest {
@@ -79,7 +77,7 @@ public class RegistrarUsuarioTest {
                 Arguments.of(AdminFixture.builderEmailNulo(), "O campo email é inválido."),
                 Arguments.of(AdminFixture.builderSenhaFraca(), "O campo senha é inválido."),
                 Arguments.of(AdminFixture.builderSenhaNula(), "O campo senha é inválido."),
-                Arguments.of(AdminFixture.builderPapelInvalido(), "O campo papel é inválido."),
+                Arguments.of(AdminFixture.builderPapelInvalido(), "Ocorreu um erro ao converter sua mensagem."),
                 Arguments.of(AdminFixture.builderPapelNulo(), "O campo papel é inválido."),
 
                 Arguments.of(UsuarioFixture.builderNomeInvalido(), "O campo nome é inválido."),

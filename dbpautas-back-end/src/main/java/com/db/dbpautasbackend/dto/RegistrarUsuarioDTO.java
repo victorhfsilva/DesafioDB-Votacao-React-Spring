@@ -16,10 +16,13 @@ public record RegistrarUsuarioDTO(
         String sobrenome,
         @Email
         @Size(max = 100)
+        @NotNull
         String email,
         @CPF
+        @NotNull
         String cpf,
         @ValidPassword
+        @NotNull
         String senha,
         @NotNull
         Papel papel) {

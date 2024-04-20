@@ -3,6 +3,7 @@ package com.db.dbpautasbackend.advicer;
 import com.db.dbpautasbackend.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -31,6 +32,12 @@ public class ExceptionHandlerAdvice {
     @ExceptionHandler(VotoInvalidoException.class)
     public ResponseEntity<String> handleVotoInvalidoException(VotoInvalidoException ex) {
         return ResponseEntity.badRequest().body("Você já votou nesta pauta.");
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<String> handleHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
+        return ResponseEntity.badRequest().body("Ocorreu um erro ao converter sua mensagem.");
     }
 
     @ResponseStatus(HttpStatus.CONFLICT)
