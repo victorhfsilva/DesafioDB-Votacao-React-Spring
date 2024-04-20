@@ -29,18 +29,6 @@ public class CadastrarPautaTest {
         RestAssured.baseURI = "http://localhost:8080/";
     }
 
-    public static Stream<Arguments> pautaBuilders() {
-        return Stream.of(
-                Arguments.of(PautaFixture.builderTituloInvalido()),
-                Arguments.of(PautaFixture.builderTituloNulo()),
-                Arguments.of(PautaFixture.builderResumoInvalido()),
-                Arguments.of(PautaFixture.builderResumoNulo()),
-                Arguments.of(PautaFixture.builderDescricaoInvalida()),
-                Arguments.of(PautaFixture.builderDescricaoNula()),
-                Arguments.of(PautaFixture.builderCategoriaInvalida()),
-                Arguments.of(PautaFixture.builderCategoriaNula())
-        );
-    }
 
     @BeforeEach
     public void setRequest() {
@@ -67,10 +55,22 @@ public class CadastrarPautaTest {
     @ParameterizedTest
     @MethodSource("pautaBuilders")
     @DisplayName("Dada uma pauta com campo inválido, quando o usuário tenta cadastrar, então o sistema deve retornar status 400.")
-    public void deveRetornarStatus400QuandoCampoInvalido(Pauta pauta) {
+    void deveRetornarStatus400QuandoCampoInvalido(Pauta pauta) {
         request.body(pauta)
                 .post("/pauta/registrar")
                 .then().statusCode(400);
     }
 
+    public static Stream<Arguments> pautaBuilders() {
+        return Stream.of(
+                Arguments.of(PautaFixture.builderTituloInvalido()),
+                Arguments.of(PautaFixture.builderTituloNulo()),
+                Arguments.of(PautaFixture.builderResumoInvalido()),
+                Arguments.of(PautaFixture.builderResumoNulo()),
+                Arguments.of(PautaFixture.builderDescricaoInvalida()),
+                Arguments.of(PautaFixture.builderDescricaoNula()),
+                Arguments.of(PautaFixture.builderCategoriaInvalida()),
+                Arguments.of(PautaFixture.builderCategoriaNula())
+        );
+    }
 }
