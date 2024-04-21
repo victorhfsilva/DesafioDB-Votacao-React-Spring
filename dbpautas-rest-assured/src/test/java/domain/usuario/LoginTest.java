@@ -3,7 +3,7 @@ package domain.usuario;
 import fixture.usuario.LoginFixture;
 import io.restassured.RestAssured;
 import io.restassured.specification.RequestSpecification;
-import org.example.domain.usuario.Login;
+import org.example.domain.usuario.LoginRequisicao;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -26,7 +26,7 @@ public class LoginTest {
     @Test
     @DisplayName("Dado um cpf e senha válidos, quando o usuário tenta logar, então o sistema deve retornar status 200, o token e o papel do usuário.")
     void testFelizLogin() {
-        Login login = LoginFixture.builderValido();
+        LoginRequisicao login = LoginFixture.builderValido();
         request.body(login)
                 .when().post()
                 .then().statusCode(200)
@@ -37,7 +37,7 @@ public class LoginTest {
     @Test
     @DisplayName("Dado um cpf válido e senha errada, quando o usuário tenta logar, então o sistema deve retornar status 403.")
     void testSenhaErradaLogin() {
-        Login login = LoginFixture.builderSenhaErrada();
+        LoginRequisicao login = LoginFixture.builderSenhaErrada();
         request.body(login)
                 .when().post()
                 .then().statusCode(403);
@@ -46,7 +46,7 @@ public class LoginTest {
     @Test
     @DisplayName("Dado um cpf não cadastrado, quando o usuário tenta logar, então o sistema deve retornar status 404.")
     void testCpfNaoCadastradoLogin() {
-        Login login = LoginFixture.builderCpfInexistente();
+        LoginRequisicao login = LoginFixture.builderCpfInexistente();
         request.body(login)
                 .when().post()
                 .then().statusCode(404);

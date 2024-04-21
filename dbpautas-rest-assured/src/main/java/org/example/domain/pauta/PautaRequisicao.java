@@ -9,9 +9,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class Pauta {
-    String titulo;
-    String resumo;
-    String descricao;
-    String categoria;
+public class PautaRequisicao {
+    private String titulo;
+    private String resumo;
+    private String descricao;
+    private String categoria;
 }

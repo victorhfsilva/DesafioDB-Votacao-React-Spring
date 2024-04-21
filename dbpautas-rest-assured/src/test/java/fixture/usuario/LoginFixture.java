@@ -1,23 +1,23 @@
 package fixture.usuario;
 
-import org.example.domain.usuario.Login;
+import org.example.domain.usuario.LoginRequisicao;
 
 public interface LoginFixture {
 
-    static Login builderValido() {
+    static LoginRequisicao builderValido() {
         return builder().build();
     }
 
-    static Login builderCpfInexistente() {
+    static LoginRequisicao builderCpfInexistente() {
         return builder().cpf("cpf inexistent").build();
     }
 
-    static Login builderSenhaErrada() {
+    static LoginRequisicao builderSenhaErrada() {
         return builder().senha("senha errada").build();
     }
 
-    private static Login.LoginBuilder builder() {
-        return Login.builder()
+    private static LoginRequisicao.LoginRequisicaoBuilder builder() {
+        return LoginRequisicao.builder()
                 .cpf("admin")
                 .senha("admin");
     }

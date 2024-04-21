@@ -1,67 +1,67 @@
 package fixture.usuario;
 
 import com.github.javafaker.Faker;
-import org.example.domain.usuario.Usuario;
+import org.example.domain.usuario.UsuarioRequisicao;
 import org.example.util.GeradorCpf;
 
 public interface AdminFixture {
 
-   static Usuario builderValido() {
+   static UsuarioRequisicao builderValido() {
         return builder().build();
     }
 
-    static Usuario builderNomeInvalido() {
+    static UsuarioRequisicao builderNomeInvalido() {
         return builder().nome("").build();
     }
 
-    static Usuario builderNomeNulo() {
+    static UsuarioRequisicao builderNomeNulo() {
         return builder().nome(null).build();
     }
 
-    static Usuario builderSobrenomeInvalido() {
+    static UsuarioRequisicao builderSobrenomeInvalido() {
         return builder().sobrenome("").build();
     }
 
-    static Usuario builderSobrenomeNulo() {
+    static UsuarioRequisicao builderSobrenomeNulo() {
         return builder().sobrenome(null).build();
     }
 
-    static Usuario builderCpfInvalido() {
+    static UsuarioRequisicao builderCpfInvalido() {
         return builder().cpf("12345678901").build();
     }
 
-    static Usuario builderCpfNulo() {
+    static UsuarioRequisicao builderCpfNulo() {
         return builder().cpf(null).build();
     }
 
-    static Usuario builderEmailInvalido() {
+    static UsuarioRequisicao builderEmailInvalido() {
         return builder().email("emailinvalido").build();
     }
 
-    static Usuario builderEmailNulo() {
+    static UsuarioRequisicao builderEmailNulo() {
         return builder().email(null).build();
     }
 
-    static Usuario builderSenhaFraca() {
+    static UsuarioRequisicao builderSenhaFraca() {
         return builder().senha("senha").build();
     }
 
-    static Usuario builderSenhaNula() {
+    static UsuarioRequisicao builderSenhaNula() {
         return builder().senha(null).build();
     }
 
-    static Usuario builderPapelInvalido() {
+    static UsuarioRequisicao builderPapelInvalido() {
         return builder().papel("PAPEL_INVALIDO").build();
     }
 
-    static Usuario builderPapelNulo() {
+    static UsuarioRequisicao builderPapelNulo() {
         return builder().papel(null).build();
     }
 
-    private static Usuario.UsuarioBuilder builder() {
+    private static UsuarioRequisicao.UsuarioRequisicaoBuilder builder() {
         Faker faker = new Faker();
 
-        return Usuario.builder()
+        return UsuarioRequisicao.builder()
                 .nome(faker.name().firstName())
                 .sobrenome(faker.name().lastName())
                 .cpf(GeradorCpf.cpf())

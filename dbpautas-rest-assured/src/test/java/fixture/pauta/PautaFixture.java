@@ -1,50 +1,50 @@
 package fixture.pauta;
 
 import com.github.javafaker.Faker;
-import org.example.domain.pauta.Pauta;
+import org.example.domain.pauta.PautaRequisicao;
 
 public interface PautaFixture {
 
-    static Pauta builderValido() {
+    static PautaRequisicao builderValido() {
         return builder().build();
     }
 
-    static Pauta builderTituloInvalido() {
+    static PautaRequisicao builderTituloInvalido() {
         return builder().titulo("").build();
     }
 
-    static Pauta builderTituloNulo() {
+    static PautaRequisicao builderTituloNulo() {
         return builder().titulo(null).build();
     }
 
-    static Pauta builderResumoInvalido() {
+    static PautaRequisicao builderResumoInvalido() {
         return builder().resumo("").build();
     }
 
-    static Pauta builderResumoNulo() {
+    static PautaRequisicao builderResumoNulo() {
         return builder().resumo(null).build();
     }
 
-    static Pauta builderDescricaoInvalida() {
+    static PautaRequisicao builderDescricaoInvalida() {
         return builder().descricao("").build();
     }
 
-    static Pauta builderDescricaoNula() {
+    static PautaRequisicao builderDescricaoNula() {
         return builder().descricao(null).build();
     }
 
-    static Pauta builderCategoriaInvalida() {
+    static PautaRequisicao builderCategoriaInvalida() {
         return builder().categoria("CATEGORIA_INVALIDA").build();
     }
 
-    static Pauta builderCategoriaNula() {
+    static PautaRequisicao builderCategoriaNula() {
         return builder().categoria(null).build();
     }
 
-    private static Pauta.PautaBuilder builder() {
+    private static PautaRequisicao.PautaRequisicaoBuilder builder() {
         Faker faker = new Faker();
 
-        return Pauta.builder()
+        return PautaRequisicao.builder()
                 .titulo(faker.lorem().sentence(5))
                 .resumo(faker.lorem().sentence(20))
                 .descricao(faker.lorem().sentence(60))

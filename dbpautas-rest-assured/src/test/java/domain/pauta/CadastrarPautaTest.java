@@ -5,8 +5,8 @@ import fixture.usuario.LoginFixture;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import org.example.domain.pauta.Pauta;
-import org.example.domain.usuario.Login;
+import org.example.domain.pauta.PautaRequisicao;
+import org.example.domain.usuario.LoginRequisicao;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -34,7 +34,7 @@ public class CadastrarPautaTest {
     public void setRequest() {
         request = RestAssured.given().contentType("application/json");
 
-        Login login = LoginFixture.builderValido();
+        LoginRequisicao login = LoginFixture.builderValido();
         Response response = request.body(login).post("/login");
         String token = response.jsonPath().getString("token");
 
@@ -45,7 +45,7 @@ public class CadastrarPautaTest {
     @Test
     @DisplayName("Dado uma pauta válida, quando o usuário tenta cadastrar, então o sistema deve retornar status 201 e true.")
     public void deveCadastrarPautaComSucesso() {
-        Pauta pauta = PautaFixture.builderValido();
+        PautaRequisicao pauta = PautaFixture.builderValido();
         request.body(pauta)
                 .post("/pauta/registrar")
                 .then().statusCode(201)
@@ -55,7 +55,7 @@ public class CadastrarPautaTest {
     @ParameterizedTest
     @MethodSource("pautaBuilders")
     @DisplayName("Dada uma pauta com campo inválido, quando o usuário tenta cadastrar, então o sistema deve retornar status 400.")
-    void deveRetornarStatus400QuandoCampoInvalido(Pauta pauta) {
+    void deveRetornarStatus400QuandoCampoInvalido(PautaRequisicao pauta) {
         request.body(pauta)
                 .post("/pauta/registrar")
                 .then().statusCode(400);

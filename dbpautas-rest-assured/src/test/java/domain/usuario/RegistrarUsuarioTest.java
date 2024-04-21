@@ -6,8 +6,8 @@ import fixture.usuario.UsuarioFixture;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import org.example.domain.usuario.Login;
-import org.example.domain.usuario.Usuario;
+import org.example.domain.usuario.LoginRequisicao;
+import org.example.domain.usuario.UsuarioRequisicao;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -28,7 +28,7 @@ public class RegistrarUsuarioTest {
     void setRequest() {
         request = RestAssured.given().contentType("application/json; charset=UTF-8");
 
-        Login login = LoginFixture.builderValido();
+        LoginRequisicao login = LoginFixture.builderValido();
         Response response = request.body(login).post("/login");
         String token = response.jsonPath().getString("token");
 
@@ -38,7 +38,7 @@ public class RegistrarUsuarioTest {
     @Test
     @DisplayName("Dado um admin válido, quando o usuário tenta cadastrar, então o sistema deve retornar status 201 e true.")
     void deveCadastrarAdminComSucesso(){
-        Usuario admin = AdminFixture.builderValido();
+        UsuarioRequisicao admin = AdminFixture.builderValido();
         request.body(admin)
                 .post("/usuario/registrar")
                 .then().statusCode(201)
@@ -48,7 +48,7 @@ public class RegistrarUsuarioTest {
     @Test
     @DisplayName("Dado um admin válido, quando o usuário tenta cadastrar, então o sistema deve retornar status 201 e true.")
     void deveCadastrarUsuarioComSucesso(){
-        Usuario usuario = UsuarioFixture.builderValido();
+        UsuarioRequisicao usuario = UsuarioFixture.builderValido();
         request.body(usuario)
                 .post("/usuario/registrar")
                 .then().statusCode(201)
@@ -57,7 +57,7 @@ public class RegistrarUsuarioTest {
 
     @ParameterizedTest
     @MethodSource("adminBuilders")
-    void deveRetornarStatus400QuandoCampoInvalido(Usuario admin, String mensagem) {
+    void deveRetornarStatus400QuandoCampoInvalido(UsuarioRequisicao admin, String mensagem) {
         String mensagemEsperada = new String(mensagem.getBytes(), StandardCharsets.UTF_8);
         request.body(admin)
                 .post("/usuario/registrar")
