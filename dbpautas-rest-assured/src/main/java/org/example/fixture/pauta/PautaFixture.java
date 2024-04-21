@@ -1,7 +1,7 @@
-package fixture.pauta;
+package org.example.fixture.pauta;
 
 import com.github.javafaker.Faker;
-import org.example.domain.pauta.PautaRequisicao;
+import org.example.model.pauta.PautaRequisicao;
 
 public interface PautaFixture {
 

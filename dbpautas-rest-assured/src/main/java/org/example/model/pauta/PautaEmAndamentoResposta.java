@@ -1,4 +1,4 @@
-package org.example.domain.pauta;
+package org.example.model.pauta;
 
 import lombok.*;
 

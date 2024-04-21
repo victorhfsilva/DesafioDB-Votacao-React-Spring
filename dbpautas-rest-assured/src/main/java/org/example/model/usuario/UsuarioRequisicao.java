@@ -1,4 +1,4 @@
-package org.example.domain.usuario;
+package org.example.model.usuario;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

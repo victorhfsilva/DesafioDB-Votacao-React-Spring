@@ -1,7 +1,7 @@
-package fixture.usuario;
+package org.example.fixture.usuario;
 
-import org.example.domain.usuario.LoginRequisicao;
-import org.example.domain.usuario.UsuarioRequisicao;
+import org.example.model.usuario.LoginRequisicao;
+import org.example.model.usuario.UsuarioRequisicao;
 
 public interface LoginFixture {
 

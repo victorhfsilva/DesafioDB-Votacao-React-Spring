@@ -1,9 +1,9 @@
-package domain.usuario;
+package usuario;
 
-import fixture.usuario.LoginFixture;
+import org.example.fixture.usuario.LoginFixture;
 import io.restassured.RestAssured;
 import io.restassured.specification.RequestSpecification;
-import org.example.domain.usuario.LoginRequisicao;
+import org.example.model.usuario.LoginRequisicao;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

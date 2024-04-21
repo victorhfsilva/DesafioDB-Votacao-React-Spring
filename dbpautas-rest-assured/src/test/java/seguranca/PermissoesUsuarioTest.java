@@ -1,13 +1,13 @@
-package domain.seguranca;
+package seguranca;
 
-import fixture.usuario.AdminFixture;
-import fixture.usuario.LoginFixture;
-import fixture.usuario.UsuarioFixture;
+import org.example.fixture.usuario.AdminFixture;
+import org.example.fixture.usuario.LoginFixture;
+import org.example.fixture.usuario.UsuarioFixture;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import org.example.domain.usuario.LoginRequisicao;
-import org.example.domain.usuario.UsuarioRequisicao;
+import org.example.model.usuario.LoginRequisicao;
+import org.example.model.usuario.UsuarioRequisicao;
 import org.junit.jupiter.api.*;
 
 public class PermissoesUsuarioTest {

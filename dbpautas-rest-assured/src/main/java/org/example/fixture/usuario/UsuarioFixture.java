@@ -1,7 +1,7 @@
-package fixture.usuario;
+package org.example.fixture.usuario;
 
 import com.github.javafaker.Faker;
-import org.example.domain.usuario.UsuarioRequisicao;
+import org.example.model.usuario.UsuarioRequisicao;
 import org.example.util.GeradorCpf;
 
 public interface UsuarioFixture {

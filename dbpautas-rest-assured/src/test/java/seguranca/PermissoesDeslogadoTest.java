@@ -1,10 +1,10 @@
-package domain.seguranca;
+package seguranca;
 
-import fixture.usuario.AdminFixture;
-import fixture.usuario.UsuarioFixture;
+import org.example.fixture.usuario.AdminFixture;
+import org.example.fixture.usuario.UsuarioFixture;
 import io.restassured.RestAssured;
 import io.restassured.specification.RequestSpecification;
-import org.example.domain.usuario.UsuarioRequisicao;
+import org.example.model.usuario.UsuarioRequisicao;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
