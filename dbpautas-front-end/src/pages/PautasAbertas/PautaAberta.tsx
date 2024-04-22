@@ -23,7 +23,9 @@ const PautaAberta: React.FC<PautaEmAndamentoProps>  = ({pauta, navigate}) => {
             margin={'1.6vw'} 
             borderRadius={'1em'} 
             direction={'column'}
-            justify={'space-between'}>
+            justify={'space-between'}
+            className="pauta"
+            id={`pauta-${pauta.id}`}>
                 <Flex width={'100%'} direction={'row'} justifyContent={'space-between'}>
                     <Text color={'cinza4'} fontFamily={'Poppins'} padding={'0.8em 1em 0.8em 1em'}>
                         #{pauta.id}
