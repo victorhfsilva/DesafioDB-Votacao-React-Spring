@@ -60,7 +60,7 @@ POSTGRES_USER={usuário do banco de dados}
 POSTGRES_PWD={senha do banco de dados}
 JWT_SECRET={senha utilizada para gerar os tokens jwt}
 JWT_ISSUER={issuer dos tokens}
-VALIDATION_CPF_ACTIVE={true | false}
+API_CPF_CNPJ_VALIDATION_CPF_ACTIVE={true | false}
 API_CPF_CNPJ_URL=https://api.cpfcnpj.com.br/5ae973d7a997af13f0aaf2bf60e65803
 ```
 
