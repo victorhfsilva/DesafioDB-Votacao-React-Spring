@@ -23,7 +23,6 @@ public class ContabilizacaoServiceImplTest {
     @Autowired
     private ContabilizacaoServiceImpl contabilizacaoService;
 
-
     @ParameterizedTest
     @MethodSource("pautas")
     @DisplayName("Dado pautas finalizadas, quando contabilizado os votos, deve retornar a decisão correta.")

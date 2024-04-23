@@ -5,5 +5,12 @@ import com.db.dbpautasbackend.enums.Decisao;
 import lombok.Builder;
 
 @Builder
-public record PautaFinalizadaDTO(Long id, String titulo, String resumo, String descricao, Categoria categoria, int votosSim, int votosNao, Decisao decisao) {
+public record PautaFinalizadaDTO(
+        Long id, String titulo,
+        String resumo,
+        String descricao,
+        Categoria categoria,
+        int votosSim,
+        int votosNao,
+        Decisao decisao) {
 }

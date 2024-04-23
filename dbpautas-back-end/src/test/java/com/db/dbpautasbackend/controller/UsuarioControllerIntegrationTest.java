@@ -40,6 +40,7 @@ class UsuarioControllerIntegrationTest {
     void registrarTest(){
         LoginDTO login = LoginDTOFixture.buiderDefault();
         HttpEntity<LoginDTO> requisicaoLogin = new HttpEntity<>(login);
+
         ResponseEntity<LoginRespostaDTO> respostaLogin = restTemplate.postForEntity("http://localhost:" + port + "/login", requisicaoLogin, LoginRespostaDTO.class);
         String token = respostaLogin.getBody().token();
 
@@ -50,6 +51,7 @@ class UsuarioControllerIntegrationTest {
         HttpEntity<RegistrarUsuarioDTO> requisicao = new HttpEntity<>(registrarUsuarioDTO, httpHeaders);
 
         ResponseEntity<Boolean> resposta = restTemplate.postForEntity("http://localhost:" + port + "/usuario/registrar", requisicao, Boolean.class);
+
         assertEquals(HttpStatus.CREATED, resposta.getStatusCode());
         assertEquals(Boolean.TRUE, resposta.getBody());
     }

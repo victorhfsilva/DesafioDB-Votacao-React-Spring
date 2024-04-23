@@ -6,7 +6,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 public interface UsuarioMapper {
     static Usuario mapRegistrarUsuarioDTOToUsuario(RegistrarUsuarioDTO usuarioDTO, PasswordEncoder passwordEncoder){
-        return Usuario.builder().nome(usuarioDTO.nome())
+        return Usuario.builder()
+                .nome(usuarioDTO.nome())
                 .sobrenome(usuarioDTO.sobrenome())
                 .email(usuarioDTO.email())
                 .cpf(usuarioDTO.cpf())

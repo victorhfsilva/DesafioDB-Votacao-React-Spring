@@ -44,10 +44,12 @@ class UsuarioControllerTest {
     void registrarTest() throws Exception {
         RegistrarUsuarioDTO usuarioDTO = RegistrarUsuarioDTOFixture.builderDefault();
         Usuario usuario = UsuarioMapper.mapRegistrarUsuarioDTOToUsuario(usuarioDTO, passwordEncoder);
+
         String usuarioDTOJson = objectMapper.writeValueAsString(usuarioDTO);
 
         when(passwordEncoder.encode(usuarioDTO.senha())).thenReturn(usuarioDTO.senha());
         when(usuarioService.salvar(usuario)).thenReturn(usuario);
+
         mockMvc.perform(MockMvcRequestBuilders.post("/usuario/registrar")
                         .contentType("application/json")
                         .content(usuarioDTOJson))
@@ -61,10 +63,12 @@ class UsuarioControllerTest {
     void registrarComSenhaFracaTest() throws Exception {
         RegistrarUsuarioDTO usuarioDTO = RegistrarUsuarioDTOFixture.builderComSenhaFraca();
         Usuario usuario = UsuarioMapper.mapRegistrarUsuarioDTOToUsuario(usuarioDTO, passwordEncoder);
+
         String usuarioDTOJson = objectMapper.writeValueAsString(usuarioDTO);
 
         when(passwordEncoder.encode(usuarioDTO.senha())).thenReturn(usuarioDTO.senha());
         when(usuarioService.salvar(usuario)).thenReturn(usuario);
+
         mockMvc.perform(MockMvcRequestBuilders.post("/usuario/registrar")
                         .contentType("application/json")
                         .content(usuarioDTOJson))
@@ -77,10 +81,12 @@ class UsuarioControllerTest {
     void registrarComCpfInvalidoTest() throws Exception {
         RegistrarUsuarioDTO usuarioDTO = RegistrarUsuarioDTOFixture.builderComCpfInvalido();
         Usuario usuario = UsuarioMapper.mapRegistrarUsuarioDTOToUsuario(usuarioDTO, passwordEncoder);
+
         String usuarioDTOJson = objectMapper.writeValueAsString(usuarioDTO);
 
         when(passwordEncoder.encode(usuarioDTO.senha())).thenReturn(usuarioDTO.senha());
         when(usuarioService.salvar(usuario)).thenReturn(usuario);
+
         mockMvc.perform(MockMvcRequestBuilders.post("/usuario/registrar")
                         .contentType("application/json")
                         .content(usuarioDTOJson))

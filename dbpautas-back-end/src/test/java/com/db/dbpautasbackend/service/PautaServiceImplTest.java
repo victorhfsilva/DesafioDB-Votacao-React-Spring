@@ -49,6 +49,7 @@ class PautaServiceImplTest {
         when(pautaRepository.save(any())).thenReturn(pautaAbertaEsperada);
 
         Pauta pautaAbertaObtida = pautaService.abrirPauta(1L, pautaAbertaEsperada.getTempoDeSessaoEmMinutos());
+
         verify(validacaoPautaService).validaPautaFechada(pauta);
         assertEquals(pautaAbertaEsperada.isAberta(), pautaAbertaObtida.isAberta());
     }
@@ -59,13 +60,18 @@ class PautaServiceImplTest {
         Usuario usuario = UsuarioFixture.builderDefault();
         Pauta pautaAberta = PautaFixture.builderDePautaAberta();
         Pauta pautaEsperada = PautaFixture.builderDePautaAbertaComVotos(usuario);
+
         Voto voto = Voto.SIM;
+
         SecurityContextHolder.getContext().setAuthentication(authentication);
+
         when(authentication.getName()).thenReturn("admin");
         when(usuarioRepository.findByCpf("admin")).thenReturn(Optional.of(usuario));
         when(pautaRepository.findById(anyLong())).thenReturn(Optional.of(pautaAberta));
         when(votacaoService.votar(pautaAberta, usuario, voto)).thenReturn(pautaEsperada);
+
         Pauta pautaObitda = pautaService.votarPauta(1L, voto);
+
         assertEquals(pautaEsperada.getVotosSim(), pautaObitda.getVotosSim());
     }
 

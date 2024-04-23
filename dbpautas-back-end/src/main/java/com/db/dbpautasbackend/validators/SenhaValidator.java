@@ -35,6 +35,7 @@ public class SenhaValidator implements ConstraintValidator<ValidPassword, String
 
         List<String> messages = validator.getMessages(result);
         String messageTemplate = String.join(",", messages);
+
         context.buildConstraintViolationWithTemplate(messageTemplate)
                 .addConstraintViolation()
                 .disableDefaultConstraintViolation();

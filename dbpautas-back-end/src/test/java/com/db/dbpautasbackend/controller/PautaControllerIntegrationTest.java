@@ -40,6 +40,7 @@ class PautaControllerIntegrationTest {
     void registrarTest(){
         LoginDTO login = LoginDTOFixture.buiderDefault();
         HttpEntity<LoginDTO> requisicaoLogin = new HttpEntity<>(login);
+
         ResponseEntity<LoginRespostaDTO> respostaLogin = restTemplate.postForEntity("http://localhost:" + port + "/login", requisicaoLogin, LoginRespostaDTO.class);
         String token = respostaLogin.getBody().token();
 
@@ -50,6 +51,7 @@ class PautaControllerIntegrationTest {
         HttpEntity<RegistrarPautaDTO> requisicao = new HttpEntity<>(pautaDTO, httpHeaders);
 
         ResponseEntity<Boolean> resposta = restTemplate.postForEntity("http://localhost:" + port + "/pauta/registrar", requisicao, Boolean.class);
+
         assertEquals(HttpStatus.CREATED, resposta.getStatusCode());
         assertEquals(Boolean.TRUE, resposta.getBody());
     }
