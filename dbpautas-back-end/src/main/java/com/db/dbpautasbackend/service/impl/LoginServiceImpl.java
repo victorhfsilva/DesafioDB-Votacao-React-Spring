@@ -25,13 +25,22 @@ public class LoginServiceImpl implements LoginService {
     public LoginRespostaDTO gerarToken(LoginDTO login) {
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
                 new UsernamePasswordAuthenticationToken(login.cpf(), login.senha());
+
         Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
         Collection<GrantedAuthority> authorities = (Collection<GrantedAuthority>) authentication.getAuthorities();
+
         String token = tokenService.gerarToken(login.cpf());
-        Papel papel = authorities.stream().findFirst().map(authority -> Papel.valueOf(authority.getAuthority())).orElseThrow();
+
+        Papel papel = authorities.stream()
+                .findFirst()
+                .map(authority -> Papel.valueOf(authority.getAuthority()))
+                .orElseThrow();
+
         return LoginRespostaDTO.builder()
                                 .token(token)
                                 .papel(papel)
                                 .build();
     }
+
+
 }

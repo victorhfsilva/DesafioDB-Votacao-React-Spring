@@ -20,8 +20,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) {
         UserDetailsInfo userDetailsInfo = usuarioRepository.findUserDetailsByCpf(username).orElseThrow();
+
         String senha = userDetailsInfo.getSenha();
         List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(userDetailsInfo.getPapel().name()));
+
         return new User(username, senha, authorities);
     }
 }

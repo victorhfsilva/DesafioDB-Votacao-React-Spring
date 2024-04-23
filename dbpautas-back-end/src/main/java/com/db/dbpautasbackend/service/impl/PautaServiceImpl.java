@@ -36,18 +36,24 @@ public class PautaServiceImpl implements PautaService {
     public Pauta abrirPauta(Long id, Integer tempoDeSessaoEmMinutos) {
         Pauta pauta = pautaRepository.findById(id).orElseThrow();
         validacaoPautaService.validaPautaFechada(pauta);
+
         pauta.setAberta(true);
         pauta.setAbertoAs(LocalDateTime.now());
         pauta.setTempoDeSessaoEmMinutos(tempoDeSessaoEmMinutos != null ? tempoDeSessaoEmMinutos : 1);
+
         return pautaRepository.save(pauta);
     }
 
     @Override
     public Pauta votarPauta(Long id, Voto voto) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Authentication authentication = SecurityContextHolder.getContext()
+                .getAuthentication();
+
         String cpf = authentication.getName();
         Usuario usuario = usuarioRepository.findByCpf(cpf).orElseThrow();
+
         Pauta pauta = pautaRepository.findById(id).orElseThrow();
+
         return votacaoService.votar(pauta, usuario, voto);
     }
 
@@ -63,16 +69,16 @@ public class PautaServiceImpl implements PautaService {
 
     @Override
     public List<Pauta> obterPautasAbertas() {
-        return pautaRepository.findPautasAbertas().stream().filter(pauta ->
-            !isPautaFinalizada(pauta)
-        ).toList();
+        return pautaRepository.findPautasAbertas().stream()
+                .filter(pauta -> !isPautaFinalizada(pauta))
+                .toList();
     }
 
     @Override
     public List<Pauta> obterPautasAbertasPorCategoria(Categoria categoria) {
-        return pautaRepository.findPautasAbertasPorCategoria(categoria).stream().filter(pauta ->
-                !isPautaFinalizada(pauta)
-        ).toList();
+        return pautaRepository.findPautasAbertasPorCategoria(categoria).stream()
+                .filter(pauta -> !isPautaFinalizada(pauta))
+                .toList();
     }
 
     @Override
@@ -84,9 +90,9 @@ public class PautaServiceImpl implements PautaService {
 
     @Override
     public List<Pauta> obterPautasFinalizadasPorCategoria(Categoria categoria) {
-        return pautaRepository.findPautasAbertasPorCategoria(categoria).stream().filter(
-                this::isPautaFinalizada
-        ).toList();
+        return pautaRepository.findPautasAbertasPorCategoria(categoria).stream()
+                .filter(this::isPautaFinalizada)
+                .toList();
     }
 
     public boolean isPautaFinalizada(Pauta pauta) {
