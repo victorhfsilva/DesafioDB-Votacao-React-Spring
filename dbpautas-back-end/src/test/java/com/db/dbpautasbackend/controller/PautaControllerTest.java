@@ -52,9 +52,11 @@ class PautaControllerTest {
     void registrarTest() throws Exception {
         RegistrarPautaDTO pautaDTO = RegistrarPautaDTOFixture.builderDefault();
         Pauta pauta = PautaMapper.mapRegistrarPautaDTOtoPauta(pautaDTO);
+
         String pautaDTOJson = objectMapper.writeValueAsString(pautaDTO);
 
         when(pautaService.salvar(pauta)).thenReturn(pauta);
+
         mockMvc.perform(MockMvcRequestBuilders.post("/pauta/registrar")
                         .contentType("application/json")
                         .content(pautaDTOJson))
@@ -67,7 +69,9 @@ class PautaControllerTest {
     @WithMockUser(username = "admin", authorities = {"ADMIN"})
     void abrirPautaTest() throws Exception {
         Pauta pautaAberta = PautaFixture.builderDePautaAberta();
+
         when(pautaService.abrirPauta(anyLong(), any())).thenReturn(pautaAberta);
+
         mockMvc.perform(MockMvcRequestBuilders.patch("/pauta/abrir/1")
                         .param("minutos", "180"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -80,7 +84,9 @@ class PautaControllerTest {
     void votarPautaTest() throws Exception {
         Usuario usuario = UsuarioFixture.builderDefault();
         Pauta pauta = PautaFixture.builderDePautaAbertaComVotos(usuario);
+
         when(pautaService.votarPauta(anyLong(), eq(Voto.SIM))).thenReturn(pauta);
+
         mockMvc.perform(MockMvcRequestBuilders.patch("/pauta/votar/1")
                         .param("voto", "SIM"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -93,7 +99,9 @@ class PautaControllerTest {
     void buscarPautasFechadaTest() throws Exception {
         Pauta pautaEsperada = PautaFixture.builderDefault();
         List<Pauta> pautas = List.of(pautaEsperada);
+
         when(pautaService.obterPautasFechadas()).thenReturn(pautas);
+
         mockMvc.perform(MockMvcRequestBuilders.get("/pauta/fechada/")
                         .param("pagina", "0")
                         .param("tamanho", "10"))
@@ -107,7 +115,9 @@ class PautaControllerTest {
     void buscarPautasFechadaPorCategoriaTest() throws Exception {
         Pauta pautaEsperada = PautaFixture.builderDefault();
         List<Pauta> pautas = List.of(pautaEsperada);
+
         when(pautaService.obterPautasFechadasPorCategoria(Categoria.EDUCACAO)).thenReturn(pautas);
+
         mockMvc.perform(MockMvcRequestBuilders.get("/pauta/fechada/EDUCACAO")
                         .param("pagina", "0")
                         .param("tamanho", "10"))
@@ -121,7 +131,9 @@ class PautaControllerTest {
     void buscarPautasAbertaTest() throws Exception {
         Pauta pautaEsperada = PautaFixture.builderDePautaAberta();
         List<Pauta> pautas = List.of(pautaEsperada);
+
         when(pautaService.obterPautasAbertas()).thenReturn(pautas);
+
         mockMvc.perform(MockMvcRequestBuilders.get("/pauta/aberta/"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].titulo").value("Título da Pauta"));
@@ -133,7 +145,9 @@ class PautaControllerTest {
     void buscarPautasAbertaPorCategoriaTest() throws Exception {
         Pauta pautaEsperada = PautaFixture.builderDePautaAberta();
         List<Pauta> pautas = List.of(pautaEsperada);
+
         when(pautaService.obterPautasAbertasPorCategoria(Categoria.EDUCACAO)).thenReturn(pautas);
+
         mockMvc.perform(MockMvcRequestBuilders.get("/pauta/aberta/EDUCACAO")
                         .param("pagina", "0")
                         .param("tamanho", "10"))
@@ -147,7 +161,9 @@ class PautaControllerTest {
     void buscarPautasFinalizadasTest() throws Exception {
         Pauta pautaEsperada = PautaFixture.builderDePautaAprovada();
         List<Pauta> pautas = List.of(pautaEsperada);
+
         when(pautaService.obterPautasFinalizadas()).thenReturn(pautas);
+
         mockMvc.perform(MockMvcRequestBuilders.get("/pauta/finalizada/")
                         .param("pagina", "0")
                         .param("tamanho", "10"))
@@ -161,7 +177,9 @@ class PautaControllerTest {
     void buscarPautasFinalizadasPorCategoriaTest() throws Exception {
         Pauta pautaEsperada = PautaFixture.builderDePautaAprovada();
         List<Pauta> pautas = List.of(pautaEsperada);
+
         when(pautaService.obterPautasFinalizadasPorCategoria(Categoria.EDUCACAO)).thenReturn(pautas);
+
         mockMvc.perform(MockMvcRequestBuilders.get("/pauta/finalizada/EDUCACAO")
                         .param("pagina", "0")
                         .param("tamanho", "10"))

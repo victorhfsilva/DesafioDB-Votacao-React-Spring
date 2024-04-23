@@ -61,12 +61,13 @@ POSTGRES_PWD={senha do banco de dados}
 JWT_SECRET={senha utilizada para gerar os tokens jwt}
 JWT_ISSUER={issuer dos tokens}
 API_CPF_CNPJ_VALIDATION_CPF_ACTIVE={true | false}
-API_CPF_CNPJ_URL=https://api.cpfcnpj.com.br/5ae973d7a997af13f0aaf2bf60e65803
+API_CPF_CNPJ_URL=https://api.cpfcnpj.com.br/{token}
+FRONTEND_URL={url do frontend para habilitar CORS}
 ```
 
 A variável `VALIDATION_CPF_ACTIVE` habilita ou desabilita a verificação da regularidade dos CPFs na api [CPF.CNPJ](https://www.cpfcnpj.com.br/).
 
-O token utilizado nesta API é um token de teste que sempre retorna cpf irregular. Para utilizá-lo em produção favor substituir o token da api por um válido em `API_CPF_CNPJ_URL`.
+O token utilizado na API Cpf.Cnpj deste repositório é um token de teste que sempre retorna cpf irregular. Para utilizá-lo em produção favor substituir o token da api por um válido em `API_CPF_CNPJ_URL`.
 
 Um exemplo desta configuração é o arquivo `./dbpautas-back-end/.env.local`
 

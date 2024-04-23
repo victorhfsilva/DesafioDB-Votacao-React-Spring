@@ -98,8 +98,10 @@ public class PautaServiceImpl implements PautaService {
     public boolean isPautaFinalizada(Pauta pauta) {
         LocalDateTime abertoAs = pauta.getAbertoAs();
         int tempoDeSessaoEmMinutos = pauta.getTempoDeSessaoEmMinutos();
+
         LocalDateTime agora = LocalDateTime.now();
         long minutosPassados = Duration.between(abertoAs, agora).toMinutes();
+
         return minutosPassados > tempoDeSessaoEmMinutos;
     }
 

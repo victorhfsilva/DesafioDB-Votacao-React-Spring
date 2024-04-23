@@ -36,11 +36,15 @@ class VotacaoServiceImplTest {
         Usuario usuario = UsuarioFixture.builderDefault();
         Pauta pautaAberta = PautaFixture.builderDePautaAberta();
         Pauta pautaEsperada = PautaFixture.builderDePautaAbertaComVotos(usuario);
+
         when(pautaRepository.save(any())).thenReturn(pautaEsperada);
+
         Pauta pautaObtida = votacaoService.votar(pautaAberta, usuario, Voto.SIM);
+
         verify(validacaoPautaService).validaPautaAberta(pautaAberta);
         verify(validacaoPautaService).validaPautaFinalizada(pautaAberta);
         verify(validacaoPautaService).validaSePrimeiroVoto(pautaAberta, usuario);
+
         assertEquals(pautaEsperada.getVotosSim(), pautaObtida.getVotosSim());
         assertIterableEquals(pautaEsperada.getEleitores(), pautaObtida.getEleitores());
     }

@@ -11,16 +11,17 @@ import java.util.List;
 public interface PautaMapper {
 
     static Pauta mapRegistrarPautaDTOtoPauta(RegistrarPautaDTO registrarPautaDTO){
-        return Pauta.builder().titulo(registrarPautaDTO.titulo())
-                                .resumo(registrarPautaDTO.resumo())
-                                .descricao(registrarPautaDTO.descricao())
-                                .categoria(registrarPautaDTO.categoria())
-                                .build();
+        return Pauta.builder()
+                .titulo(registrarPautaDTO.titulo())
+                .resumo(registrarPautaDTO.resumo())
+                .descricao(registrarPautaDTO.descricao())
+                .categoria(registrarPautaDTO.categoria())
+                .build();
     }
 
     static List<PautaEmAndamentoDTO> mapPageOfPautaToPageOfPautaEmAndamentoDTO(List<Pauta> pautas){
-        return pautas.stream().map(pauta ->
-            PautaEmAndamentoDTO.builder().id(pauta.getId())
+        return pautas.stream()
+                .map(pauta -> PautaEmAndamentoDTO.builder().id(pauta.getId())
                     .titulo(pauta.getTitulo())
                     .resumo(pauta.getResumo())
                     .descricao(pauta.getDescricao())
@@ -30,8 +31,7 @@ public interface PautaMapper {
     }
 
     static List<PautaFinalizadaDTO> mapPageOfPautaToPageOfPautaFinalizadaDTO(List<Pauta> pautas, ContabilizacaoService contabilizacaoService){
-        return pautas.stream().map(pauta ->
-            PautaFinalizadaDTO.builder().id(pauta.getId())
+        return pautas.stream().map(pauta -> PautaFinalizadaDTO.builder().id(pauta.getId())
                         .titulo(pauta.getTitulo())
                         .resumo(pauta.getResumo())
                         .descricao(pauta.getDescricao())

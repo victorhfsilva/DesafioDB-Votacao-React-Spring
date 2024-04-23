@@ -39,12 +39,15 @@ class LoginServiceImplTest {
     @DisplayName("Dado dados de login válidos, quando feito o login, deve retornar um Token.")
     void gerarTokenComLoginValidoTest(){
         LoginDTO login = LoginDTOFixture.buiderDefault();
+
         String token = "token";
         Papel papel = Papel.ADMIN;
 
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
                 new UsernamePasswordAuthenticationToken(login.cpf(), login.senha());
+
         Collection<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(papel.name()));
+
         Authentication authentication = new TestingAuthenticationToken(login.cpf(), login.senha(), authorities);
 
         when(authenticationManager.authenticate(usernamePasswordAuthenticationToken)).thenReturn(authentication);

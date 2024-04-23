@@ -46,7 +46,9 @@ class LoginControllerIntegrationTest {
     void loginTest(){
         LoginDTO login = LoginDTOFixture.buiderDefault();
         HttpEntity<LoginDTO> requisicao = new HttpEntity<>(login);
+
         ResponseEntity<LoginRespostaDTO> resposta = restTemplate.postForEntity("http://localhost:" + port + "/login", requisicao, LoginRespostaDTO.class);
+
         assertEquals(HttpStatus.OK, resposta.getStatusCode());
         assertTrue(tokenService.isTokenValido(resposta.getBody().token()));
         assertEquals(Papel.ADMIN, resposta.getBody().papel());
@@ -61,7 +63,9 @@ class LoginControllerIntegrationTest {
     })
     void loginTestWithInvalidLogin(LoginDTO login){
         HttpEntity<LoginDTO> requisicao = new HttpEntity<>(login);
+
         ResponseEntity<String> resposta = restTemplate.postForEntity("http://localhost:" + port + "/login", requisicao, String.class);
+
         assertEquals(HttpStatus.BAD_REQUEST, resposta.getStatusCode());
     }
 

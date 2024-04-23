@@ -3,6 +3,7 @@ package com.db.dbpautasbackend.security;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -22,7 +23,8 @@ import java.util.List;
 @AllArgsConstructor
 public class SecurityConfig {
 
-    private static final List<String> ALLOWED_ORIGINS = List.of("http://localhost:5173");
+    private Environment environment;
+
 
     private TokenSecurityFilter tokenSecurityFilter;
 
@@ -47,12 +49,18 @@ public class SecurityConfig {
 
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
+        List<String> ALLOWED_ORIGINS = List.of(environment.getProperty("frontend.url"));
+
         CorsConfiguration configuration = new CorsConfiguration();
+
         configuration.setAllowedOrigins(ALLOWED_ORIGINS);
         configuration.setAllowedMethods(List.of("*"));
         configuration.setAllowedHeaders(List.of("*"));
+
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+
         source.registerCorsConfiguration("/**", configuration);
+
         return source;
     }
 

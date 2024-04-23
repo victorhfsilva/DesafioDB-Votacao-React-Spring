@@ -32,11 +32,15 @@ class UserDetailsServiceImplTest {
     @DisplayName("Dado um usuário válido, quando buscado por usuário, deve retornar UserDetails corretamente")
     void loadUserByUsernameTest(){
         UserDetailsInfoImpl userDetailsInfo = UserDetailsInfoFixture.builderDefault();
+
         when(usuarioRepository.findUserDetailsByCpf(userDetailsInfo.getCpf())).thenReturn(Optional.of(userDetailsInfo));
+
         UserDetails user = userDetailsService.loadUserByUsername(userDetailsInfo.getCpf());
+        String expectedAuthority = userDetailsInfo.getPapel().name();
+
         assertEquals(userDetailsInfo.getCpf(), user.getUsername());
         assertEquals(userDetailsInfo.getSenha(), user.getPassword());
-        String expectedAuthority = userDetailsInfo.getPapel().name();
+
         assertTrue(user.getAuthorities().stream()
                         .map(GrantedAuthority::getAuthority)
                         .anyMatch(authority -> authority.equals(expectedAuthority)));

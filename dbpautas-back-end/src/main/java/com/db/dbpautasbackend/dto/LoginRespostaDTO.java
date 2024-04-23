@@ -4,6 +4,7 @@ import com.db.dbpautasbackend.enums.Papel;
 import lombok.Builder;
 
 @Builder
-public record LoginRespostaDTO(String token, Papel papel){
-
+public record LoginRespostaDTO(
+        String token,
+        Papel papel){
 }

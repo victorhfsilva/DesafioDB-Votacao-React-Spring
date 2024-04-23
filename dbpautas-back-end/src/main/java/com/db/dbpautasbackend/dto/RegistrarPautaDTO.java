@@ -8,8 +8,14 @@ import lombok.Builder;
 
 @Builder
 public record RegistrarPautaDTO(
-        @NotBlank @Size(max = 255) String titulo,
-        @NotBlank @Size(max = 500) String resumo,
-        @NotBlank String descricao,
-        @NotNull Categoria categoria) {
+        @NotBlank
+        @Size(max = 255)
+        String titulo,
+        @NotBlank
+        @Size(max = 500)
+        String resumo,
+        @NotBlank
+        String descricao,
+        @NotNull
+        Categoria categoria) {
 }

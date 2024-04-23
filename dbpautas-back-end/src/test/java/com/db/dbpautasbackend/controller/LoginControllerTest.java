@@ -40,9 +40,11 @@ class LoginControllerTest {
     void loginTest() throws Exception {
         LoginDTO login = LoginDTOFixture.buiderDefault();
         LoginRespostaDTO loginResposta = LoginRespostaDTOFixture.buiderDefault();
+
         String loginJson = objectMapper.writeValueAsString(login);
 
         when(loginService.gerarToken(login)).thenReturn(loginResposta);
+
         mockMvc.perform(MockMvcRequestBuilders.post("/login")
                                                 .contentType("application/json")
                                                 .content(loginJson))
