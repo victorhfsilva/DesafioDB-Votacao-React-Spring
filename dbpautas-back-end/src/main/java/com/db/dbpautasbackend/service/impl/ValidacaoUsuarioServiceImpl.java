@@ -20,7 +20,9 @@ public class ValidacaoUsuarioServiceImpl implements ValidacaoUsuarioService {
         @Override
         public void validarSituacaoRegularDoCpf(String cpf) {
             boolean validarCpf = Boolean.parseBoolean(environment.getProperty("validation.cpf.active"));
+
             CpfDTO cpfDTO = cpfCnpjClient.getCpfCnpj(cpf);
+
             if (cpfDTO.status()){
                 if (validarCpf && !cpfDTO.situacao().equals(Situacao.REGULAR)) {
                     throw new CpfIrregularException("CPF irregular.");

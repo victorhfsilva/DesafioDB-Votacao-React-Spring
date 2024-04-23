@@ -41,8 +41,11 @@ public class TokenServiceImpl implements TokenService {
                     .withIssuer(issuer)
                     .build()
                     .verify(token);
+
             String cpf = JWT.decode(token).getSubject();
+
             return usuarioRepository.findUserDetailsByCpf(cpf).isPresent();
+
         } catch (Exception ex) {
             return false;
         }

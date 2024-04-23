@@ -32,9 +32,11 @@ public class TokenSecurityFilter extends OncePerRequestFilter {
         if (tokenService.isTokenValido(token)){
             String subject = tokenService.extrairSujeito(token);
             UserDetails userDetails = userDetailsService.loadUserByUsername(subject);
+
             UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
                     new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
             usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
             SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
         }
 

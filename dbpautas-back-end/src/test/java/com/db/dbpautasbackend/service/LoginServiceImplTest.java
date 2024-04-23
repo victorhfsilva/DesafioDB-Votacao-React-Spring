@@ -1,6 +1,7 @@
 package com.db.dbpautasbackend.service;
 
 import com.db.dbpautasbackend.dto.LoginDTO;
+import com.db.dbpautasbackend.dto.LoginRespostaDTO;
 import com.db.dbpautasbackend.enums.Papel;
 import com.db.dbpautasbackend.fixture.LoginDTOFixture;
 import com.db.dbpautasbackend.service.impl.LoginServiceImpl;
@@ -49,8 +50,10 @@ class LoginServiceImplTest {
         when(authenticationManager.authenticate(usernamePasswordAuthenticationToken)).thenReturn(authentication);
         when(tokenService.gerarToken(login.cpf())).thenReturn(token);
 
-        assertEquals(token, loginService.gerarToken(login).token());
-        assertEquals(Papel.ADMIN, loginService.gerarToken(login).papel());
+        LoginRespostaDTO loginRespostaDTO = loginService.gerarToken(login);
+
+        assertEquals(token, loginRespostaDTO.token());
+        assertEquals(Papel.ADMIN, loginRespostaDTO.papel());
     }
 
 }

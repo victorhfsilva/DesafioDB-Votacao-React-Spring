@@ -18,8 +18,10 @@ public class ValidacaoPautaServiceImpl implements ValidacaoPautaService {
     public void validaPautaFinalizada(Pauta pauta) {
         LocalDateTime abertoAs = pauta.getAbertoAs();
         int tempoDeSessaoEmMinutos = pauta.getTempoDeSessaoEmMinutos();
+
         LocalDateTime agora = LocalDateTime.now();
         long minutosPassados = Duration.between(abertoAs, agora).toMinutes();
+
         if (minutosPassados > tempoDeSessaoEmMinutos) {
             throw new PautaFinalizadaException("O tempo de sessão já expirou. Sessão finalizada.");
         }
