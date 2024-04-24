@@ -48,7 +48,7 @@ class UsuarioControllerTest {
         String usuarioDTOJson = objectMapper.writeValueAsString(usuarioDTO);
 
         when(passwordEncoder.encode(usuarioDTO.senha())).thenReturn(usuarioDTO.senha());
-        when(usuarioService.salvar(usuario)).thenReturn(usuario);
+        when(usuarioService.salvar(usuarioDTO)).thenReturn(usuario);
 
         mockMvc.perform(MockMvcRequestBuilders.post("/usuario/registrar")
                         .contentType("application/json")
@@ -67,7 +67,7 @@ class UsuarioControllerTest {
         String usuarioDTOJson = objectMapper.writeValueAsString(usuarioDTO);
 
         when(passwordEncoder.encode(usuarioDTO.senha())).thenReturn(usuarioDTO.senha());
-        when(usuarioService.salvar(usuario)).thenReturn(usuario);
+        when(usuarioService.salvar(usuarioDTO)).thenReturn(usuario);
 
         mockMvc.perform(MockMvcRequestBuilders.post("/usuario/registrar")
                         .contentType("application/json")
@@ -85,7 +85,7 @@ class UsuarioControllerTest {
         String usuarioDTOJson = objectMapper.writeValueAsString(usuarioDTO);
 
         when(passwordEncoder.encode(usuarioDTO.senha())).thenReturn(usuarioDTO.senha());
-        when(usuarioService.salvar(usuario)).thenReturn(usuario);
+        when(usuarioService.salvar(usuarioDTO)).thenReturn(usuario);
 
         mockMvc.perform(MockMvcRequestBuilders.post("/usuario/registrar")
                         .contentType("application/json")

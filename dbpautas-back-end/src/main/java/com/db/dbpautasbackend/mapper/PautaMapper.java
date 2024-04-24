@@ -19,7 +19,7 @@ public interface PautaMapper {
                 .build();
     }
 
-    static List<PautaEmAndamentoDTO> mapPageOfPautaToPageOfPautaEmAndamentoDTO(List<Pauta> pautas){
+    static List<PautaEmAndamentoDTO> mapListOfPautaToListOfPautaEmAndamentoDTO(List<Pauta> pautas){
         return pautas.stream()
                 .map(pauta -> PautaEmAndamentoDTO.builder().id(pauta.getId())
                     .titulo(pauta.getTitulo())
@@ -30,7 +30,7 @@ public interface PautaMapper {
         ).toList();
     }
 
-    static List<PautaFinalizadaDTO> mapPageOfPautaToPageOfPautaFinalizadaDTO(List<Pauta> pautas, ContabilizacaoService contabilizacaoService){
+    static List<PautaFinalizadaDTO> mapListOfPautaToListOfPautaFinalizadaDTO(List<Pauta> pautas, ContabilizacaoService contabilizacaoService){
         return pautas.stream().map(pauta -> PautaFinalizadaDTO.builder().id(pauta.getId())
                         .titulo(pauta.getTitulo())
                         .resumo(pauta.getResumo())
