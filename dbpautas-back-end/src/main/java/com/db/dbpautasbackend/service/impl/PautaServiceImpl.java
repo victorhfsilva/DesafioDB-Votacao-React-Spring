@@ -4,13 +4,13 @@ import com.db.dbpautasbackend.dto.PautaEmAndamentoDTO;
 import com.db.dbpautasbackend.dto.PautaFinalizadaDTO;
 import com.db.dbpautasbackend.dto.RegistrarPautaDTO;
 import com.db.dbpautasbackend.enums.Categoria;
+import com.db.dbpautasbackend.enums.Decisao;
 import com.db.dbpautasbackend.enums.Voto;
 import com.db.dbpautasbackend.mapper.PautaMapper;
 import com.db.dbpautasbackend.model.Pauta;
 import com.db.dbpautasbackend.model.Usuario;
 import com.db.dbpautasbackend.repository.PautaRepository;
 import com.db.dbpautasbackend.repository.UsuarioRepository;
-import com.db.dbpautasbackend.service.ContabilizacaoService;
 import com.db.dbpautasbackend.service.PautaService;
 import com.db.dbpautasbackend.service.ValidacaoPautaService;
 import com.db.dbpautasbackend.service.VotacaoService;
@@ -31,7 +31,6 @@ public class PautaServiceImpl implements PautaService {
     private UsuarioRepository usuarioRepository;
     private VotacaoService votacaoService;
     private ValidacaoPautaService validacaoPautaService;
-    private ContabilizacaoService contabilizacaoService;
 
     @Override
     public Pauta salvar(RegistrarPautaDTO pautaDTO) {
@@ -67,15 +66,13 @@ public class PautaServiceImpl implements PautaService {
     @Override
     public List<PautaEmAndamentoDTO> obterPautasFechadas() {
         List<Pauta> pautas = pautaRepository.findPautasFechadas();
-        List<PautaEmAndamentoDTO> pautasDTOs = PautaMapper.mapListOfPautaToListOfPautaEmAndamentoDTO(pautas);
-        return pautasDTOs;
+        return PautaMapper.mapListOfPautaToListOfPautaEmAndamentoDTO(pautas);
     }
 
     @Override
     public List<PautaEmAndamentoDTO> obterPautasFechadasPorCategoria(Categoria categoria) {
         List<Pauta> pautas = pautaRepository.findPautasFechadasPorCategoria(categoria);
-        List<PautaEmAndamentoDTO> pautasDTOs = PautaMapper.mapListOfPautaToListOfPautaEmAndamentoDTO(pautas);
-        return pautasDTOs;
+        return PautaMapper.mapListOfPautaToListOfPautaEmAndamentoDTO(pautas);
     }
 
     @Override
@@ -83,9 +80,8 @@ public class PautaServiceImpl implements PautaService {
         List<Pauta> pautas = pautaRepository.findPautasAbertas().stream()
                 .filter(pauta -> !isPautaFinalizada(pauta))
                 .toList();
-        List<PautaEmAndamentoDTO> pautasDTOs = PautaMapper.mapListOfPautaToListOfPautaEmAndamentoDTO(pautas);
 
-        return pautasDTOs;
+        return PautaMapper.mapListOfPautaToListOfPautaEmAndamentoDTO(pautas);
     }
 
     @Override
@@ -93,9 +89,8 @@ public class PautaServiceImpl implements PautaService {
         List<Pauta> pautas = pautaRepository.findPautasAbertasPorCategoria(categoria).stream()
                 .filter(pauta -> !isPautaFinalizada(pauta))
                 .toList();
-        List<PautaEmAndamentoDTO> pautasDTOs = PautaMapper.mapListOfPautaToListOfPautaEmAndamentoDTO(pautas);
 
-        return pautasDTOs;
+        return PautaMapper.mapListOfPautaToListOfPautaEmAndamentoDTO(pautas);
     }
 
     @Override
@@ -104,8 +99,7 @@ public class PautaServiceImpl implements PautaService {
                 this::isPautaFinalizada
         ).toList();
 
-        List<PautaFinalizadaDTO> pautasDTOs = PautaMapper.mapListOfPautaToListOfPautaFinalizadaDTO(pautas, contabilizacaoService);
-        return pautasDTOs;
+        return PautaMapper.mapListOfPautaToListOfPautaFinalizadaDTO(pautas, this);
     }
 
     @Override
@@ -113,8 +107,8 @@ public class PautaServiceImpl implements PautaService {
         List<Pauta> pautas = pautaRepository.findPautasAbertasPorCategoria(categoria).stream()
                 .filter(this::isPautaFinalizada)
                 .toList();
-        List<PautaFinalizadaDTO> pautasDTOs = PautaMapper.mapListOfPautaToListOfPautaFinalizadaDTO(pautas, contabilizacaoService);
-        return pautasDTOs;
+
+        return PautaMapper.mapListOfPautaToListOfPautaFinalizadaDTO(pautas, this);
     }
 
     public boolean isPautaFinalizada(Pauta pauta) {
@@ -125,6 +119,18 @@ public class PautaServiceImpl implements PautaService {
         long minutosPassados = Duration.between(abertoAs, agora).toMinutes();
 
         return minutosPassados > tempoDeSessaoEmMinutos;
+    }
+
+    public Decisao contabilizar(Pauta pauta) {
+        Decisao decisao;
+        if(pauta.getVotosSim() > pauta.getVotosNao()) {
+            decisao = Decisao.APROVADO;
+        } else if (pauta.getVotosSim() == pauta.getVotosNao()) {
+            decisao =  Decisao.EMPATE;
+        } else {
+            decisao = Decisao.REPROVADO;
+        }
+        return decisao;
     }
 
 }

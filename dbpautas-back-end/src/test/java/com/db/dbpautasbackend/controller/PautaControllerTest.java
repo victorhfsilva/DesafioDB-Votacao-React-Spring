@@ -4,6 +4,7 @@ import com.db.dbpautasbackend.dto.PautaEmAndamentoDTO;
 import com.db.dbpautasbackend.dto.PautaFinalizadaDTO;
 import com.db.dbpautasbackend.dto.RegistrarPautaDTO;
 import com.db.dbpautasbackend.enums.Categoria;
+import com.db.dbpautasbackend.enums.Decisao;
 import com.db.dbpautasbackend.enums.Voto;
 import com.db.dbpautasbackend.fixture.*;
 import com.db.dbpautasbackend.mapper.PautaMapper;
@@ -102,9 +103,7 @@ class PautaControllerTest {
 
         when(pautaService.obterPautasFechadas()).thenReturn(pautasDTOs);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/pauta/fechada/")
-                        .param("pagina", "0")
-                        .param("tamanho", "10"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/pauta/fechada/"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].titulo").value("Título da Pauta"));
     }
@@ -118,9 +117,7 @@ class PautaControllerTest {
 
         when(pautaService.obterPautasFechadasPorCategoria(Categoria.EDUCACAO)).thenReturn(pautasDTOs);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/pauta/fechada/EDUCACAO")
-                        .param("pagina", "0")
-                        .param("tamanho", "10"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/pauta/fechada/EDUCACAO"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].titulo").value("Título da Pauta"));
     }
@@ -148,9 +145,7 @@ class PautaControllerTest {
 
         when(pautaService.obterPautasAbertasPorCategoria(Categoria.EDUCACAO)).thenReturn(pautasDTOs);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/pauta/aberta/EDUCACAO")
-                        .param("pagina", "0")
-                        .param("tamanho", "10"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/pauta/aberta/EDUCACAO"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].titulo").value("Título da Pauta"));
     }
@@ -164,9 +159,7 @@ class PautaControllerTest {
 
         when(pautaService.obterPautasFinalizadas()).thenReturn(pautasDTOs);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/pauta/finalizada/")
-                        .param("pagina", "0")
-                        .param("tamanho", "10"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/pauta/finalizada/"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].titulo").value("Título da Pauta"));
     }
@@ -178,11 +171,9 @@ class PautaControllerTest {
         PautaFinalizadaDTO pautaEsperada = PautaFinalizadaDTOFixture.builderDefault();
         List<PautaFinalizadaDTO> pautasDTOs = List.of(pautaEsperada);
 
-        when(pautaService.obterPautasFinalizadas()).thenReturn(pautasDTOs);
+        when(pautaService.obterPautasFinalizadasPorCategoria(Categoria.EDUCACAO)).thenReturn(pautasDTOs);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/pauta/finalizada/EDUCACAO")
-                        .param("pagina", "0")
-                        .param("tamanho", "10"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/pauta/finalizada/EDUCACAO"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].titulo").value("Título da Pauta"));
     }

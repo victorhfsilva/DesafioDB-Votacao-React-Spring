@@ -4,6 +4,7 @@ import com.db.dbpautasbackend.dto.PautaEmAndamentoDTO;
 import com.db.dbpautasbackend.dto.PautaFinalizadaDTO;
 import com.db.dbpautasbackend.dto.RegistrarPautaDTO;
 import com.db.dbpautasbackend.enums.Categoria;
+import com.db.dbpautasbackend.enums.Decisao;
 import com.db.dbpautasbackend.enums.Voto;
 import com.db.dbpautasbackend.model.Pauta;
 
@@ -20,4 +21,5 @@ public interface PautaService {
     List<PautaFinalizadaDTO> obterPautasFinalizadas();
     List<PautaFinalizadaDTO> obterPautasFinalizadasPorCategoria(Categoria categoria);
 
+    Decisao contabilizar(Pauta pauta);
 }
