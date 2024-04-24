@@ -5,9 +5,6 @@ import com.db.dbpautasbackend.dto.PautaFinalizadaDTO;
 import com.db.dbpautasbackend.dto.RegistrarPautaDTO;
 import com.db.dbpautasbackend.enums.Categoria;
 import com.db.dbpautasbackend.enums.Voto;
-import com.db.dbpautasbackend.mapper.PautaMapper;
-import com.db.dbpautasbackend.model.Pauta;
-import com.db.dbpautasbackend.service.ContabilizacaoService;
 import com.db.dbpautasbackend.service.PautaService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
@@ -24,13 +21,11 @@ import java.util.List;
 public class PautaController {
 
     private PautaService pautaService;
-    private ContabilizacaoService contabilizacaoService;
 
     @PostMapping("/registrar")
     @Operation(summary = "Registra uma pauta no sistema.")
     public ResponseEntity<Boolean> registrar(@RequestBody @Valid RegistrarPautaDTO pautaDTO) {
-        Pauta pauta = PautaMapper.mapRegistrarPautaDTOtoPauta(pautaDTO);
-        pautaService.salvar(pauta);
+        pautaService.salvar(pautaDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(true);
     }
 
@@ -57,8 +52,7 @@ public class PautaController {
     @Operation(summary = "Obtêm uma página de pautas fechadas")
     public ResponseEntity<List<PautaEmAndamentoDTO>> buscarPautasFechadas(
     ){
-        List<Pauta> pautas = pautaService.obterPautasFechadas();
-        List<PautaEmAndamentoDTO> pautasDTOs = PautaMapper.mapPageOfPautaToPageOfPautaEmAndamentoDTO(pautas);
+        List<PautaEmAndamentoDTO> pautasDTOs = pautaService.obterPautasFechadas();
         return ResponseEntity.status(HttpStatus.OK).body(pautasDTOs);
     }
 
@@ -67,8 +61,7 @@ public class PautaController {
     public ResponseEntity<List<PautaEmAndamentoDTO>> buscarPautasFechadasPorCategoria(
             @PathVariable("categoria") Categoria categoria
             ){
-        List<Pauta> pautas = pautaService.obterPautasFechadasPorCategoria(categoria);
-        List<PautaEmAndamentoDTO> pautasDTOs = PautaMapper.mapPageOfPautaToPageOfPautaEmAndamentoDTO(pautas);
+        List<PautaEmAndamentoDTO> pautasDTOs = pautaService.obterPautasFechadasPorCategoria(categoria);
         return ResponseEntity.status(HttpStatus.OK).body(pautasDTOs);
     }
 
@@ -76,8 +69,7 @@ public class PautaController {
     @Operation(summary = "Obtêm uma página de pautas abertas.")
     public ResponseEntity<List<PautaEmAndamentoDTO>> buscarPautasAbertas(
     ){
-        List<Pauta> pautas = pautaService.obterPautasAbertas();
-        List<PautaEmAndamentoDTO> pautasDTOs = PautaMapper.mapPageOfPautaToPageOfPautaEmAndamentoDTO(pautas);
+        List<PautaEmAndamentoDTO> pautasDTOs = pautaService.obterPautasAbertas();
         return ResponseEntity.status(HttpStatus.OK).body(pautasDTOs);
     }
 
@@ -86,8 +78,7 @@ public class PautaController {
     public ResponseEntity<List<PautaEmAndamentoDTO>> buscarPautasAbertasPorCategoria(
             @PathVariable("categoria") Categoria categoria
     ){
-        List<Pauta> pautas = pautaService.obterPautasAbertasPorCategoria(categoria);
-        List<PautaEmAndamentoDTO> pautasDTOs = PautaMapper.mapPageOfPautaToPageOfPautaEmAndamentoDTO(pautas);
+        List<PautaEmAndamentoDTO> pautasDTOs = pautaService.obterPautasAbertasPorCategoria(categoria);
         return ResponseEntity.status(HttpStatus.OK).body(pautasDTOs);
     }
 
@@ -95,8 +86,7 @@ public class PautaController {
     @Operation(summary = "Obtêm uma página de pautas finalizadas")
     public ResponseEntity<List<PautaFinalizadaDTO>> buscarPautasFinalizadas(
     ){
-        List<Pauta> pautas = pautaService.obterPautasFinalizadas();
-        List<PautaFinalizadaDTO> pautasDTOs = PautaMapper.mapPageOfPautaToPageOfPautaFinalizadaDTO(pautas, contabilizacaoService);
+        List<PautaFinalizadaDTO> pautasDTOs = pautaService.obterPautasFinalizadas();
         return ResponseEntity.status(HttpStatus.OK).body(pautasDTOs);
     }
 
@@ -105,8 +95,7 @@ public class PautaController {
     public ResponseEntity<List<PautaFinalizadaDTO>> buscarPautasFinalizadasPorCategoria(
             @PathVariable("categoria") Categoria categoria
     ){
-        List<Pauta> pautas = pautaService.obterPautasFinalizadasPorCategoria(categoria);
-        List<PautaFinalizadaDTO> pautasDTOs = PautaMapper.mapPageOfPautaToPageOfPautaFinalizadaDTO(pautas, contabilizacaoService);
+        List<PautaFinalizadaDTO> pautasDTOs = pautaService.obterPautasFinalizadasPorCategoria(categoria);
         return ResponseEntity.status(HttpStatus.OK).body(pautasDTOs);
     }
 

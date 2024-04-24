@@ -1,5 +1,6 @@
 package com.db.dbpautasbackend.service;
 
+import com.db.dbpautasbackend.enums.Decisao;
 import com.db.dbpautasbackend.enums.Voto;
 import com.db.dbpautasbackend.fixture.PautaFixture;
 import com.db.dbpautasbackend.fixture.UsuarioFixture;
@@ -11,12 +12,17 @@ import com.db.dbpautasbackend.service.impl.PautaServiceImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import java.util.Optional;
+import java.util.stream.Stream;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.verify;
@@ -75,4 +81,19 @@ class PautaServiceImplTest {
         assertEquals(pautaEsperada.getVotosSim(), pautaObitda.getVotosSim());
     }
 
+    @ParameterizedTest
+    @MethodSource("pautas")
+    @DisplayName("Dado pautas finalizadas, quando contabilizado os votos, deve retornar a decisão correta.")
+    void contabilizarTest(Pauta pauta, Decisao decisaoEsperada){
+        Decisao decisaoObtida = pautaService.contabilizar(pauta);
+        assertEquals(decisaoEsperada, decisaoObtida);
+    }
+
+    public static Stream<Arguments> pautas() {
+        return Stream.of(
+                Arguments.of(PautaFixture.builderDePautaAprovada(), Decisao.APROVADO),
+                Arguments.of(PautaFixture.builderDePautaReprovada(), Decisao.REPROVADO),
+                Arguments.of(PautaFixture.builderDePautaEmpatada(), Decisao.EMPATE)
+        );
+    }
 }

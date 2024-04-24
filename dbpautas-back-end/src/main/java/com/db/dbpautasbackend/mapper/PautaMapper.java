@@ -4,7 +4,7 @@ import com.db.dbpautasbackend.dto.PautaEmAndamentoDTO;
 import com.db.dbpautasbackend.dto.PautaFinalizadaDTO;
 import com.db.dbpautasbackend.dto.RegistrarPautaDTO;
 import com.db.dbpautasbackend.model.Pauta;
-import com.db.dbpautasbackend.service.ContabilizacaoService;
+import com.db.dbpautasbackend.service.PautaService;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ public interface PautaMapper {
                 .build();
     }
 
-    static List<PautaEmAndamentoDTO> mapPageOfPautaToPageOfPautaEmAndamentoDTO(List<Pauta> pautas){
+    static List<PautaEmAndamentoDTO> mapListOfPautaToListOfPautaEmAndamentoDTO(List<Pauta> pautas){
         return pautas.stream()
                 .map(pauta -> PautaEmAndamentoDTO.builder().id(pauta.getId())
                     .titulo(pauta.getTitulo())
@@ -30,7 +30,7 @@ public interface PautaMapper {
         ).toList();
     }
 
-    static List<PautaFinalizadaDTO> mapPageOfPautaToPageOfPautaFinalizadaDTO(List<Pauta> pautas, ContabilizacaoService contabilizacaoService){
+    static List<PautaFinalizadaDTO> mapListOfPautaToListOfPautaFinalizadaDTO(List<Pauta> pautas, PautaService pautaService){
         return pautas.stream().map(pauta -> PautaFinalizadaDTO.builder().id(pauta.getId())
                         .titulo(pauta.getTitulo())
                         .resumo(pauta.getResumo())
@@ -38,7 +38,7 @@ public interface PautaMapper {
                         .categoria(pauta.getCategoria())
                         .votosSim(pauta.getVotosSim())
                         .votosNao(pauta.getVotosNao())
-                        .decisao(contabilizacaoService.contabilizar(pauta))
+                        .decisao(pautaService.contabilizar(pauta))
                         .build()
         ).toList();
     }

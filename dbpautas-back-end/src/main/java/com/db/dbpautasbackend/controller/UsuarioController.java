@@ -21,12 +21,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class UsuarioController {
 
     private UsuarioService usuarioService;
-    private PasswordEncoder passwordEncoder;
+
     @PostMapping("/registrar")
     @Operation(summary = "Registra um usuário no sistema.")
     public ResponseEntity<Boolean> registrar(@RequestBody @Valid RegistrarUsuarioDTO registrarUsuarioDTO) {
-        Usuario usuario = UsuarioMapper.mapRegistrarUsuarioDTOToUsuario(registrarUsuarioDTO, passwordEncoder);
-        usuarioService.salvar(usuario);
+        usuarioService.salvar(registrarUsuarioDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(true);
     }
 }
