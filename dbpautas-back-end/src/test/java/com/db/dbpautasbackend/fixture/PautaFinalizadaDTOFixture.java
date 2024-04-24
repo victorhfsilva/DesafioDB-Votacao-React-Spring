@@ -5,8 +5,8 @@ import com.db.dbpautasbackend.dto.PautaFinalizadaDTO;
 import com.db.dbpautasbackend.enums.Categoria;
 import com.db.dbpautasbackend.enums.Decisao;
 
-public class PautaFinalizadaDTOFixture {
-    public static PautaFinalizadaDTO builderDefault(){
+public interface PautaFinalizadaDTOFixture {
+    static PautaFinalizadaDTO builderDefault(){
         return builder().build();
     }
 
