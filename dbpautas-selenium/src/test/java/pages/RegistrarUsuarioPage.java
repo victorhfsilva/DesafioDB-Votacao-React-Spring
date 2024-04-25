@@ -111,4 +111,31 @@ public class RegistrarUsuarioPage extends BasePage{
         return this;
     }
 
+    public WebElement getNome() {
+        return nome;
+    }
+
+    public WebElement getSobrenome() {
+        return sobrenome;
+    }
+
+    public WebElement getEmail() {
+        return email;
+    }
+
+    public WebElement getCpf() {
+        return cpf;
+    }
+
+    public WebElement getSenha() {
+        return senha;
+    }
+
+    public WebElement getPapel() {
+        return papel;
+    }
+
+    public WebElement getRegistrar() {
+        return registrar;
+    }
 }

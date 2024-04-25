@@ -91,6 +91,30 @@ public class BasePage {
         return this;
     }
 
+    public WebElement findElement(By locator) {
+        return driver.findElement(locator);
+    }
+
+    public void click(By locator) {
+        findElement(locator).click();
+    }
+
+    public void sendKeys(By locator, String text) {
+        findElement(locator).sendKeys(text);
+    }
+
+    public String getText(By locator) {
+        return findElement(locator).getText();
+    }
+
+    public String getTitle() {
+        return driver.getTitle();
+    }
+
+    public String getCurrentUrl() {
+        return driver.getCurrentUrl();
+    }
+
     public String getHome() {
         return this.home;
     }

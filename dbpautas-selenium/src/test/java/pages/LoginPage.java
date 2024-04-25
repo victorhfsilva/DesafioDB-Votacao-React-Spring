@@ -5,6 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+
 public class LoginPage extends BasePage {
 
     @FindBy(xpath = "//input[@name='cpf']")
@@ -52,4 +53,15 @@ public class LoginPage extends BasePage {
         return this;
     }
 
+    public WebElement getCpf() {
+        return cpf;
+    }
+
+    public WebElement getSenha() {
+        return senha;
+    }
+
+    public WebElement getEntrar() {
+        return entrar;
+    }
 }

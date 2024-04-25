@@ -7,13 +7,11 @@ import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
 
-
-public class AbrirPautasPage extends BasePage {
-
+public class PautasAbertasPage extends BasePage{
     @FindBy(className = "pauta")
     List<WebElement> pautas;
 
-    public AbrirPautasPage(WebDriver driver) {
+    public PautasAbertasPage(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
     }
