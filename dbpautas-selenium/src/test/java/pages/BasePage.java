@@ -11,7 +11,7 @@ import java.util.Set;
 
 public class BasePage {
 
-    private String home = "http://localhost:5173";
+    private String urlInicio = "http://localhost:5173/";
 
     protected WebDriver driver;
 
@@ -91,32 +91,28 @@ public class BasePage {
         return this;
     }
 
-    public WebElement findElement(By locator) {
+    public WebElement encontrarElemento(By locator) {
         return driver.findElement(locator);
     }
 
-    public void click(By locator) {
-        findElement(locator).click();
+    public void clicar(By locator) {
+        encontrarElemento(locator).click();
     }
 
-    public void sendKeys(By locator, String text) {
-        findElement(locator).sendKeys(text);
+    public void digitar(By locator, String text) {
+        encontrarElemento(locator).sendKeys(text);
     }
 
-    public String getText(By locator) {
-        return findElement(locator).getText();
+    public String getTexto(By locator) {
+        return encontrarElemento(locator).getText();
     }
 
-    public String getTitle() {
-        return driver.getTitle();
-    }
-
-    public String getCurrentUrl() {
+    public String gettUrlAtual() {
         return driver.getCurrentUrl();
     }
 
-    public String getHome() {
-        return this.home;
+    public String getUrlInicio() {
+        return this.urlInicio;
     }
 
 }

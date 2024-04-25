@@ -49,7 +49,9 @@ const PautaAbertaModal: React.FC<PautaAbertaProps> = ({pauta, isOpen, onClose, n
                         color={'cinza4'} 
                         fontSize={'1.2em'} 
                         fontFamily={'Poppins'} 
-                        fontWeight={'300'}>
+                        fontWeight={'300'}
+                        id={`titulo-${pauta.id}`}
+                        className="titulo">
                         {pauta.titulo}
                     </Heading>
                 </ModalHeader>
@@ -59,7 +61,9 @@ const PautaAbertaModal: React.FC<PautaAbertaProps> = ({pauta, isOpen, onClose, n
                         fontFamily={'Poppins'} 
                         padding={'0.8em 1em 0.8em 1em'}
                         overflow={'auto'}
-                        maxHeight={'16em'}>
+                        maxHeight={'16em'}
+                        id={`desc-${pauta.id}`}
+                        className="desc">
                         <b>Resumo:</b> {pauta.resumo}
                         <br />
                         <br />
@@ -72,10 +76,21 @@ const PautaAbertaModal: React.FC<PautaAbertaProps> = ({pauta, isOpen, onClose, n
                 </ModalBody>
                 <ModalFooter>
                     <Flex direction={'row'} justifyContent={'flex-end'}>
-                        <Button colorScheme='red' variant={'outline'} mr={3} onClick={onVotoNao}>
+                        <Button 
+                            colorScheme='red' 
+                            variant={'outline'} 
+                            mr={3} 
+                            onClick={onVotoNao}
+                            id={`nao-${pauta.id}`}
+                            className="nao">
                             Não
                         </Button>
-                        <Button colorScheme='green' mr={3} onClick={onVotoSim}>
+                        <Button 
+                            colorScheme='green' 
+                            mr={3} 
+                            onClick={onVotoSim}
+                            id={`sim-${pauta.id}`}
+                            className="sim">
                             Sim
                         </Button>
                     </Flex>

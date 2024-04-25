@@ -40,6 +40,7 @@ const PautaAberta: React.FC<PautaEmAndamentoProps>  = ({pauta, navigate}) => {
                     fontWeight={'700'}
                     maxHeight={'2.5em'}
                     overflow={'hidden'}
+                    className="titulo"
                     id={`titulo-${pauta.id}`}>
                         {pauta.titulo}
                 </Heading>
@@ -49,7 +50,8 @@ const PautaAberta: React.FC<PautaEmAndamentoProps>  = ({pauta, navigate}) => {
                     maxWidth={'100%'}
                     overflow={'auto'}
                     maxHeight={'7em'}
-                    id={`resumo-${pauta.id}`}>
+                    id={`resumo-${pauta.id}`}
+                    className="resumo">
                     <b>Resumo:</b> {pauta.resumo}
                 </Text>
                 <Flex width={'100%'} direction={'row'} justifyContent={'flex-end'}>
@@ -60,7 +62,8 @@ const PautaAberta: React.FC<PautaEmAndamentoProps>  = ({pauta, navigate}) => {
                         _hover={{background: 'cinza5', color: 'cinza4'}} 
                         _active={{background: 'cinza5', color: 'cinza4'}}
                         onClick={onOpen}
-                        id={`sobre-${pauta.id}`}>
+                        id={`sobre-${pauta.id}`}
+                        className="sobre">
                             Sobre
                     </Button>
                 </Flex>

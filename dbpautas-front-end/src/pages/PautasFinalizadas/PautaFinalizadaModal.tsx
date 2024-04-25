@@ -20,7 +20,9 @@ const PautaFinalizadaModal: React.FC<PautaFinalizadaProps> = ({pauta, isOpen, on
                         color={'cinza4'} 
                         fontSize={'1.2em'} 
                         fontFamily={'Poppins'} 
-                        fontWeight={'300'}>
+                        fontWeight={'300'}
+                        id={`titulo-${pauta.id}`}
+                        className="titulo">
                         {pauta.titulo}
                     </Heading>
                 </ModalHeader>
@@ -30,7 +32,9 @@ const PautaFinalizadaModal: React.FC<PautaFinalizadaProps> = ({pauta, isOpen, on
                         fontFamily={'Poppins'} 
                         padding={'0.8em 1em 0.8em 1em'}
                         overflow={'auto'}
-                        maxHeight={'16em'}>
+                        maxHeight={'16em'}
+                        id={`desc-${pauta.id}`}
+                        className="desc">
                         <b>Resumo:</b> {pauta.resumo}
                         <br />
                         <br />
@@ -43,21 +47,30 @@ const PautaFinalizadaModal: React.FC<PautaFinalizadaProps> = ({pauta, isOpen, on
                         <Text 
                             color={'cinza4'}
                             fontFamily={'Poppins'} 
-                            padding={'0.8em 1em 0.8em 1em'}>
+                            padding={'0.8em 1em 0.8em 1em'}
+                            id={`decisao-${pauta.id}`}
+                            className="decisao">
                             <b> {getDecisaoFormatada(pauta.decisao)} </b>
                         </Text>
                         <Text  
                             color={'cinza4'}
                             fontFamily={'Poppins'} 
-                            padding={'0.8em 1em 0.8em 1em'}>
+                            padding={'0.8em 1em 0.8em 1em'}
+                            id={`votos-${pauta.id}`}
+                            className="votos">
                             Sim: {pauta.votosSim} | Não: {pauta.votosNao}
                         </Text>
                     </Flex>
                     
                 </ModalBody>
                 <ModalFooter>
-                    <Button colorScheme='gray' mr={3} onClick={onClose}>
-                        Close
+                    <Button 
+                        colorScheme='gray' 
+                        mr={3} 
+                        onClick={onClose}
+                        id={`fechar-${pauta.id}`}
+                        className="fechar">
+                        Fechar
                     </Button>
                 </ModalFooter>
             </ModalContent>

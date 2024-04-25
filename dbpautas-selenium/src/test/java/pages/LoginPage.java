@@ -22,6 +22,11 @@ public class LoginPage extends BasePage {
         PageFactory.initElements(driver, this);
     }
 
+    public LoginPage navegarPara() {
+        driver.get(super.getUrlInicio() + "login");
+        return this;
+    }
+
     public LoginPage preencherCpf(String cpf) {
         this.cpf.sendKeys(cpf);
         return this;

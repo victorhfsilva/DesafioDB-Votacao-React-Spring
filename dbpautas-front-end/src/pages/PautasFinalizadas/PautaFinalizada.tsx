@@ -41,7 +41,8 @@ const PautaFinalizada: React.FC<PautaFinalizadaProps>  = ({pauta}) => {
                     fontWeight={'700'}
                     maxHeight={'2.5em'}
                     overflow={'hidden'}
-                    id={`titulo-${pauta.id}`}>
+                    id={`titulo-${pauta.id}`}
+                    className="titulo">
                         {pauta.titulo}
                 </Heading>
                 <Text color={'cinza4'} 
@@ -50,7 +51,8 @@ const PautaFinalizada: React.FC<PautaFinalizadaProps>  = ({pauta}) => {
                     overflow={'auto'}
                     maxWidth={'100%'}
                     maxHeight={'7em'}
-                    id={`resumo-${pauta.id}`}>
+                    id={`resumo-${pauta.id}`}
+                    className="resumo">
                     <b>Resumo:</b> {pauta.resumo}
                 </Text>
                 <Flex width={'100%'} direction={'row'} justifyContent={'space-between'}>
@@ -64,7 +66,8 @@ const PautaFinalizada: React.FC<PautaFinalizadaProps>  = ({pauta}) => {
                         _hover={{background: 'cinza5', color: 'cinza4'}} 
                         _active={{background: 'cinza5', color: 'cinza4'}}
                         onClick={onOpen}
-                        id={`sobre-${pauta.id}`}>
+                        id={`sobre-${pauta.id}`}
+                        className="resumo">
                             Sobre
                     </Button>
                 </Flex>
