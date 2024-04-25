@@ -10,7 +10,7 @@ public class CadastrarPautaPage extends BasePage {
     @FindBy(xpath = "//input[@name='titulo']")
     private WebElement titulo;
 
-    @FindBy(xpath = "//input[@name='resumo']")
+    @FindBy(xpath = "//textarea[@name='resumo']")
     private WebElement resumo;
 
     @FindBy(xpath = "//textarea[@name='descricao']")

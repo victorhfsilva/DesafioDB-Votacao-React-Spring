@@ -53,7 +53,7 @@ public class LoginPage extends BasePage {
         return this;
     }
 
-    public BasePage clicarEntrar() {
+    public BasePage entrar() {
         this.entrar.click();
         return this;
     }

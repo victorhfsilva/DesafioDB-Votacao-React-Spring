@@ -1,5 +1,4 @@
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
@@ -31,7 +30,7 @@ class LoginTest {
         BasePage inicio = loginPage.navegarPara()
                 .preencherCpf("admin")
                 .preencherSenha("admin")
-                .clicarEntrar();
+                .entrar();
 
         inicio.esperaUrlSer("http://localhost:5173/", Duration.ofSeconds(10));
         String urlAtual = inicio.gettUrlAtual();
@@ -40,11 +39,11 @@ class LoginTest {
 
     @Test
     @DisplayName("Dado um login com CPF não cadastrado no banco de dados, quando o usuário tenta logar, o usuário deve receber um alerta de recurso não encontrado.")
-    void deveLogarComCpfNaoCadastrado() {
+    void deveExibirErroComCpfNaoCadastrado() {
         BasePage inicio = loginPage.navegarPara()
                 .preencherCpf("12345678901")
                 .preencherSenha("senha")
-                .clicarEntrar();
+                .entrar();
 
         String tituloEsperadoToast = new String("Recurso não encontrado".getBytes(), StandardCharsets.UTF_8);
         String descricaoEsperadaToast = new String("O recurso solicitado não foi encontrado.".getBytes(), StandardCharsets.UTF_8);
@@ -62,11 +61,11 @@ class LoginTest {
 
     @Test
     @DisplayName("Dado um login com CPF não cadastrado no banco de dados, quando o usuário tenta logar, o usuário deve receber um alerta de recurso não encontrado.")
-    void deveLogarComSenhaErrada() {
+    void deveExibirErroComSenhaErrada() {
         BasePage inicio = loginPage.navegarPara()
                 .preencherCpf("admin")
                 .preencherSenha("senha errada")
-                .clicarEntrar();
+                .entrar();
 
         String tituloEsperadoToast = new String("Falha de autenticação".getBytes(), StandardCharsets.UTF_8);
         String descricaoEsperadaToast = new String("Por favor, faça login novamente.".getBytes(), StandardCharsets.UTF_8);
