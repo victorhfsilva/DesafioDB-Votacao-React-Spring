@@ -57,10 +57,13 @@ class LoginTest {
         assertTrue(toast.isDisplayed());
         assertEquals(tituloEsperadoToast, toastTitulo.getText());
         assertEquals(descricaoEsperadaToast, toastDescricao.getText());
+
+        String urlAtual = inicio.gettUrlAtual();
+        assertEquals("http://localhost:5173/login", urlAtual);
     }
 
     @Test
-    @DisplayName("Dado um login com CPF não cadastrado no banco de dados, quando o usuário tenta logar, o usuário deve receber um alerta de recurso não encontrado.")
+    @DisplayName("Dado um login com senha inválida, quando o usuário tenta logar, o usuário deve receber um alerta de recurso não encontrado.")
     void deveExibirErroComSenhaErrada() {
         BasePage inicio = loginPage.navegarPara()
                 .preencherCpf("admin")
@@ -79,5 +82,9 @@ class LoginTest {
         assertTrue(toast.isDisplayed());
         assertEquals(tituloEsperadoToast, toastTitulo.getText());
         assertEquals(descricaoEsperadaToast, toastDescricao.getText());
+
+        String urlAtual = inicio.gettUrlAtual();
+        assertEquals("http://localhost:5173/login", urlAtual);
+
     }
 }

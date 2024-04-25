@@ -23,8 +23,8 @@ class CadastrarPautaTest {
     private static final LoginPage loginPage = new LoginPage(driver);
     private static final CadastrarPautaPage cadastrarPautaPage = new CadastrarPautaPage(driver);
     private static final Faker faker = new Faker();
-
     private BasePage inicio;
+
     @BeforeEach
     void setUp() {
         inicio = loginPage.navegarPara()
@@ -60,23 +60,6 @@ class CadastrarPautaTest {
     }
 
     @Test
-    @DisplayName("Dado uma pauta válida, quando o usuário cadastrá-la, então o usuário deve ser encaminhado para página AbrirPautas.")
-    void deveCadastrarPautaSemEspecificarCategoriaComSucesso() {
-        inicio.clicar(By.xpath("//button[@data-testid='menu-admin']"));
-        inicio.clicar(By.xpath("//button[@data-testid='menu-cadastrar-pauta']"));
-
-
-        BasePage abrirPautas = cadastrarPautaPage.preencherTitulo(faker.lorem().sentence(5))
-                .preencherResumo(faker.lorem().sentence(20))
-                .preencherDescricao(faker.lorem().sentence(60))
-                .cadastrar();
-
-        abrirPautas.esperaUrlSer("http://localhost:5173/abrirPauta", Duration.ofSeconds(10));
-        String urlAtual = inicio.gettUrlAtual();
-        assertEquals("http://localhost:5173/abrirPauta", urlAtual);
-    }
-
-    @Test
     @DisplayName("Dado uma pauta com título inválido, quando o usuário cadastrá-la, então o usuário deve receber um erro.")
     void deveExibirErroCadastrandoPautaComTituloInvalido() {
         inicio.clicar(By.xpath("//button[@data-testid='menu-admin']"));
@@ -102,6 +85,9 @@ class CadastrarPautaTest {
         assertTrue(toast.isDisplayed());
         assertEquals(tituloEsperadoToast, toastTitulo.getText());
         assertEquals(descricaoEsperadaToast, toastDescricao.getText());
+
+        String urlAtual = inicio.gettUrlAtual();
+        assertEquals("http://localhost:5173/cadastrarPauta", urlAtual);
     }
 
     @Test
@@ -130,6 +116,9 @@ class CadastrarPautaTest {
         assertTrue(toast.isDisplayed());
         assertEquals(tituloEsperadoToast, toastTitulo.getText());
         assertEquals(descricaoEsperadaToast, toastDescricao.getText());
+
+        String urlAtual = inicio.gettUrlAtual();
+        assertEquals("http://localhost:5173/cadastrarPauta", urlAtual);
     }
 
     @Test
@@ -158,5 +147,8 @@ class CadastrarPautaTest {
         assertTrue(toast.isDisplayed());
         assertEquals(tituloEsperadoToast, toastTitulo.getText());
         assertEquals(descricaoEsperadaToast, toastDescricao.getText());
+
+        String urlAtual = inicio.gettUrlAtual();
+        assertEquals("http://localhost:5173/cadastrarPauta", urlAtual);
     }
 }

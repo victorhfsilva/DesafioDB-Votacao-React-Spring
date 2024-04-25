@@ -106,7 +106,7 @@ public class RegistrarUsuarioPage extends BasePage{
         return this;
     }
 
-    public BasePage clicarRegistrar() {
+    public BasePage registrar() {
         this.registrar.click();
         return this;
     }
