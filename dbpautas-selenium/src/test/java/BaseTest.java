@@ -14,9 +14,4 @@ public class BaseTest {
         DriverFactory.setDriver(url);
     }
 
-    @AfterAll
-    public static void tearDown(){
-        driver.quit();
-    }
-
 }

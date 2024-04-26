@@ -43,14 +43,14 @@ public class LoginAction extends LoginPage {
         this.entrar.click();
     }
 
-    public void loginValido(){
+    public void ralizarLoginValido(){
         this.navegarPara()
                 .preencherCpf("admin")
                 .preencherSenha("admin")
                 .entrar();
     }
 
-    public void loginUsuario(String cpf, String senha){
+    public void realizarLoginUsuario(String cpf, String senha){
         this.navegarPara()
                 .preencherCpf(cpf)
                 .preencherSenha(senha)
