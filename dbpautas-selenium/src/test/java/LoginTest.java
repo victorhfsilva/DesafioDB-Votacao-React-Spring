@@ -1,12 +1,8 @@
-import org.junit.jupiter.api.AfterAll;
+import actions.LoginAction;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import pages.BasePage;
-import pages.LoginPage;
 
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
@@ -14,77 +10,65 @@ import java.time.Duration;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class LoginTest {
+class LoginTest extends  BaseTest {
 
-    public static final WebDriver driver = new ChromeDriver();
-    private static final LoginPage loginPage = new LoginPage(driver);
-
-    @AfterAll
-    static void tearDown() {
-        driver.quit();
-    }
+    private static final LoginAction loginAction = new LoginAction();
 
     @Test
     @DisplayName("Dado um login válido, quando o usuário tenta logar, então o usuário deve ser encaminhado para página Home.")
     void deveLogarComSucesso() {
-        BasePage inicio = loginPage.navegarPara()
+        loginAction.navegarPara()
                 .preencherCpf("admin")
                 .preencherSenha("admin")
                 .entrar();
 
-        inicio.esperaUrlSer("http://localhost:5173/", Duration.ofSeconds(10));
-        String urlAtual = inicio.gettUrlAtual();
-        assertEquals(inicio.getUrlInicio(), urlAtual);
+        loginAction.esperaUrlSer(loginAction.getUrlInicio(), Duration.ofSeconds(10));
+        assertEquals(loginAction.getUrlInicio(), loginAction.gettUrlAtual());
     }
 
     @Test
     @DisplayName("Dado um login com CPF não cadastrado no banco de dados, quando o usuário tenta logar, o usuário deve receber um alerta de recurso não encontrado.")
-    void deveExibirErroComCpfNaoCadastrado() {
-        BasePage inicio = loginPage.navegarPara()
+    void loginDeveExibirErroComCpfNaoCadastrado() {
+        loginAction.navegarPara()
                 .preencherCpf("12345678901")
                 .preencherSenha("senha")
                 .entrar();
 
+        loginAction.esperar(Duration.ofSeconds(2));
+
+        WebElement toast = loginAction.encontrarToast();
+        String tituloToast = loginAction.obterTituloDoToast(toast);
+        String descricaoToast = loginAction.obterDescricaoDoToast(toast);
+
         String tituloEsperadoToast = new String("Recurso não encontrado".getBytes(), StandardCharsets.UTF_8);
         String descricaoEsperadaToast = new String("O recurso solicitado não foi encontrado.".getBytes(), StandardCharsets.UTF_8);
 
-        inicio.esperar(Duration.ofSeconds(2));
-
-        WebElement toast = inicio.encontrarElemento(By.className("chakra-alert"));
-        WebElement toastTitulo = toast.findElement(By.className("chakra-alert__title"));
-        WebElement toastDescricao = toast.findElement(By.className("chakra-alert__desc"));
-
         assertTrue(toast.isDisplayed());
-        assertEquals(tituloEsperadoToast, toastTitulo.getText());
-        assertEquals(descricaoEsperadaToast, toastDescricao.getText());
-
-        String urlAtual = inicio.gettUrlAtual();
-        assertEquals("http://localhost:5173/login", urlAtual);
+        assertEquals(tituloEsperadoToast, tituloToast);
+        assertEquals(descricaoEsperadaToast, descricaoToast);
+        assertEquals("http://localhost:5173/login", loginAction.gettUrlAtual());
     }
 
     @Test
-    @DisplayName("Dado um login com senha inválida, quando o usuário tenta logar, o usuário deve receber um alerta de recurso não encontrado.")
-    void deveExibirErroComSenhaErrada() {
-        BasePage inicio = loginPage.navegarPara()
+    @DisplayName("Dado um login com senha errada, quando o usuário tenta logar, o usuário deve receber um alerta de recurso não encontrado.")
+    void loginDeveExibirErroComSenhaErradaCadastrado() {
+        loginAction.navegarPara()
                 .preencherCpf("admin")
                 .preencherSenha("senha errada")
                 .entrar();
 
+        loginAction.esperar(Duration.ofSeconds(2));
+
+        WebElement toast = loginAction.encontrarToast();
+        String tituloToast = loginAction.obterTituloDoToast(toast);
+        String descricaoToast = loginAction.obterDescricaoDoToast(toast);
+
         String tituloEsperadoToast = new String("Falha de autenticação".getBytes(), StandardCharsets.UTF_8);
         String descricaoEsperadaToast = new String("Por favor, faça login novamente.".getBytes(), StandardCharsets.UTF_8);
 
-        inicio.esperar(Duration.ofSeconds(2));
-
-        WebElement toast = inicio.encontrarElemento(By.className("chakra-alert"));
-        WebElement toastTitulo = toast.findElement(By.className("chakra-alert__title"));
-        WebElement toastDescricao = toast.findElement(By.className("chakra-alert__desc"));
-
         assertTrue(toast.isDisplayed());
-        assertEquals(tituloEsperadoToast, toastTitulo.getText());
-        assertEquals(descricaoEsperadaToast, toastDescricao.getText());
-
-        String urlAtual = inicio.gettUrlAtual();
-        assertEquals("http://localhost:5173/login", urlAtual);
-
+        assertEquals(tituloEsperadoToast, tituloToast);
+        assertEquals(descricaoEsperadaToast, descricaoToast);
+        assertEquals("http://localhost:5173/login", loginAction.gettUrlAtual());
     }
 }

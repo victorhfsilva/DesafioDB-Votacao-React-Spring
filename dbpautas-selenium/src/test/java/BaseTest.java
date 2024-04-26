@@ -1,3 +1,4 @@
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import util.DriverFactory;
@@ -13,8 +14,8 @@ public class BaseTest {
         DriverFactory.setDriver(url);
     }
 
-    @AfterEach
-    public void tearDown(){
+    @AfterAll
+    public static void tearDown(){
         driver.quit();
     }
 

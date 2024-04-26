@@ -1,6 +1,8 @@
 package pages;
 
 import org.openqa.selenium.*;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.apache.commons.io.FileUtils;
@@ -9,14 +11,14 @@ import java.io.IOException;
 import java.time.Duration;
 import java.util.Set;
 
+import static util.DriverFactory.driver;
+
 public class BasePage {
 
     private String urlInicio = "http://localhost:5173/";
 
-    protected WebDriver driver;
-
-    public BasePage(WebDriver driver) {
-        this.driver = driver;
+    public BasePage() {
+        PageFactory.initElements(new AjaxElementLocatorFactory(driver, 10), this);
     }
 
     public BasePage abrirPagina(String url){
@@ -57,7 +59,6 @@ public class BasePage {
         return this;
     }
 
-
     public BasePage esperarPorTituloConter(String title, Duration timeout) {
         WebDriverWait wait = new WebDriverWait(driver, timeout);
         wait.until(ExpectedConditions.titleContains(title));
@@ -89,22 +90,6 @@ public class BasePage {
             e.printStackTrace();
         }
         return this;
-    }
-
-    public WebElement encontrarElemento(By locator) {
-        return driver.findElement(locator);
-    }
-
-    public void clicar(By locator) {
-        encontrarElemento(locator).click();
-    }
-
-    public void digitar(By locator, String text) {
-        encontrarElemento(locator).sendKeys(text);
-    }
-
-    public String getTexto(By locator) {
-        return encontrarElemento(locator).getText();
     }
 
     public String gettUrlAtual() {
