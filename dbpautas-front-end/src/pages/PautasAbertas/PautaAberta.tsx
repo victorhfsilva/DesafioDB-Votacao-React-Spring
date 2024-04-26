@@ -39,7 +39,9 @@ const PautaAberta: React.FC<PautaEmAndamentoProps>  = ({pauta, navigate}) => {
                     fontFamily={'Poppins'} 
                     fontWeight={'700'}
                     maxHeight={'2.5em'}
-                    overflow={'hidden'}>
+                    overflow={'hidden'}
+                    className="titulo"
+                    id={`titulo-${pauta.id}`}>
                         {pauta.titulo}
                 </Heading>
                 <Text color={'cinza4'} 
@@ -47,7 +49,9 @@ const PautaAberta: React.FC<PautaEmAndamentoProps>  = ({pauta, navigate}) => {
                     padding={'0.8em 1em 0.8em 1em'}
                     maxWidth={'100%'}
                     overflow={'auto'}
-                    maxHeight={'7em'}>
+                    maxHeight={'7em'}
+                    id={`resumo-${pauta.id}`}
+                    className="resumo">
                     <b>Resumo:</b> {pauta.resumo}
                 </Text>
                 <Flex width={'100%'} direction={'row'} justifyContent={'flex-end'}>
@@ -57,7 +61,9 @@ const PautaAberta: React.FC<PautaEmAndamentoProps>  = ({pauta, navigate}) => {
                         color={'cinza4'}
                         _hover={{background: 'cinza5', color: 'cinza4'}} 
                         _active={{background: 'cinza5', color: 'cinza4'}}
-                        onClick={onOpen}>
+                        onClick={onOpen}
+                        id={`sobre-${pauta.id}`}
+                        className="sobre">
                             Sobre
                     </Button>
                 </Flex>

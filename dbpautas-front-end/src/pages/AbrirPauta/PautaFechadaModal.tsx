@@ -44,7 +44,9 @@ const PautaFechadaModal: React.FC<PautaFechadaProps> = ({pauta, isOpen, onClose,
                         color={'cinza4'} 
                         fontSize={'1.2em'} 
                         fontFamily={'Poppins'} 
-                        fontWeight={'300'}>
+                        fontWeight={'300'}
+                        id={`titulo-${pauta.id}`}
+                        className="titulo">
                         {pauta.titulo}
                     </Heading>
                 </ModalHeader>
@@ -54,7 +56,9 @@ const PautaFechadaModal: React.FC<PautaFechadaProps> = ({pauta, isOpen, onClose,
                         fontFamily={'Poppins'} 
                         padding={'0.8em 1em 0.8em 1em'}
                         overflow={'auto'}
-                        maxHeight={'16em'}>
+                        maxHeight={'16em'}
+                        id={`desc-${pauta.id}`}
+                        className="desc">
                         <b>Resumo:</b> {pauta.resumo}
                         <br />
                         <br />
@@ -73,7 +77,12 @@ const PautaFechadaModal: React.FC<PautaFechadaProps> = ({pauta, isOpen, onClose,
                         </NumberInputStepper>
                     </NumberInput>    
                     <Flex direction={'row'} justifyContent={'flex-end'}>
-                        <Button colorScheme='gray' mr={3} onClick={onAbrir}>
+                        <Button 
+                            colorScheme='gray' 
+                            mr={3} 
+                            onClick={onAbrir}
+                            id={`abrir-${pauta.id}`}
+                            className="abrir">
                             Abrir
                         </Button>
                     </Flex>

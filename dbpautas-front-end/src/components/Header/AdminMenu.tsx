@@ -9,7 +9,7 @@ const AdminMenu = () => {
                 fontFamily={'Poppins'}
                 paddingLeft={'1.6em'} 
                 fontSize={'1.0em'} 
-                data-testid='menu-pautas'>
+                data-testid='menu-admin'>
                     Admin
             </MenuButton>
             <MenuList fontFamily={'Poppins'} fontSize={'.9em'}>
