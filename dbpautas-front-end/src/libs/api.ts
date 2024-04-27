@@ -4,7 +4,7 @@ import useHandleSessaoExpirada from "../hooks/useHandleSessaoExpirada";
 import useHandleExcecao from "../hooks/useHandleExcecao";
 
 const api = axios.create({
-  baseURL: "http://localhost:8080"
+  baseURL: "https://dbpautas-spring-back-end.onrender.com"
 })
 
 const AxiosInterceptor = ({children}: {children: React.ReactNode}) => {
