@@ -3,7 +3,7 @@ import CadastrarPautaRequisicaoModel from "../models/CadastrarPautaRequisicaoMod
 
 const cadastrarPautaService = async (cadastrarPautaRequisicao: CadastrarPautaRequisicaoModel) => {
     
-    return api.post('/pauta/registrar', cadastrarPautaRequisicao).then(response => {
+    return api.post('/pautas', cadastrarPautaRequisicao).then(response => {
             return response.data as boolean;
         });
 }
