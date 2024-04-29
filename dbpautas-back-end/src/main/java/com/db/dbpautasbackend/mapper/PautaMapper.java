@@ -1,8 +1,8 @@
 package com.db.dbpautasbackend.mapper;
 
-import com.db.dbpautasbackend.dto.PautaEmAndamentoDTO;
-import com.db.dbpautasbackend.dto.PautaFinalizadaDTO;
-import com.db.dbpautasbackend.dto.RegistrarPautaDTO;
+import com.db.dbpautasbackend.model.dto.PautaEmAndamentoResponse;
+import com.db.dbpautasbackend.model.dto.PautaFinalizadaResponse;
+import com.db.dbpautasbackend.model.dto.RegistrarPautaRequest;
 import com.db.dbpautasbackend.model.Pauta;
 import com.db.dbpautasbackend.service.PautaService;
 
@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface PautaMapper {
 
-    static Pauta mapRegistrarPautaDTOtoPauta(RegistrarPautaDTO registrarPautaDTO){
+    static Pauta mapRegistrarPautaDTOtoPauta(RegistrarPautaRequest registrarPautaDTO){
         return Pauta.builder()
                 .titulo(registrarPautaDTO.titulo())
                 .resumo(registrarPautaDTO.resumo())
@@ -19,9 +19,9 @@ public interface PautaMapper {
                 .build();
     }
 
-    static List<PautaEmAndamentoDTO> mapListOfPautaToListOfPautaEmAndamentoDTO(List<Pauta> pautas){
+    static List<PautaEmAndamentoResponse> mapListOfPautaToListOfPautaEmAndamentoDTO(List<Pauta> pautas){
         return pautas.stream()
-                .map(pauta -> PautaEmAndamentoDTO.builder().id(pauta.getId())
+                .map(pauta -> PautaEmAndamentoResponse.builder().id(pauta.getId())
                     .titulo(pauta.getTitulo())
                     .resumo(pauta.getResumo())
                     .descricao(pauta.getDescricao())
@@ -30,8 +30,8 @@ public interface PautaMapper {
         ).toList();
     }
 
-    static List<PautaFinalizadaDTO> mapListOfPautaToListOfPautaFinalizadaDTO(List<Pauta> pautas, PautaService pautaService){
-        return pautas.stream().map(pauta -> PautaFinalizadaDTO.builder().id(pauta.getId())
+    static List<PautaFinalizadaResponse> mapListOfPautaToListOfPautaFinalizadaDTO(List<Pauta> pautas, PautaService pautaService){
+        return pautas.stream().map(pauta -> PautaFinalizadaResponse.builder().id(pauta.getId())
                         .titulo(pauta.getTitulo())
                         .resumo(pauta.getResumo())
                         .descricao(pauta.getDescricao())

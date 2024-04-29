@@ -1,4 +1,4 @@
-package com.db.dbpautasbackend.security;
+package com.db.dbpautasbackend.config;
 
 import com.db.dbpautasbackend.service.TokenService;
 import jakarta.servlet.FilterChain;

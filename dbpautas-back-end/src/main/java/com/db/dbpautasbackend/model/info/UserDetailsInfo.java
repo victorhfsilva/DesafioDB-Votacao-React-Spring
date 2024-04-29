@@ -1,6 +1,6 @@
-package com.db.dbpautasbackend.info;
+package com.db.dbpautasbackend.model.info;
 
-import com.db.dbpautasbackend.enums.Papel;
+import com.db.dbpautasbackend.model.enums.Papel;
 
 public interface UserDetailsInfo {
     String getCpf();

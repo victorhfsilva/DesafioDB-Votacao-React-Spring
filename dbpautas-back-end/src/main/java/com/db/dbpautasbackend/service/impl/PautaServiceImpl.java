@@ -1,11 +1,11 @@
 package com.db.dbpautasbackend.service.impl;
 
-import com.db.dbpautasbackend.dto.PautaEmAndamentoDTO;
-import com.db.dbpautasbackend.dto.PautaFinalizadaDTO;
-import com.db.dbpautasbackend.dto.RegistrarPautaDTO;
-import com.db.dbpautasbackend.enums.Categoria;
-import com.db.dbpautasbackend.enums.Decisao;
-import com.db.dbpautasbackend.enums.Voto;
+import com.db.dbpautasbackend.model.dto.PautaEmAndamentoResponse;
+import com.db.dbpautasbackend.model.dto.PautaFinalizadaResponse;
+import com.db.dbpautasbackend.model.dto.RegistrarPautaRequest;
+import com.db.dbpautasbackend.model.enums.Categoria;
+import com.db.dbpautasbackend.model.enums.Decisao;
+import com.db.dbpautasbackend.model.enums.Voto;
 import com.db.dbpautasbackend.mapper.PautaMapper;
 import com.db.dbpautasbackend.model.Pauta;
 import com.db.dbpautasbackend.model.Usuario;
@@ -33,7 +33,7 @@ public class PautaServiceImpl implements PautaService {
     private ValidacaoPautaService validacaoPautaService;
 
     @Override
-    public Pauta salvar(RegistrarPautaDTO pautaDTO) {
+    public Pauta salvar(RegistrarPautaRequest pautaDTO) {
         Pauta pauta = PautaMapper.mapRegistrarPautaDTOtoPauta(pautaDTO);
         return pautaRepository.save(pauta);
     }
@@ -64,19 +64,19 @@ public class PautaServiceImpl implements PautaService {
     }
 
     @Override
-    public List<PautaEmAndamentoDTO> obterPautasFechadas() {
+    public List<PautaEmAndamentoResponse> obterPautasFechadas() {
         List<Pauta> pautas = pautaRepository.findPautasFechadas();
         return PautaMapper.mapListOfPautaToListOfPautaEmAndamentoDTO(pautas);
     }
 
     @Override
-    public List<PautaEmAndamentoDTO> obterPautasFechadasPorCategoria(Categoria categoria) {
+    public List<PautaEmAndamentoResponse> obterPautasFechadasPorCategoria(Categoria categoria) {
         List<Pauta> pautas = pautaRepository.findPautasFechadasPorCategoria(categoria);
         return PautaMapper.mapListOfPautaToListOfPautaEmAndamentoDTO(pautas);
     }
 
     @Override
-    public List<PautaEmAndamentoDTO> obterPautasAbertas() {
+    public List<PautaEmAndamentoResponse> obterPautasAbertas() {
         List<Pauta> pautas = pautaRepository.findPautasAbertas().stream()
                 .filter(pauta -> !isPautaFinalizada(pauta))
                 .toList();
@@ -85,7 +85,7 @@ public class PautaServiceImpl implements PautaService {
     }
 
     @Override
-    public List<PautaEmAndamentoDTO> obterPautasAbertasPorCategoria(Categoria categoria) {
+    public List<PautaEmAndamentoResponse> obterPautasAbertasPorCategoria(Categoria categoria) {
         List<Pauta> pautas = pautaRepository.findPautasAbertasPorCategoria(categoria).stream()
                 .filter(pauta -> !isPautaFinalizada(pauta))
                 .toList();
@@ -94,7 +94,7 @@ public class PautaServiceImpl implements PautaService {
     }
 
     @Override
-    public List<PautaFinalizadaDTO> obterPautasFinalizadas() {
+    public List<PautaFinalizadaResponse> obterPautasFinalizadas() {
         List<Pauta> pautas = pautaRepository.findPautasAbertas().stream().filter(
                 this::isPautaFinalizada
         ).toList();
@@ -103,7 +103,7 @@ public class PautaServiceImpl implements PautaService {
     }
 
     @Override
-    public List<PautaFinalizadaDTO> obterPautasFinalizadasPorCategoria(Categoria categoria) {
+    public List<PautaFinalizadaResponse> obterPautasFinalizadasPorCategoria(Categoria categoria) {
         List<Pauta> pautas = pautaRepository.findPautasAbertasPorCategoria(categoria).stream()
                 .filter(this::isPautaFinalizada)
                 .toList();

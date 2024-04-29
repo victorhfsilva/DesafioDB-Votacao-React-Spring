@@ -1,4 +1,4 @@
-package com.db.dbpautasbackend.security;
+package com.db.dbpautasbackend.config;
 
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;

@@ -1,7 +1,7 @@
-package com.db.dbpautasbackend.info.impl;
+package com.db.dbpautasbackend.model.info.impl;
 
-import com.db.dbpautasbackend.enums.Papel;
-import com.db.dbpautasbackend.info.UserDetailsInfo;
+import com.db.dbpautasbackend.model.enums.Papel;
+import com.db.dbpautasbackend.model.info.UserDetailsInfo;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 

@@ -1,8 +1,8 @@
 package com.db.dbpautasbackend.service.impl;
 
-import com.db.dbpautasbackend.dto.LoginDTO;
-import com.db.dbpautasbackend.dto.LoginRespostaDTO;
-import com.db.dbpautasbackend.enums.Papel;
+import com.db.dbpautasbackend.model.dto.LoginRequest;
+import com.db.dbpautasbackend.model.dto.LoginResponse;
+import com.db.dbpautasbackend.model.enums.Papel;
 import com.db.dbpautasbackend.service.LoginService;
 import com.db.dbpautasbackend.service.TokenService;
 import lombok.AllArgsConstructor;
@@ -22,7 +22,7 @@ public class LoginServiceImpl implements LoginService {
     private TokenService tokenService;
 
     @Override
-    public LoginRespostaDTO gerarToken(LoginDTO login) {
+    public LoginResponse gerarToken(LoginRequest login) {
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
                 new UsernamePasswordAuthenticationToken(login.cpf(), login.senha());
 
@@ -36,7 +36,7 @@ public class LoginServiceImpl implements LoginService {
                 .map(authority -> Papel.valueOf(authority.getAuthority()))
                 .orElseThrow();
 
-        return LoginRespostaDTO.builder()
+        return LoginResponse.builder()
                                 .token(token)
                                 .papel(papel)
                                 .build();

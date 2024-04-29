@@ -1,6 +1,6 @@
 package com.db.dbpautasbackend.repository;
 
-import com.db.dbpautasbackend.enums.Categoria;
+import com.db.dbpautasbackend.model.enums.Categoria;
 import com.db.dbpautasbackend.model.Pauta;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

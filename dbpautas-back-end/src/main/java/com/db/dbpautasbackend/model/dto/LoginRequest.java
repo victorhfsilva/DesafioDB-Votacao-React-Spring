@@ -1,10 +1,10 @@
-package com.db.dbpautasbackend.dto;
+package com.db.dbpautasbackend.model.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 
 @Builder
-public record LoginDTO(
+public record LoginRequest(
         @NotBlank
         String cpf,
         @NotBlank

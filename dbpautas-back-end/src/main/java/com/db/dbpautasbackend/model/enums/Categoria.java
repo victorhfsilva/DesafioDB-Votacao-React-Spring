@@ -1,4 +1,4 @@
-package com.db.dbpautasbackend.enums;
+package com.db.dbpautasbackend.model.enums;
 
 
 import lombok.AllArgsConstructor;

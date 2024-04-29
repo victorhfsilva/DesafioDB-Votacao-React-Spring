@@ -1,25 +1,25 @@
 package com.db.dbpautasbackend.fixture;
 
-import com.db.dbpautasbackend.dto.RegistrarUsuarioDTO;
-import com.db.dbpautasbackend.enums.Papel;
+import com.db.dbpautasbackend.model.dto.RegistrarUsuarioRequest;
+import com.db.dbpautasbackend.model.enums.Papel;
 
-public interface RegistrarUsuarioDTOFixture {
+public interface RegistrarUsuarioRequestFixture {
 
-    static RegistrarUsuarioDTO builderDefault(){
+    static RegistrarUsuarioRequest builderDefault(){
         return builder().build();
     }
 
-    static RegistrarUsuarioDTO builderComSenhaFraca() {
+    static RegistrarUsuarioRequest builderComSenhaFraca() {
         return builder().senha("password123")
                 .build();
     }
 
-    static RegistrarUsuarioDTO builderComCpfInvalido() {
+    static RegistrarUsuarioRequest builderComCpfInvalido() {
         return builder().cpf("12345678900")
                 .build();
     }
-    private static RegistrarUsuarioDTO.RegistrarUsuarioDTOBuilder builder(){
-        return RegistrarUsuarioDTO.builder()
+    private static RegistrarUsuarioRequest.RegistrarUsuarioRequestBuilder builder(){
+        return RegistrarUsuarioRequest.builder()
                 .nome("Maria")
                 .sobrenome("Silveira")
                 .email("mariaSilveira@email.com")

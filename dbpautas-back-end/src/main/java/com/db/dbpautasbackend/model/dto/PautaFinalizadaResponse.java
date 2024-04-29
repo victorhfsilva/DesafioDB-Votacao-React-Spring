@@ -1,11 +1,11 @@
-package com.db.dbpautasbackend.dto;
+package com.db.dbpautasbackend.model.dto;
 
-import com.db.dbpautasbackend.enums.Categoria;
-import com.db.dbpautasbackend.enums.Decisao;
+import com.db.dbpautasbackend.model.enums.Categoria;
+import com.db.dbpautasbackend.model.enums.Decisao;
 import lombok.Builder;
 
 @Builder
-public record PautaFinalizadaDTO(
+public record PautaFinalizadaResponse(
         Long id, String titulo,
         String resumo,
         String descricao,

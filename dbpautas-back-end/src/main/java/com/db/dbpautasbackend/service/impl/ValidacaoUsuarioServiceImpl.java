@@ -1,8 +1,8 @@
 package com.db.dbpautasbackend.service.impl;
 
 import com.db.dbpautasbackend.client.CpfCnpjClient;
-import com.db.dbpautasbackend.dto.CpfDTO;
-import com.db.dbpautasbackend.enums.Situacao;
+import com.db.dbpautasbackend.model.dto.CpfResponse;
+import com.db.dbpautasbackend.model.enums.Situacao;
 import com.db.dbpautasbackend.exception.ClienteIndisponivelException;
 import com.db.dbpautasbackend.exception.CpfIrregularException;
 import com.db.dbpautasbackend.service.ValidacaoUsuarioService;
@@ -21,7 +21,7 @@ public class ValidacaoUsuarioServiceImpl implements ValidacaoUsuarioService {
         public void validarSituacaoRegularDoCpf(String cpf) {
             boolean validarCpf = Boolean.parseBoolean(environment.getProperty("validation.cpf.active"));
 
-            CpfDTO cpfDTO = cpfCnpjClient.getCpfCnpj(cpf);
+            CpfResponse cpfDTO = cpfCnpjClient.getCpfCnpj(cpf);
 
             if (cpfDTO.status()){
                 if (validarCpf && !cpfDTO.situacao().equals(Situacao.REGULAR)) {

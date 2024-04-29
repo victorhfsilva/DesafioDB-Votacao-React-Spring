@@ -1,11 +1,11 @@
 package com.db.dbpautasbackend.mapper;
 
-import com.db.dbpautasbackend.dto.RegistrarUsuarioDTO;
+import com.db.dbpautasbackend.model.dto.RegistrarUsuarioRequest;
 import com.db.dbpautasbackend.model.Usuario;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 public interface UsuarioMapper {
-    static Usuario mapRegistrarUsuarioDTOToUsuario(RegistrarUsuarioDTO usuarioDTO, PasswordEncoder passwordEncoder){
+    static Usuario mapRegistrarUsuarioDTOToUsuario(RegistrarUsuarioRequest usuarioDTO, PasswordEncoder passwordEncoder){
         return Usuario.builder()
                 .nome(usuarioDTO.nome())
                 .sobrenome(usuarioDTO.sobrenome())

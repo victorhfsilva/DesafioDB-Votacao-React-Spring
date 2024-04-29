@@ -1,11 +1,10 @@
 package com.db.dbpautasbackend.controller;
 
-import com.db.dbpautasbackend.dto.PautaEmAndamentoDTO;
-import com.db.dbpautasbackend.dto.PautaFinalizadaDTO;
-import com.db.dbpautasbackend.dto.RegistrarPautaDTO;
-import com.db.dbpautasbackend.enums.Categoria;
-import com.db.dbpautasbackend.enums.Decisao;
-import com.db.dbpautasbackend.enums.Voto;
+import com.db.dbpautasbackend.model.dto.PautaEmAndamentoResponse;
+import com.db.dbpautasbackend.model.dto.PautaFinalizadaResponse;
+import com.db.dbpautasbackend.model.dto.RegistrarPautaRequest;
+import com.db.dbpautasbackend.model.enums.Categoria;
+import com.db.dbpautasbackend.model.enums.Voto;
 import com.db.dbpautasbackend.fixture.*;
 import com.db.dbpautasbackend.mapper.PautaMapper;
 import com.db.dbpautasbackend.model.Pauta;
@@ -51,7 +50,7 @@ class PautaControllerTest {
     @DisplayName("Dado uma pauta válida, quando registrada com sucesso, deve retornar verdadeiro")
     @WithMockUser(username = "admin", authorities = {"ADMIN"})
     void registrarTest() throws Exception {
-        RegistrarPautaDTO pautaDTO = RegistrarPautaDTOFixture.builderDefault();
+        RegistrarPautaRequest pautaDTO = RegistrarPautaRequestFixture.builderDefault();
         Pauta pauta = PautaMapper.mapRegistrarPautaDTOtoPauta(pautaDTO);
 
         String pautaDTOJson = objectMapper.writeValueAsString(pautaDTO);
@@ -98,8 +97,8 @@ class PautaControllerTest {
     @DisplayName("Dado uma lista de pautas, quando o usuário buscar por pautas fechadas, deve retornar as pautas corretamente.")
     @WithMockUser(username = "admin", authorities = {"ADMIN"})
     void buscarPautasFechadaTest() throws Exception {
-        PautaEmAndamentoDTO pautaEsperada = PautaEmAndamentoDTOFixture.builderDefault();
-        List<PautaEmAndamentoDTO> pautasDTOs = List.of(pautaEsperada);
+        PautaEmAndamentoResponse pautaEsperada = PautaEmAndamentoResponseFixture.builderDefault();
+        List<PautaEmAndamentoResponse> pautasDTOs = List.of(pautaEsperada);
 
         when(pautaService.obterPautasFechadas()).thenReturn(pautasDTOs);
 
@@ -112,8 +111,8 @@ class PautaControllerTest {
     @DisplayName("Dado uma lista de pautas, quando o usuário buscar por pautas fechadas filtradas por categoria, deve retornar as pautas corretamente.")
     @WithMockUser(username = "admin", authorities = {"ADMIN"})
     void buscarPautasFechadaPorCategoriaTest() throws Exception {
-        PautaEmAndamentoDTO pautaEsperada = PautaEmAndamentoDTOFixture.builderDefault();
-        List<PautaEmAndamentoDTO> pautasDTOs = List.of(pautaEsperada);
+        PautaEmAndamentoResponse pautaEsperada = PautaEmAndamentoResponseFixture.builderDefault();
+        List<PautaEmAndamentoResponse> pautasDTOs = List.of(pautaEsperada);
 
         when(pautaService.obterPautasFechadasPorCategoria(Categoria.EDUCACAO)).thenReturn(pautasDTOs);
 
@@ -126,8 +125,8 @@ class PautaControllerTest {
     @DisplayName("Dado uma lista de pautas, quando o usuário buscar por pautas abertas, deve retornar as pautas corretamente.")
     @WithMockUser(username = "admin", authorities = {"ADMIN"})
     void buscarPautasAbertaTest() throws Exception {
-        PautaEmAndamentoDTO pautaEsperada = PautaEmAndamentoDTOFixture.builderDefault();
-        List<PautaEmAndamentoDTO> pautasDTOs = List.of(pautaEsperada);
+        PautaEmAndamentoResponse pautaEsperada = PautaEmAndamentoResponseFixture.builderDefault();
+        List<PautaEmAndamentoResponse> pautasDTOs = List.of(pautaEsperada);
 
         when(pautaService.obterPautasAbertas()).thenReturn(pautasDTOs);
 
@@ -140,8 +139,8 @@ class PautaControllerTest {
     @DisplayName("Dado uma lista de pautas, quando o usuário buscar por pautas abertas filtradas por categoria, deve retornar as pautas corretamente.")
     @WithMockUser(username = "admin", authorities = {"ADMIN"})
     void buscarPautasAbertaPorCategoriaTest() throws Exception {
-        PautaEmAndamentoDTO pautaEsperada = PautaEmAndamentoDTOFixture.builderDefault();
-        List<PautaEmAndamentoDTO> pautasDTOs = List.of(pautaEsperada);
+        PautaEmAndamentoResponse pautaEsperada = PautaEmAndamentoResponseFixture.builderDefault();
+        List<PautaEmAndamentoResponse> pautasDTOs = List.of(pautaEsperada);
 
         when(pautaService.obterPautasAbertasPorCategoria(Categoria.EDUCACAO)).thenReturn(pautasDTOs);
 
@@ -154,8 +153,8 @@ class PautaControllerTest {
     @DisplayName("Dado uma lista de pautas, quando o usuário buscar por pautas finalizadas, deve retornar as pautas corretamente.")
     @WithMockUser(username = "admin", authorities = {"ADMIN"})
     void buscarPautasFinalizadasTest() throws Exception {
-        PautaFinalizadaDTO pautaEsperada = PautaFinalizadaDTOFixture.builderDefault();
-        List<PautaFinalizadaDTO> pautasDTOs = List.of(pautaEsperada);
+        PautaFinalizadaResponse pautaEsperada = PautaFinalizadaResponseFixture.builderDefault();
+        List<PautaFinalizadaResponse> pautasDTOs = List.of(pautaEsperada);
 
         when(pautaService.obterPautasFinalizadas()).thenReturn(pautasDTOs);
 
@@ -168,8 +167,8 @@ class PautaControllerTest {
     @DisplayName("Dado uma lista de pautas, quando o usuário buscar por pautas finalizadas filtradas por categoria, deve retornar as pautas corretamente.")
     @WithMockUser(username = "admin", authorities = {"ADMIN"})
     void buscarPautasFinalizadasPorCategoriaTest() throws Exception {
-        PautaFinalizadaDTO pautaEsperada = PautaFinalizadaDTOFixture.builderDefault();
-        List<PautaFinalizadaDTO> pautasDTOs = List.of(pautaEsperada);
+        PautaFinalizadaResponse pautaEsperada = PautaFinalizadaResponseFixture.builderDefault();
+        List<PautaFinalizadaResponse> pautasDTOs = List.of(pautaEsperada);
 
         when(pautaService.obterPautasFinalizadasPorCategoria(Categoria.EDUCACAO)).thenReturn(pautasDTOs);
 

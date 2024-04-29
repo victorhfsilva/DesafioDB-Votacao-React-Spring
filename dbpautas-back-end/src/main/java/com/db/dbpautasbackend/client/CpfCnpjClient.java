@@ -1,7 +1,7 @@
 package com.db.dbpautasbackend.client;
 
-import com.db.dbpautasbackend.dto.CpfDTO;
+import com.db.dbpautasbackend.model.dto.CpfResponse;
 
 public interface CpfCnpjClient {
-        CpfDTO getCpfCnpj(String cpf);
+        CpfResponse getCpfCnpj(String cpf);
 }

@@ -1,8 +1,8 @@
 package com.db.dbpautasbackend.service;
 
 import com.db.dbpautasbackend.client.CpfCnpjClient;
-import com.db.dbpautasbackend.dto.CpfDTO;
-import com.db.dbpautasbackend.enums.Situacao;
+import com.db.dbpautasbackend.model.dto.CpfResponse;
+import com.db.dbpautasbackend.model.enums.Situacao;
 import com.db.dbpautasbackend.exception.CpfIrregularException;
 import com.db.dbpautasbackend.service.impl.ValidacaoUsuarioServiceImpl;
 import org.junit.jupiter.api.DisplayName;
@@ -32,7 +32,7 @@ class ValidacaoUsuarioServicoImplTest {
     @DisplayName("Dado uma cpf regular, quando validado, não deve lançar exceção.")
     void validarCpfRegularTest() {
         when(environment.getProperty("validation.cpf.active")).thenReturn("true");
-        when(cpfCnpjClient.getCpfCnpj("95098681324")).thenReturn(new CpfDTO(true, Situacao.REGULAR));
+        when(cpfCnpjClient.getCpfCnpj("95098681324")).thenReturn(new CpfResponse(true, Situacao.REGULAR));
         assertDoesNotThrow(() ->
                 validacaoUsuarioService.validarSituacaoRegularDoCpf("95098681324")
         );
@@ -42,7 +42,7 @@ class ValidacaoUsuarioServicoImplTest {
     @DisplayName("Dado uma cpf irregular, quando validado, deve lançar exceção.")
     void validarCpfIrregularTest() {
         when(environment.getProperty("validation.cpf.active")).thenReturn("true");
-        when(cpfCnpjClient.getCpfCnpj("95098681324")).thenReturn(new CpfDTO(true, Situacao.CANCELADA));
+        when(cpfCnpjClient.getCpfCnpj("95098681324")).thenReturn(new CpfResponse(true, Situacao.CANCELADA));
         assertThrows(CpfIrregularException.class, () ->
                 validacaoUsuarioService.validarSituacaoRegularDoCpf("95098681324")
         );

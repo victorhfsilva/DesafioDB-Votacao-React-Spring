@@ -1,7 +1,7 @@
 package com.db.dbpautasbackend.service;
 
-import com.db.dbpautasbackend.enums.Decisao;
-import com.db.dbpautasbackend.enums.Voto;
+import com.db.dbpautasbackend.model.enums.Decisao;
+import com.db.dbpautasbackend.model.enums.Voto;
 import com.db.dbpautasbackend.fixture.PautaFixture;
 import com.db.dbpautasbackend.fixture.UsuarioFixture;
 import com.db.dbpautasbackend.model.Pauta;

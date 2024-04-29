@@ -1,6 +1,6 @@
 package com.db.dbpautasbackend.model;
 
-import com.db.dbpautasbackend.enums.Papel;
+import com.db.dbpautasbackend.model.enums.Papel;
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.List;

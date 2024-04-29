@@ -1,10 +1,10 @@
-package com.db.dbpautasbackend.dto;
+package com.db.dbpautasbackend.model.dto;
 
-import com.db.dbpautasbackend.enums.Categoria;
+import com.db.dbpautasbackend.model.enums.Categoria;
 import lombok.Builder;
 
 @Builder
-public record PautaEmAndamentoDTO(
+public record PautaEmAndamentoResponse(
         Long id,
         String titulo,
         String resumo,
