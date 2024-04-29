@@ -37,7 +37,7 @@ public class SecurityConfig {
                     .requestMatchers("/pautas/fechadas/**").hasAnyAuthority("ADMIN")
                     .requestMatchers("/pautas/finalizadas/**").hasAnyAuthority("ADMIN","USUARIO")
                     .requestMatchers("/pautas/abertas/**").hasAnyAuthority("ADMIN","USUARIO")
-                    .requestMatchers("/usuario/registrar").hasAnyAuthority("ADMIN")
+                    .requestMatchers("/usuarios").hasAnyAuthority("ADMIN")
                 .anyRequest().permitAll())
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))

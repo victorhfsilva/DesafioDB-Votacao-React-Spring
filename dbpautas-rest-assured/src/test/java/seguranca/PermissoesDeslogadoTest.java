@@ -29,7 +29,7 @@ public class PermissoesDeslogadoTest {
     void deveRetornarStatus403QuandoUsuarioTentaCadastrarAdmin(){
         UsuarioRequisicao admin = AdminFixture.builderValido();
         request.body(admin)
-                .post("/usuario/registrar")
+                .post("/usuarios")
                 .then().statusCode(403);
     }
 
@@ -38,7 +38,7 @@ public class PermissoesDeslogadoTest {
     void deveRetornarStatus403QuandoUsuarioTentaRegistrarPauta(){
         UsuarioRequisicao usuario = UsuarioFixture.builderValido();
         request.body(usuario)
-                .post("/usuario/registrar")
+                .post("/usuarios")
                 .then().statusCode(403);
     }
 

@@ -32,7 +32,7 @@ public class PermissoesUsuarioTest {
 
         UsuarioRequisicao usuario = UsuarioFixture.builderValido();
         request.body(usuario)
-                .post("/usuario/registrar");
+                .post("/usuarios");
 
         LoginRequisicao login = LoginFixture.builderDoUsuario(usuario);
         Response response = request.body(login).post("/login");
@@ -47,7 +47,7 @@ public class PermissoesUsuarioTest {
     void deveRetornarStatus403QuandoUsuarioTentaCadastrarAdmin(){
         UsuarioRequisicao admin = AdminFixture.builderValido();
         request.body(admin)
-                .post("/usuario/registrar")
+                .post("/usuarios")
                 .then().statusCode(403);
     }
 
@@ -56,7 +56,7 @@ public class PermissoesUsuarioTest {
     void deveRetornarStatus403QuandoUsuarioTentaRegistrarPauta(){
         UsuarioRequisicao usuario = UsuarioFixture.builderValido();
         request.body(usuario)
-                .post("/usuario/registrar")
+                .post("/usuarios")
                 .then().statusCode(403);
     }
 

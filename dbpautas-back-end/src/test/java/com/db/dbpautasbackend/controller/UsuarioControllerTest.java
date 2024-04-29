@@ -49,7 +49,7 @@ class UsuarioControllerTest {
         when(passwordEncoder.encode(usuarioDTO.senha())).thenReturn(usuarioDTO.senha());
         when(usuarioService.salvar(usuarioDTO)).thenReturn(usuario);
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/usuario/registrar")
+        mockMvc.perform(MockMvcRequestBuilders.post("/usuarios")
                         .contentType("application/json")
                         .content(usuarioDTOJson))
                 .andExpect(MockMvcResultMatchers.status().isCreated())
@@ -68,7 +68,7 @@ class UsuarioControllerTest {
         when(passwordEncoder.encode(usuarioDTO.senha())).thenReturn(usuarioDTO.senha());
         when(usuarioService.salvar(usuarioDTO)).thenReturn(usuario);
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/usuario/registrar")
+        mockMvc.perform(MockMvcRequestBuilders.post("/usuarios")
                         .contentType("application/json")
                         .content(usuarioDTOJson))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest());
@@ -86,7 +86,7 @@ class UsuarioControllerTest {
         when(passwordEncoder.encode(usuarioDTO.senha())).thenReturn(usuarioDTO.senha());
         when(usuarioService.salvar(usuarioDTO)).thenReturn(usuario);
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/usuario/registrar")
+        mockMvc.perform(MockMvcRequestBuilders.post("/usuarios")
                         .contentType("application/json")
                         .content(usuarioDTOJson))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest());

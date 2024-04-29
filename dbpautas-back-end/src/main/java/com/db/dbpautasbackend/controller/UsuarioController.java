@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/usuario")
+@RequestMapping(value = "/usuarios")
 @AllArgsConstructor
 public class UsuarioController {
 
     private UsuarioService usuarioService;
 
-    @PostMapping("/registrar")
+    @PostMapping("")
     @Operation(summary = "Registra um usuário no sistema.")
     public ResponseEntity<Boolean> registrar(@RequestBody @Valid RegistrarUsuarioRequest registrarUsuarioDTO) {
         usuarioService.salvar(registrarUsuarioDTO);

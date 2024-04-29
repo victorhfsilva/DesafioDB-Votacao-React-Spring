@@ -50,7 +50,7 @@ class UsuarioControllerIntegrationTest {
         RegistrarUsuarioRequest registrarUsuarioDTO = RegistrarUsuarioRequestFixture.builderDefault();
         HttpEntity<RegistrarUsuarioRequest> requisicao = new HttpEntity<>(registrarUsuarioDTO, httpHeaders);
 
-        ResponseEntity<Boolean> resposta = restTemplate.postForEntity("http://localhost:" + port + "/usuario/registrar", requisicao, Boolean.class);
+        ResponseEntity<Boolean> resposta = restTemplate.postForEntity("http://localhost:" + port + "/usuarios", requisicao, Boolean.class);
 
         assertEquals(HttpStatus.CREATED, resposta.getStatusCode());
         assertEquals(Boolean.TRUE, resposta.getBody());
