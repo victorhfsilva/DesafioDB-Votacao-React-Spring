@@ -50,7 +50,7 @@ class PautaControllerIntegrationTest {
         RegistrarPautaRequest pautaDTO = RegistrarPautaRequestFixture.builderDefault();
         HttpEntity<RegistrarPautaRequest> requisicao = new HttpEntity<>(pautaDTO, httpHeaders);
 
-        ResponseEntity<Boolean> resposta = restTemplate.postForEntity("http://localhost:" + port + "/pauta/registrar", requisicao, Boolean.class);
+        ResponseEntity<Boolean> resposta = restTemplate.postForEntity("http://localhost:" + port + "/pautas", requisicao, Boolean.class);
 
         assertEquals(HttpStatus.CREATED, resposta.getStatusCode());
         assertEquals(Boolean.TRUE, resposta.getBody());
