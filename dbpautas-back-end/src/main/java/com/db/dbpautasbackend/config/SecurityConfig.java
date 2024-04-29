@@ -31,12 +31,12 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(requests ->
-            requests.requestMatchers("/pauta/registrar").hasAnyAuthority("ADMIN")
-                    .requestMatchers("/pauta/abrir/**").hasAnyAuthority("ADMIN")
-                    .requestMatchers("/pauta/votar/**").hasAnyAuthority("ADMIN", "USUARIO")
-                    .requestMatchers("/pauta/fechada/**").hasAnyAuthority("ADMIN")
-                    .requestMatchers("/pauta/finalizada/**").hasAnyAuthority("ADMIN","USUARIO")
-                    .requestMatchers("/pauta/aberta/**").hasAnyAuthority("ADMIN","USUARIO")
+            requests.requestMatchers("/pautas").hasAnyAuthority("ADMIN")
+                    .requestMatchers("/pautas/*/status").hasAnyAuthority("ADMIN")
+                    .requestMatchers("/pautas/*/votos").hasAnyAuthority("ADMIN", "USUARIO")
+                    .requestMatchers("/pautas/fechadas/**").hasAnyAuthority("ADMIN")
+                    .requestMatchers("/pautas/finalizadas/**").hasAnyAuthority("ADMIN","USUARIO")
+                    .requestMatchers("/pautas/abertas/**").hasAnyAuthority("ADMIN","USUARIO")
                     .requestMatchers("/usuario/registrar").hasAnyAuthority("ADMIN")
                 .anyRequest().permitAll())
                 .csrf(csrf -> csrf.disable())

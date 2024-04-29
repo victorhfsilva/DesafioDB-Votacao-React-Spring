@@ -63,21 +63,21 @@ public class PermissoesUsuarioTest {
     @Test
     @DisplayName("Dado um usuário comun, quando o usuário tenta obter as pautas abertas, então o sistema deve retornar com status 200.")
     void deveRetornarStatus403QuandoUsuarioTentaObterPautasAbertas(){
-        request.get("/pauta/aberta/")
+        request.get("/pautas/abertas/")
                 .then().statusCode(200);
     }
 
     @Test
     @DisplayName("Dado um usuário comun, quando o usuário tenta obter as pautas fechadas, então o sistema deve retornar com status 200.")
     void deveRetornarStatus403QuandoUsuarioTentaObterPautasFechadas(){
-        request.get("/pauta/fechada/")
+        request.get("/pautas/fechadas/")
                 .then().statusCode(403);
     }
 
     @Test
     @DisplayName("Dado um usuário comun, quando o usuário tenta obter as pautas finalizadas, então o sistema deve retornar com status 200.")
     void deveRetornarStatus403QuandoUsuarioTentaObterPautasFinalizadas(){
-        request.get("/pauta/finalizada/")
+        request.get("/pautas/finalizadas/")
                 .then().statusCode(200);
     }
 
