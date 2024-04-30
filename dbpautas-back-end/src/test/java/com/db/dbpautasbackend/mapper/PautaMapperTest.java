@@ -28,10 +28,11 @@ class PautaMapperTest {
 
 
     @Test
-    @DisplayName("Teste do método mapRegistrarPautaDTOtoPauta")
-    void testMapRegistrarPautaDTOtoPauta() {
+    @DisplayName("Teste do método de mapear RegistrarPautaRequest para Pauta")
+    void testMapRegistrarPautaRequestToPauta() {
         RegistrarPautaRequest registrarPautaRequest = RegistrarPautaRequestFixture.builderDefault();
-        Pauta pauta = PautaMapper.mapRegistrarPautaDTOtoPauta(registrarPautaRequest);
+        Pauta pauta = PautaMapper.mapRegistrarPautaRequesttoPauta(registrarPautaRequest);
+
         assertEquals(registrarPautaRequest.titulo(), pauta.getTitulo());
         assertEquals(registrarPautaRequest.resumo(), pauta.getResumo());
         assertEquals(registrarPautaRequest.descricao(), pauta.getDescricao());
@@ -39,10 +40,11 @@ class PautaMapperTest {
     }
 
     @Test
-    @DisplayName("Teste do método mapPautaToRegistrarPautaDTO")
-    void testMapPautaToRegistrarPautaDTO() {
+    @DisplayName("Teste do método de mapear Pauta para RegistrarPautaRequest")
+    void testMapPautaToRegistrarPautaRequest() {
         Pauta pauta = PautaFixture.builderDefault();
-        RegistrarPautaRequest registrarPautaRequest = PautaMapper.mapPautaToRegistrarPautaDTO(pauta);
+        RegistrarPautaRequest registrarPautaRequest = PautaMapper.mapPautaToRegistrarPautaRequest(pauta);
+
         assertEquals(pauta.getTitulo(), registrarPautaRequest.titulo());
         assertEquals(pauta.getResumo(), registrarPautaRequest.resumo());
         assertEquals(pauta.getDescricao(), registrarPautaRequest.descricao());
@@ -50,11 +52,12 @@ class PautaMapperTest {
     }
 
     @Test
-    @DisplayName("Teste do método mapListOfPautaToListOfPautaEmAndamentoDTO")
-    void testMapListOfPautaToListOfPautaEmAndamentoDTO() {
+    @DisplayName("Teste do método de mapear lista de Pauta para lista de PautaEmAndamentoResponse")
+    void testMapListOfPautaToListOfPautaEmAndamentoResponse() {
         Pauta pauta = PautaFixture.builderDefault();
         List<Pauta> pautas = List.of(pauta);
-        List<PautaEmAndamentoResponse> pautasEmAndamento = PautaMapper.mapListOfPautaToListOfPautaEmAndamentoDTO(pautas);
+        List<PautaEmAndamentoResponse> pautasEmAndamento = PautaMapper.mapListOfPautaToListOfPautaEmAndamentoResponse(pautas);
+
         assertEquals(pautas.size(), pautasEmAndamento.size());
         pautasEmAndamento.forEach(pautaEmAndamento -> {
             assertEquals(pauta.getId(), pautaEmAndamento.id());
@@ -66,12 +69,15 @@ class PautaMapperTest {
     }
 
     @Test
-    @DisplayName("Teste do método mapListOfPautaToListOfPautaFinalizadaDTO")
-    void testMapListOfPautaToListOfPautaFinalizadaDTO() {
+    @DisplayName("Teste do método de mapear lista de Pauta para lista de PautaFinalizadaResponse")
+    void testMapListOfPautaToListOfPautaFinalizadaResponse() {
         Pauta pauta = PautaFixture.builderDefault();
         List<Pauta> pautas = List.of(pauta);
+
         when(pautaService.contabilizar(pauta)).thenReturn(Decisao.APROVADO);
-        List<PautaFinalizadaResponse> pautasFinalizadas = PautaMapper.mapListOfPautaToListOfPautaFinalizadaDTO(pautas, pautaService);
+
+        List<PautaFinalizadaResponse> pautasFinalizadas = PautaMapper.mapListOfPautaToListOfPautaFinalizadaResponse(pautas, pautaService);
+
         assertEquals(pautas.size(), pautasFinalizadas.size());
         pautasFinalizadas.forEach(pautaFinalizada -> {
             assertEquals(pauta.getId(), pautaFinalizada.id());

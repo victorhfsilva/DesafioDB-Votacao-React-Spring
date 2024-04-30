@@ -5,7 +5,7 @@ import com.db.dbpautasbackend.model.Usuario;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 public interface UsuarioMapper {
-    static Usuario mapRegistrarUsuarioDTOToUsuario(RegistrarUsuarioRequest usuarioDTO, PasswordEncoder passwordEncoder){
+    static Usuario mapRegistrarUsuarioRequestToUsuario(RegistrarUsuarioRequest usuarioDTO, PasswordEncoder passwordEncoder){
         return Usuario.builder()
                 .nome(usuarioDTO.nome())
                 .sobrenome(usuarioDTO.sobrenome())

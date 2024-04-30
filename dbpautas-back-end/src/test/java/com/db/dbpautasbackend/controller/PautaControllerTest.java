@@ -51,7 +51,7 @@ class PautaControllerTest {
     @WithMockUser(username = "admin", authorities = {"ADMIN"})
     void registrarTest() throws Exception {
         RegistrarPautaRequest pautaDTO = RegistrarPautaRequestFixture.builderDefault();
-        Pauta pauta = PautaMapper.mapRegistrarPautaDTOtoPauta(pautaDTO);
+        Pauta pauta = PautaMapper.mapRegistrarPautaRequesttoPauta(pautaDTO);
 
         String pautaDTOJson = objectMapper.writeValueAsString(pautaDTO);
 

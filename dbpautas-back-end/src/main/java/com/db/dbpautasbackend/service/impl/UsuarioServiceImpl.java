@@ -24,7 +24,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public Usuario salvar(RegistrarUsuarioRequest usuarioDTO) {
         validacaoUsuarioService.validarSituacaoRegularDoCpf(usuarioDTO.cpf());
-        Usuario usuario = UsuarioMapper.mapRegistrarUsuarioDTOToUsuario(usuarioDTO, passwordEncoder);
+        Usuario usuario = UsuarioMapper.mapRegistrarUsuarioRequestToUsuario(usuarioDTO, passwordEncoder);
         return usuarioRepository.save(usuario);
     }
 

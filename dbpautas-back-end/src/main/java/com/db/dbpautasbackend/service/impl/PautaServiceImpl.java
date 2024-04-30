@@ -34,7 +34,7 @@ public class PautaServiceImpl implements PautaService {
 
     @Override
     public Pauta salvar(RegistrarPautaRequest pautaDTO) {
-        Pauta pauta = PautaMapper.mapRegistrarPautaDTOtoPauta(pautaDTO);
+        Pauta pauta = PautaMapper.mapRegistrarPautaRequesttoPauta(pautaDTO);
         return pautaRepository.save(pauta);
     }
 
@@ -66,13 +66,13 @@ public class PautaServiceImpl implements PautaService {
     @Override
     public List<PautaEmAndamentoResponse> obterPautasFechadas() {
         List<Pauta> pautas = pautaRepository.findPautasFechadas();
-        return PautaMapper.mapListOfPautaToListOfPautaEmAndamentoDTO(pautas);
+        return PautaMapper.mapListOfPautaToListOfPautaEmAndamentoResponse(pautas);
     }
 
     @Override
     public List<PautaEmAndamentoResponse> obterPautasFechadasPorCategoria(Categoria categoria) {
         List<Pauta> pautas = pautaRepository.findPautasFechadasPorCategoria(categoria);
-        return PautaMapper.mapListOfPautaToListOfPautaEmAndamentoDTO(pautas);
+        return PautaMapper.mapListOfPautaToListOfPautaEmAndamentoResponse(pautas);
     }
 
     @Override
@@ -81,7 +81,7 @@ public class PautaServiceImpl implements PautaService {
                 .filter(pauta -> !isPautaFinalizada(pauta))
                 .toList();
 
-        return PautaMapper.mapListOfPautaToListOfPautaEmAndamentoDTO(pautas);
+        return PautaMapper.mapListOfPautaToListOfPautaEmAndamentoResponse(pautas);
     }
 
     @Override
@@ -90,7 +90,7 @@ public class PautaServiceImpl implements PautaService {
                 .filter(pauta -> !isPautaFinalizada(pauta))
                 .toList();
 
-        return PautaMapper.mapListOfPautaToListOfPautaEmAndamentoDTO(pautas);
+        return PautaMapper.mapListOfPautaToListOfPautaEmAndamentoResponse(pautas);
     }
 
     @Override
@@ -99,7 +99,7 @@ public class PautaServiceImpl implements PautaService {
                 this::isPautaFinalizada
         ).toList();
 
-        return PautaMapper.mapListOfPautaToListOfPautaFinalizadaDTO(pautas, this);
+        return PautaMapper.mapListOfPautaToListOfPautaFinalizadaResponse(pautas, this);
     }
 
     @Override
@@ -108,7 +108,7 @@ public class PautaServiceImpl implements PautaService {
                 .filter(this::isPautaFinalizada)
                 .toList();
 
-        return PautaMapper.mapListOfPautaToListOfPautaFinalizadaDTO(pautas, this);
+        return PautaMapper.mapListOfPautaToListOfPautaFinalizadaResponse(pautas, this);
     }
 
     public boolean isPautaFinalizada(Pauta pauta) {

@@ -42,7 +42,7 @@ class UsuarioControllerTest {
     @WithMockUser(username = "admin", authorities = {"ADMIN"})
     void registrarTest() throws Exception {
         RegistrarUsuarioRequest usuarioDTO = RegistrarUsuarioRequestFixture.builderDefault();
-        Usuario usuario = UsuarioMapper.mapRegistrarUsuarioDTOToUsuario(usuarioDTO, passwordEncoder);
+        Usuario usuario = UsuarioMapper.mapRegistrarUsuarioRequestToUsuario(usuarioDTO, passwordEncoder);
 
         String usuarioDTOJson = objectMapper.writeValueAsString(usuarioDTO);
 
@@ -61,7 +61,7 @@ class UsuarioControllerTest {
     @WithMockUser(username = "admin", authorities = {"ADMIN"})
     void registrarComSenhaFracaTest() throws Exception {
         RegistrarUsuarioRequest usuarioDTO = RegistrarUsuarioRequestFixture.builderComSenhaFraca();
-        Usuario usuario = UsuarioMapper.mapRegistrarUsuarioDTOToUsuario(usuarioDTO, passwordEncoder);
+        Usuario usuario = UsuarioMapper.mapRegistrarUsuarioRequestToUsuario(usuarioDTO, passwordEncoder);
 
         String usuarioDTOJson = objectMapper.writeValueAsString(usuarioDTO);
 
@@ -79,7 +79,7 @@ class UsuarioControllerTest {
     @WithMockUser(username = "admin", authorities = {"ADMIN"})
     void registrarComCpfInvalidoTest() throws Exception {
         RegistrarUsuarioRequest usuarioDTO = RegistrarUsuarioRequestFixture.builderComCpfInvalido();
-        Usuario usuario = UsuarioMapper.mapRegistrarUsuarioDTOToUsuario(usuarioDTO, passwordEncoder);
+        Usuario usuario = UsuarioMapper.mapRegistrarUsuarioRequestToUsuario(usuarioDTO, passwordEncoder);
 
         String usuarioDTOJson = objectMapper.writeValueAsString(usuarioDTO);
 

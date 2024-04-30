@@ -123,7 +123,7 @@ class PautaServiceImplTest {
     @DisplayName("Dada uma pauta valida, quando salva, deve retornar a pauta salva.")
     void salvarPautaTest(){
         Pauta pauta = PautaFixture.builderDefault();
-        RegistrarPautaRequest pautaDTO = PautaMapper.mapPautaToRegistrarPautaDTO(pauta);
+        RegistrarPautaRequest pautaDTO = PautaMapper.mapPautaToRegistrarPautaRequest(pauta);
         when(pautaRepository.save(any())).thenReturn(pauta);
         Pauta pautaObtida = pautaService.salvar(pautaDTO);
         assertEquals(pauta, pautaObtida);
@@ -134,7 +134,7 @@ class PautaServiceImplTest {
     void obterPautasFechadasTest(){
         Pauta pauta = PautaFixture.builderDefault();
         List<Pauta> pautas = List.of(pauta);
-        List<PautaEmAndamentoResponse> pautasEsperadas = PautaMapper.mapListOfPautaToListOfPautaEmAndamentoDTO(pautas);
+        List<PautaEmAndamentoResponse> pautasEsperadas = PautaMapper.mapListOfPautaToListOfPautaEmAndamentoResponse(pautas);
         when(pautaRepository.findPautasFechadas()).thenReturn(pautas);
         assertIterableEquals(pautaService.obterPautasFechadas(), pautasEsperadas);
     }
@@ -144,7 +144,7 @@ class PautaServiceImplTest {
     void obterPautasFechadasPorCategoriaTest(){
         Pauta pauta = PautaFixture.builderDefault();
         List<Pauta> pautas = List.of(pauta);
-        List<PautaEmAndamentoResponse> pautasEsperadas = PautaMapper.mapListOfPautaToListOfPautaEmAndamentoDTO(pautas);
+        List<PautaEmAndamentoResponse> pautasEsperadas = PautaMapper.mapListOfPautaToListOfPautaEmAndamentoResponse(pautas);
         when(pautaRepository.findPautasFechadasPorCategoria(any())).thenReturn(pautas);
         assertIterableEquals(pautaService.obterPautasFechadasPorCategoria(pauta.getCategoria()), pautasEsperadas);
     }
@@ -154,7 +154,7 @@ class PautaServiceImplTest {
     void obterPautasAbertasTest(){
         Pauta pauta = PautaFixture.builderDePautaAberta();
         List<Pauta> pautas = List.of(pauta);
-        List<PautaEmAndamentoResponse> pautasEsperadas = PautaMapper.mapListOfPautaToListOfPautaEmAndamentoDTO(pautas);
+        List<PautaEmAndamentoResponse> pautasEsperadas = PautaMapper.mapListOfPautaToListOfPautaEmAndamentoResponse(pautas);
         when(pautaRepository.findPautasAbertas()).thenReturn(pautas);
         assertIterableEquals(pautaService.obterPautasAbertas(), pautasEsperadas);
     }
@@ -164,7 +164,7 @@ class PautaServiceImplTest {
     void obterPautasAbertasPorCategoriaTest(){
         Pauta pauta = PautaFixture.builderDePautaAberta();
         List<Pauta> pautas = List.of(pauta);
-        List<PautaEmAndamentoResponse> pautasEsperadas = PautaMapper.mapListOfPautaToListOfPautaEmAndamentoDTO(pautas);
+        List<PautaEmAndamentoResponse> pautasEsperadas = PautaMapper.mapListOfPautaToListOfPautaEmAndamentoResponse(pautas);
         when(pautaRepository.findPautasAbertasPorCategoria(any())).thenReturn(pautas);
         assertIterableEquals(pautaService.obterPautasAbertasPorCategoria(pauta.getCategoria()), pautasEsperadas);
     }
@@ -174,7 +174,7 @@ class PautaServiceImplTest {
     void buscarPautasFinalizadasTest(){
         Pauta pauta = PautaFixture.builderDePautaAprovada();
         List<Pauta> pautas = List.of(pauta);
-        List<PautaFinalizadaResponse> pautasEsperadas = PautaMapper.mapListOfPautaToListOfPautaFinalizadaDTO(pautas, pautaService);
+        List<PautaFinalizadaResponse> pautasEsperadas = PautaMapper.mapListOfPautaToListOfPautaFinalizadaResponse(pautas, pautaService);
         when(pautaRepository.findPautasAbertas()).thenReturn(pautas);
         assertIterableEquals(pautaService.obterPautasFinalizadas(), pautasEsperadas);
     }
@@ -184,7 +184,7 @@ class PautaServiceImplTest {
     void buscarPautasFinalizadasPorCategoriaTest(){
         Pauta pauta = PautaFixture.builderDePautaAprovada();
         List<Pauta> pautas = List.of(pauta);
-        List<PautaFinalizadaResponse> pautasEsperadas = PautaMapper.mapListOfPautaToListOfPautaFinalizadaDTO(pautas, pautaService);
+        List<PautaFinalizadaResponse> pautasEsperadas = PautaMapper.mapListOfPautaToListOfPautaFinalizadaResponse(pautas, pautaService);
         when(pautaRepository.findPautasAbertasPorCategoria(any())).thenReturn(pautas);
         assertIterableEquals(pautaService.obterPautasFinalizadasPorCategoria(pauta.getCategoria()), pautasEsperadas);
     }
