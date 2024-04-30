@@ -9,6 +9,10 @@ public interface UsuarioFixture {
         return builder().build();
     }
 
+    static Usuario builderUsuario(){
+        return builder().papel(Papel.USUARIO).build();
+    }
+
     private static Usuario.UsuarioBuilder builder(){
         return Usuario.builder().id(1L)
                             .nome("Adalberto")

@@ -19,6 +19,15 @@ public interface PautaMapper {
                 .build();
     }
 
+    static RegistrarPautaRequest mapPautaToRegistrarPautaDTO(Pauta pauta){
+        return RegistrarPautaRequest.builder()
+                .titulo(pauta.getTitulo())
+                .resumo(pauta.getResumo())
+                .descricao(pauta.getDescricao())
+                .categoria(pauta.getCategoria())
+                .build();
+    }
+
     static List<PautaEmAndamentoResponse> mapListOfPautaToListOfPautaEmAndamentoDTO(List<Pauta> pautas){
         return pautas.stream()
                 .map(pauta -> PautaEmAndamentoResponse.builder().id(pauta.getId())
