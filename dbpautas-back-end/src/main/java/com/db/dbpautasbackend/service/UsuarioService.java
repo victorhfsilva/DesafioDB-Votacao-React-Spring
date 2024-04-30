@@ -7,5 +7,4 @@ import org.springframework.data.domain.Pageable;
 
 public interface UsuarioService {
     Usuario salvar(RegistrarUsuarioRequest usuarioDTO);
-    Page<Usuario> buscarTodosUsuariosPorPagina(Pageable pageable);
 }

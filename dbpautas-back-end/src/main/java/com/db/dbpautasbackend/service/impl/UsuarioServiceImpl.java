@@ -27,9 +27,4 @@ public class UsuarioServiceImpl implements UsuarioService {
         Usuario usuario = UsuarioMapper.mapRegistrarUsuarioRequestToUsuario(usuarioDTO, passwordEncoder);
         return usuarioRepository.save(usuario);
     }
-
-    @Override
-    public Page<Usuario> buscarTodosUsuariosPorPagina(Pageable pageable) {
-        return usuarioRepository.findAll(pageable);
-    }
 }
