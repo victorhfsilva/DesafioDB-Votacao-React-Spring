@@ -1,0 +1,1 @@
+DELETE FROM pautas_eleitores WHERE EXISTS (SELECT 1 FROM pautas_eleitores);

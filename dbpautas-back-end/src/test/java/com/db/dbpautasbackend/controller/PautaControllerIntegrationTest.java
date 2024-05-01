@@ -3,6 +3,7 @@ package com.db.dbpautasbackend.controller;
 import com.db.dbpautasbackend.model.dto.*;
 import com.db.dbpautasbackend.fixture.LoginRequestFixture;
 import com.db.dbpautasbackend.fixture.RegistrarPautaRequestFixture;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
@@ -29,12 +31,19 @@ class PautaControllerIntegrationTest {
     @Autowired
     private TestRestTemplate restTemplate;
 
+    @BeforeEach
+    public void setup() {
+        restTemplate.getRestTemplate().setRequestFactory(new HttpComponentsClientHttpRequestFactory());
+    }
+
     @Test
     @DisplayName("Dado uma pauta válida, quando registrada com sucesso no banco de dados, deve retornar verdadeiro")
     @SqlGroup({
+            @Sql(scripts =  "/db/clear_pautas_eleitores.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
             @Sql(scripts = "/db/clear_usuarios.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
+            @Sql(scripts =  "/db/clear_pautas.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
             @Sql(scripts = "/db/insert_usuarios.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
-            @Sql(scripts =  "/db/clear_pautas.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+            @Sql(scripts =  "/db/insert_pautas.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     })
     void registrarTest(){
         LoginRequest login = LoginRequestFixture.buiderDefault();
@@ -58,9 +67,10 @@ class PautaControllerIntegrationTest {
     @Test
     @DisplayName("Dadas pautas válidas, quando buscado por pautas fechadas, deve retornar as pautas corretas")
     @SqlGroup({
+            @Sql(scripts =  "/db/clear_pautas_eleitores.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
             @Sql(scripts = "/db/clear_usuarios.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
+            @Sql(scripts =  "/db/clear_pautas.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
             @Sql(scripts = "/db/insert_usuarios.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
-            @Sql(scripts =  "/db/clear_pautas.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD),
             @Sql(scripts =  "/db/insert_pautas.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     })
     void buscarPautasFechadasTest(){
@@ -91,9 +101,10 @@ class PautaControllerIntegrationTest {
     @Test
     @DisplayName("Dadas pautas válidas, quando buscado por pautas fechadas por categoria, deve retornar as pautas corretas")
     @SqlGroup({
+            @Sql(scripts =  "/db/clear_pautas_eleitores.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
             @Sql(scripts = "/db/clear_usuarios.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
+            @Sql(scripts =  "/db/clear_pautas.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
             @Sql(scripts = "/db/insert_usuarios.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
-            @Sql(scripts =  "/db/clear_pautas.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD),
             @Sql(scripts =  "/db/insert_pautas.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     })
     void buscarPautasFechadasPorCategoriaTest(){
@@ -123,9 +134,10 @@ class PautaControllerIntegrationTest {
     @Test
     @DisplayName("Dadas pautas válidas, quando buscado por pautas abertas, deve retornar as pautas corretas")
     @SqlGroup({
+            @Sql(scripts =  "/db/clear_pautas_eleitores.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
             @Sql(scripts = "/db/clear_usuarios.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
+            @Sql(scripts =  "/db/clear_pautas.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
             @Sql(scripts = "/db/insert_usuarios.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
-            @Sql(scripts =  "/db/clear_pautas.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD),
             @Sql(scripts =  "/db/insert_pautas.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     })
     void buscarPautasAbertasTest(){
@@ -156,9 +168,10 @@ class PautaControllerIntegrationTest {
     @Test
     @DisplayName("Dadas pautas válidas, quando buscado por pautas abertas, deve retornar as pautas corretas")
     @SqlGroup({
+            @Sql(scripts =  "/db/clear_pautas_eleitores.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
             @Sql(scripts = "/db/clear_usuarios.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
+            @Sql(scripts =  "/db/clear_pautas.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
             @Sql(scripts = "/db/insert_usuarios.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
-            @Sql(scripts =  "/db/clear_pautas.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD),
             @Sql(scripts =  "/db/insert_pautas.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     })
     void buscarPautasAbertasPorCategoriaTest(){
@@ -188,9 +201,10 @@ class PautaControllerIntegrationTest {
     @Test
     @DisplayName("Dadas pautas válidas, quando buscado por pautas finalizadas, deve retornar as pautas corretas")
     @SqlGroup({
+            @Sql(scripts =  "/db/clear_pautas_eleitores.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
             @Sql(scripts = "/db/clear_usuarios.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
+            @Sql(scripts =  "/db/clear_pautas.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
             @Sql(scripts = "/db/insert_usuarios.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
-            @Sql(scripts =  "/db/clear_pautas.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD),
             @Sql(scripts =  "/db/insert_pautas.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     })
     void buscarPautasFinalizadasTest(){
@@ -222,9 +236,10 @@ class PautaControllerIntegrationTest {
     @Test
     @DisplayName("Dadas pautas válidas, quando buscado por pautas finalizadas por categoria, deve retornar as pautas corretas")
     @SqlGroup({
+            @Sql(scripts =  "/db/clear_pautas_eleitores.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
             @Sql(scripts = "/db/clear_usuarios.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
+            @Sql(scripts =  "/db/clear_pautas.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
             @Sql(scripts = "/db/insert_usuarios.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
-            @Sql(scripts =  "/db/clear_pautas.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD),
             @Sql(scripts =  "/db/insert_pautas.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     })
     void buscarPautasFinalizadasPorCategoriaTest(){
@@ -249,5 +264,85 @@ class PautaControllerIntegrationTest {
         assertEquals(HttpStatus.OK, resposta.getStatusCode());
         assertEquals(1, pautas.size());
         assertEquals("Titulo da Pauta 7", pautas.get(0).titulo());
+    }
+
+    @Test
+    @DisplayName("Dada uma pauta fechada válida, quando aberta, deve retornar verdadeiro")
+    @SqlGroup({
+            @Sql(scripts =  "/db/clear_pautas_eleitores.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
+            @Sql(scripts = "/db/clear_usuarios.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
+            @Sql(scripts =  "/db/clear_pautas.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
+            @Sql(scripts = "/db/insert_usuarios.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
+            @Sql(scripts =  "/db/insert_pautas.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    })
+    void abrirPautaTest(){
+        LoginRequest login = LoginRequestFixture.buiderDefault();
+        HttpEntity<LoginRequest> requisicaoLogin = new HttpEntity<>(login);
+
+        ResponseEntity<LoginResponse> respostaLogin = restTemplate.postForEntity("http://localhost:" + port + "/login", requisicaoLogin, LoginResponse.class);
+        String token = respostaLogin.getBody().token();
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add("Authorization", "Bearer " + token);
+
+        HttpEntity<RegistrarPautaRequest> requisicao = new HttpEntity<>(httpHeaders);
+
+        ResponseEntity<List<PautaEmAndamentoResponse>> pautasResponse = restTemplate.exchange(
+                "http://localhost:" + port + "/pautas/fechadas/",
+                HttpMethod.GET,
+                requisicao,
+                new ParameterizedTypeReference<List<PautaEmAndamentoResponse>>() {}
+        );
+        List<PautaEmAndamentoResponse> pautas = pautasResponse.getBody();
+
+        ResponseEntity<Boolean> resposta = restTemplate.exchange(
+                "http://localhost:" + port + "/pautas/" + pautas.get(0).id() + "/status",
+                HttpMethod.PATCH,
+                requisicao,
+                Boolean.class
+        );
+
+        assertEquals(HttpStatus.OK, resposta.getStatusCode());
+        assertEquals(Boolean.TRUE, resposta.getBody());
+    }
+
+    @Test
+    @DisplayName("Dada uma pauta aberta válida, quando votada, deve retornar verdadeiro")
+    @SqlGroup({
+            @Sql(scripts =  "/db/clear_pautas_eleitores.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
+            @Sql(scripts = "/db/clear_usuarios.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
+            @Sql(scripts =  "/db/clear_pautas.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
+            @Sql(scripts = "/db/insert_usuarios.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
+            @Sql(scripts =  "/db/insert_pautas.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    })
+    void votarTest(){
+        LoginRequest login = LoginRequestFixture.buiderDefault();
+        HttpEntity<LoginRequest> requisicaoLogin = new HttpEntity<>(login);
+
+        ResponseEntity<LoginResponse> respostaLogin = restTemplate.postForEntity("http://localhost:" + port + "/login", requisicaoLogin, LoginResponse.class);
+        String token = respostaLogin.getBody().token();
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add("Authorization", "Bearer " + token);
+
+        HttpEntity<RegistrarPautaRequest> requisicao = new HttpEntity<>(httpHeaders);
+
+        ResponseEntity<List<PautaEmAndamentoResponse>> pautasResponse = restTemplate.exchange(
+                "http://localhost:" + port + "/pautas/abertas/",
+                HttpMethod.GET,
+                requisicao,
+                new ParameterizedTypeReference<List<PautaEmAndamentoResponse>>() {}
+        );
+        List<PautaEmAndamentoResponse> pautas = pautasResponse.getBody();
+
+        ResponseEntity<Boolean> resposta = restTemplate.exchange(
+                "http://localhost:" + port + "/pautas/" + pautas.get(0).id() + "/votos?voto=SIM",
+                HttpMethod.PATCH,
+                requisicao,
+                Boolean.class
+        );
+
+        assertEquals(HttpStatus.OK, resposta.getStatusCode());
+        assertEquals(Boolean.TRUE, resposta.getBody());
     }
 }
