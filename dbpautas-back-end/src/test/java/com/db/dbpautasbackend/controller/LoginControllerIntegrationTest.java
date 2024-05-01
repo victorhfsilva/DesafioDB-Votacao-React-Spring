@@ -1,9 +1,9 @@
 package com.db.dbpautasbackend.controller;
 
-import com.db.dbpautasbackend.dto.LoginDTO;
-import com.db.dbpautasbackend.dto.LoginRespostaDTO;
-import com.db.dbpautasbackend.enums.Papel;
-import com.db.dbpautasbackend.fixture.LoginDTOFixture;
+import com.db.dbpautasbackend.model.dto.LoginRequest;
+import com.db.dbpautasbackend.model.dto.LoginResponse;
+import com.db.dbpautasbackend.model.enums.Papel;
+import com.db.dbpautasbackend.fixture.LoginRequestFixture;
 import com.db.dbpautasbackend.service.TokenService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -44,10 +44,10 @@ class LoginControllerIntegrationTest {
             @Sql(scripts = "/db/insert_usuarios.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     })
     void loginTest(){
-        LoginDTO login = LoginDTOFixture.buiderDefault();
-        HttpEntity<LoginDTO> requisicao = new HttpEntity<>(login);
+        LoginRequest login = LoginRequestFixture.buiderDefault();
+        HttpEntity<LoginRequest> requisicao = new HttpEntity<>(login);
 
-        ResponseEntity<LoginRespostaDTO> resposta = restTemplate.postForEntity("http://localhost:" + port + "/login", requisicao, LoginRespostaDTO.class);
+        ResponseEntity<LoginResponse> resposta = restTemplate.postForEntity("http://localhost:" + port + "/login", requisicao, LoginResponse.class);
 
         assertEquals(HttpStatus.OK, resposta.getStatusCode());
         assertTrue(tokenService.isTokenValido(resposta.getBody().token()));
@@ -61,8 +61,8 @@ class LoginControllerIntegrationTest {
             @Sql(scripts = "/db/clear_usuarios.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
             @Sql(scripts = "/db/insert_usuarios.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     })
-    void loginTestWithInvalidLogin(LoginDTO login){
-        HttpEntity<LoginDTO> requisicao = new HttpEntity<>(login);
+    void loginTestWithInvalidLogin(LoginRequest login){
+        HttpEntity<LoginRequest> requisicao = new HttpEntity<>(login);
 
         ResponseEntity<String> resposta = restTemplate.postForEntity("http://localhost:" + port + "/login", requisicao, String.class);
 
@@ -71,8 +71,8 @@ class LoginControllerIntegrationTest {
 
     private static Stream<Arguments> logins() {
         return Stream.of(
-                Arguments.of(LoginDTOFixture.builderComCpfBranco()),
-                Arguments.of(LoginDTOFixture.builderComSenhaBranca())
+                Arguments.of(LoginRequestFixture.builderComCpfBranco()),
+                Arguments.of(LoginRequestFixture.builderComSenhaBranca())
         );
     }
 }

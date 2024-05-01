@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PautaServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">dbpautas-back-end</a> &gt; <a href="index.source.html" class="el_package">com.db.dbpautasbackend.service.impl</a> &gt; <span class="el_source">PautaServiceImpl.java</span></div><h1>PautaServiceImpl.java</h1><pre class="source lang-java linenums">package com.db.dbpautasbackend.service.impl;
+
+import com.db.dbpautasbackend.model.dto.PautaEmAndamentoResponse;
+import com.db.dbpautasbackend.model.dto.PautaFinalizadaResponse;
+import com.db.dbpautasbackend.model.dto.RegistrarPautaRequest;
+import com.db.dbpautasbackend.model.enums.Categoria;
+import com.db.dbpautasbackend.model.enums.Decisao;
+import com.db.dbpautasbackend.model.enums.Voto;
+import com.db.dbpautasbackend.mapper.PautaMapper;
+import com.db.dbpautasbackend.model.Pauta;
+import com.db.dbpautasbackend.model.Usuario;
+import com.db.dbpautasbackend.repository.PautaRepository;
+import com.db.dbpautasbackend.repository.UsuarioRepository;
+import com.db.dbpautasbackend.service.PautaService;
+import com.db.dbpautasbackend.service.ValidacaoPautaService;
+import com.db.dbpautasbackend.service.VotacaoService;
+import lombok.AllArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
+
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.List;
+
+@Service
+<span class="fc" id="L27">@AllArgsConstructor</span>
+public class PautaServiceImpl implements PautaService {
+
+    private PautaRepository pautaRepository;
+    private UsuarioRepository usuarioRepository;
+    private VotacaoService votacaoService;
+    private ValidacaoPautaService validacaoPautaService;
+
+    @Override
+    public Pauta salvar(RegistrarPautaRequest pautaDTO) {
+<span class="fc" id="L37">        Pauta pauta = PautaMapper.mapRegistrarPautaRequesttoPauta(pautaDTO);</span>
+<span class="fc" id="L38">        return pautaRepository.save(pauta);</span>
+    }
+
+    @Override
+    public Pauta abrirPauta(Long id, Integer tempoDeSessaoEmMinutos) {
+<span class="fc" id="L43">        Pauta pauta = pautaRepository.findById(id).orElseThrow();</span>
+<span class="fc" id="L44">        validacaoPautaService.validaPautaFechada(pauta);</span>
+
+<span class="fc" id="L46">        pauta.setAberta(true);</span>
+<span class="fc" id="L47">        pauta.setAbertoAs(LocalDateTime.now());</span>
+<span class="fc bfc" id="L48" title="All 2 branches covered.">        pauta.setTempoDeSessaoEmMinutos(tempoDeSessaoEmMinutos != null ? tempoDeSessaoEmMinutos : 1);</span>
+
+<span class="fc" id="L50">        return pautaRepository.save(pauta);</span>
+    }
+
+    @Override
+    public Pauta votarPauta(Long id, Voto voto) {
+<span class="fc" id="L55">        Authentication authentication = SecurityContextHolder.getContext()</span>
+<span class="fc" id="L56">                .getAuthentication();</span>
+
+<span class="fc" id="L58">        String cpf = authentication.getName();</span>
+<span class="fc" id="L59">        Usuario usuario = usuarioRepository.findByCpf(cpf).orElseThrow();</span>
+
+<span class="fc" id="L61">        Pauta pauta = pautaRepository.findById(id).orElseThrow();</span>
+
+<span class="fc" id="L63">        return votacaoService.votar(pauta, usuario, voto);</span>
+    }
+
+    @Override
+    public List&lt;PautaEmAndamentoResponse&gt; obterPautasFechadas() {
+<span class="fc" id="L68">        List&lt;Pauta&gt; pautas = pautaRepository.findPautasFechadas();</span>
+<span class="fc" id="L69">        return PautaMapper.mapListOfPautaToListOfPautaEmAndamentoResponse(pautas);</span>
+    }
+
+    @Override
+    public List&lt;PautaEmAndamentoResponse&gt; obterPautasFechadasPorCategoria(Categoria categoria) {
+<span class="fc" id="L74">        List&lt;Pauta&gt; pautas = pautaRepository.findPautasFechadasPorCategoria(categoria);</span>
+<span class="fc" id="L75">        return PautaMapper.mapListOfPautaToListOfPautaEmAndamentoResponse(pautas);</span>
+    }
+
+    @Override
+    public List&lt;PautaEmAndamentoResponse&gt; obterPautasAbertas() {
+<span class="fc" id="L80">        List&lt;Pauta&gt; pautas = pautaRepository.findPautasAbertas().stream()</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">                .filter(pauta -&gt; !isPautaFinalizada(pauta))</span>
+<span class="fc" id="L82">                .toList();</span>
+
+<span class="fc" id="L84">        return PautaMapper.mapListOfPautaToListOfPautaEmAndamentoResponse(pautas);</span>
+    }
+
+    @Override
+    public List&lt;PautaEmAndamentoResponse&gt; obterPautasAbertasPorCategoria(Categoria categoria) {
+<span class="fc" id="L89">        List&lt;Pauta&gt; pautas = pautaRepository.findPautasAbertasPorCategoria(categoria).stream()</span>
+<span class="pc bpc" id="L90" title="1 of 2 branches missed.">                .filter(pauta -&gt; !isPautaFinalizada(pauta))</span>
+<span class="fc" id="L91">                .toList();</span>
+
+<span class="fc" id="L93">        return PautaMapper.mapListOfPautaToListOfPautaEmAndamentoResponse(pautas);</span>
+    }
+
+    @Override
+    public List&lt;PautaFinalizadaResponse&gt; obterPautasFinalizadas() {
+<span class="fc" id="L98">        List&lt;Pauta&gt; pautas = pautaRepository.findPautasAbertas().stream().filter(</span>
+                this::isPautaFinalizada
+<span class="fc" id="L100">        ).toList();</span>
+
+<span class="fc" id="L102">        return PautaMapper.mapListOfPautaToListOfPautaFinalizadaResponse(pautas, this);</span>
+    }
+
+    @Override
+    public List&lt;PautaFinalizadaResponse&gt; obterPautasFinalizadasPorCategoria(Categoria categoria) {
+<span class="fc" id="L107">        List&lt;Pauta&gt; pautas = pautaRepository.findPautasAbertasPorCategoria(categoria).stream()</span>
+<span class="fc" id="L108">                .filter(this::isPautaFinalizada)</span>
+<span class="fc" id="L109">                .toList();</span>
+
+<span class="fc" id="L111">        return PautaMapper.mapListOfPautaToListOfPautaFinalizadaResponse(pautas, this);</span>
+    }
+
+    public boolean isPautaFinalizada(Pauta pauta) {
+<span class="fc" id="L115">        LocalDateTime abertoAs = pauta.getAbertoAs();</span>
+<span class="fc" id="L116">        int tempoDeSessaoEmMinutos = pauta.getTempoDeSessaoEmMinutos();</span>
+
+<span class="fc" id="L118">        LocalDateTime agora = LocalDateTime.now();</span>
+<span class="fc" id="L119">        long minutosPassados = Duration.between(abertoAs, agora).toMinutes();</span>
+
+<span class="fc bfc" id="L121" title="All 2 branches covered.">        return minutosPassados &gt; tempoDeSessaoEmMinutos;</span>
+    }
+
+    public Decisao contabilizar(Pauta pauta) {
+        Decisao decisao;
+<span class="fc bfc" id="L126" title="All 2 branches covered.">        if(pauta.getVotosSim() &gt; pauta.getVotosNao()) {</span>
+<span class="fc" id="L127">            decisao = Decisao.APROVADO;</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">        } else if (pauta.getVotosSim() == pauta.getVotosNao()) {</span>
+<span class="fc" id="L129">            decisao =  Decisao.EMPATE;</span>
+        } else {
+<span class="fc" id="L131">            decisao = Decisao.REPROVADO;</span>
+        }
+<span class="fc" id="L133">        return decisao;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

@@ -1,7 +1,11 @@
 package com.db.dbpautasbackend.service;
 
-import com.db.dbpautasbackend.enums.Decisao;
-import com.db.dbpautasbackend.enums.Voto;
+import com.db.dbpautasbackend.mapper.PautaMapper;
+import com.db.dbpautasbackend.model.dto.PautaEmAndamentoResponse;
+import com.db.dbpautasbackend.model.dto.PautaFinalizadaResponse;
+import com.db.dbpautasbackend.model.dto.RegistrarPautaRequest;
+import com.db.dbpautasbackend.model.enums.Decisao;
+import com.db.dbpautasbackend.model.enums.Voto;
 import com.db.dbpautasbackend.fixture.PautaFixture;
 import com.db.dbpautasbackend.fixture.UsuarioFixture;
 import com.db.dbpautasbackend.model.Pauta;
@@ -20,10 +24,12 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -96,4 +102,91 @@ class PautaServiceImplTest {
                 Arguments.of(PautaFixture.builderDePautaEmpatada(), Decisao.EMPATE)
         );
     }
+
+    @Test
+    @DisplayName("Dado uma pauta finalizada, quando verificada se ela foi finalizada, deve retornar verdadeiro.")
+    void isPautaFinalizadaTest(){
+        Pauta pauta = PautaFixture.builderDePautaAprovada();
+        boolean isFinalizada = pautaService.isPautaFinalizada(pauta);
+        assertEquals(true, isFinalizada);
+    }
+
+    @Test
+    @DisplayName("Dado uma pauta em andamento, quando verificada se ela foi finalizada, deve retornar falso.")
+    void isPautaFinalizadaFalseTest(){
+        Pauta pauta = PautaFixture.builderDePautaAberta();
+        boolean isFinalizada = pautaService.isPautaFinalizada(pauta);
+        assertEquals(false, isFinalizada);
+    }
+
+    @Test
+    @DisplayName("Dada uma pauta valida, quando salva, deve retornar a pauta salva.")
+    void salvarPautaTest(){
+        Pauta pauta = PautaFixture.builderDefault();
+        RegistrarPautaRequest pautaDTO = PautaMapper.mapPautaToRegistrarPautaRequest(pauta);
+        when(pautaRepository.save(any())).thenReturn(pauta);
+        Pauta pautaObtida = pautaService.salvar(pautaDTO);
+        assertEquals(pauta, pautaObtida);
+    }
+
+    @Test
+    @DisplayName("Dado pautas fechadas, quando obtidas, deve retornar a lista correta.")
+    void obterPautasFechadasTest(){
+        Pauta pauta = PautaFixture.builderDefault();
+        List<Pauta> pautas = List.of(pauta);
+        List<PautaEmAndamentoResponse> pautasEsperadas = PautaMapper.mapListOfPautaToListOfPautaEmAndamentoResponse(pautas);
+        when(pautaRepository.findPautasFechadas()).thenReturn(pautas);
+        assertIterableEquals(pautaService.obterPautasFechadas(), pautasEsperadas);
+    }
+
+    @Test
+    @DisplayName("Dado pautas fechadas, quando obtidas por categoria, deve retornar a lista correta.")
+    void obterPautasFechadasPorCategoriaTest(){
+        Pauta pauta = PautaFixture.builderDefault();
+        List<Pauta> pautas = List.of(pauta);
+        List<PautaEmAndamentoResponse> pautasEsperadas = PautaMapper.mapListOfPautaToListOfPautaEmAndamentoResponse(pautas);
+        when(pautaRepository.findPautasFechadasPorCategoria(any())).thenReturn(pautas);
+        assertIterableEquals(pautaService.obterPautasFechadasPorCategoria(pauta.getCategoria()), pautasEsperadas);
+    }
+
+    @Test
+    @DisplayName("Dado pautas abertas, quando obtidas, deve retornar a lista correta.")
+    void obterPautasAbertasTest(){
+        Pauta pauta = PautaFixture.builderDePautaAberta();
+        List<Pauta> pautas = List.of(pauta);
+        List<PautaEmAndamentoResponse> pautasEsperadas = PautaMapper.mapListOfPautaToListOfPautaEmAndamentoResponse(pautas);
+        when(pautaRepository.findPautasAbertas()).thenReturn(pautas);
+        assertIterableEquals(pautaService.obterPautasAbertas(), pautasEsperadas);
+    }
+
+    @Test
+    @DisplayName("Dado pautas abertas por categoria, quando obtidas, deve retornar a lista correta.")
+    void obterPautasAbertasPorCategoriaTest(){
+        Pauta pauta = PautaFixture.builderDePautaAberta();
+        List<Pauta> pautas = List.of(pauta);
+        List<PautaEmAndamentoResponse> pautasEsperadas = PautaMapper.mapListOfPautaToListOfPautaEmAndamentoResponse(pautas);
+        when(pautaRepository.findPautasAbertasPorCategoria(any())).thenReturn(pautas);
+        assertIterableEquals(pautaService.obterPautasAbertasPorCategoria(pauta.getCategoria()), pautasEsperadas);
+    }
+
+    @Test
+    @DisplayName("Dado pautas finalizadas, quando obtidas, deve retornar a lista correta.")
+    void buscarPautasFinalizadasTest(){
+        Pauta pauta = PautaFixture.builderDePautaAprovada();
+        List<Pauta> pautas = List.of(pauta);
+        List<PautaFinalizadaResponse> pautasEsperadas = PautaMapper.mapListOfPautaToListOfPautaFinalizadaResponse(pautas, pautaService);
+        when(pautaRepository.findPautasAbertas()).thenReturn(pautas);
+        assertIterableEquals(pautaService.obterPautasFinalizadas(), pautasEsperadas);
+    }
+
+    @Test
+    @DisplayName("Dado pautas finalizadas por categoria, quando obtidas, deve retornar a lista correta.")
+    void buscarPautasFinalizadasPorCategoriaTest(){
+        Pauta pauta = PautaFixture.builderDePautaAprovada();
+        List<Pauta> pautas = List.of(pauta);
+        List<PautaFinalizadaResponse> pautasEsperadas = PautaMapper.mapListOfPautaToListOfPautaFinalizadaResponse(pautas, pautaService);
+        when(pautaRepository.findPautasAbertasPorCategoria(any())).thenReturn(pautas);
+        assertIterableEquals(pautaService.obterPautasFinalizadasPorCategoria(pauta.getCategoria()), pautasEsperadas);
+    }
+
 }

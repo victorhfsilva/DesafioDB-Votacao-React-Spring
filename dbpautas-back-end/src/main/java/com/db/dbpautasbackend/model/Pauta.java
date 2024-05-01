@@ -1,6 +1,6 @@
 package com.db.dbpautasbackend.model;
 
-import com.db.dbpautasbackend.enums.Categoria;
+import com.db.dbpautasbackend.model.enums.Categoria;
 import jakarta.persistence.*;
 import lombok.*;
 

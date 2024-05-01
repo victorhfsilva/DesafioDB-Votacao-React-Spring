@@ -1,6 +1,6 @@
 package com.db.dbpautasbackend.service;
 
-import com.db.dbpautasbackend.enums.Voto;
+import com.db.dbpautasbackend.model.enums.Voto;
 import com.db.dbpautasbackend.fixture.PautaFixture;
 import com.db.dbpautasbackend.fixture.UsuarioFixture;
 import com.db.dbpautasbackend.model.Pauta;
@@ -31,8 +31,8 @@ class VotacaoServiceImplTest {
 
 
     @Test
-    @DisplayName("Dado uma pauta aberta e um usuario valido, quando usuário votar na pauta, deve atualizar pauta corretamente.")
-    void votarEmPautaAbertaTest() {
+    @DisplayName("Dado uma pauta aberta e um usuario valido, quando usuário votar sim na pauta, deve atualizar pauta corretamente.")
+    void votarSimEmPautaAbertaTest() {
         Usuario usuario = UsuarioFixture.builderDefault();
         Pauta pautaAberta = PautaFixture.builderDePautaAberta();
         Pauta pautaEsperada = PautaFixture.builderDePautaAbertaComVotos(usuario);
@@ -40,6 +40,25 @@ class VotacaoServiceImplTest {
         when(pautaRepository.save(any())).thenReturn(pautaEsperada);
 
         Pauta pautaObtida = votacaoService.votar(pautaAberta, usuario, Voto.SIM);
+
+        verify(validacaoPautaService).validaPautaAberta(pautaAberta);
+        verify(validacaoPautaService).validaPautaFinalizada(pautaAberta);
+        verify(validacaoPautaService).validaSePrimeiroVoto(pautaAberta, usuario);
+
+        assertEquals(pautaEsperada.getVotosSim(), pautaObtida.getVotosSim());
+        assertIterableEquals(pautaEsperada.getEleitores(), pautaObtida.getEleitores());
+    }
+
+    @Test
+    @DisplayName("Dado uma pauta aberta e um usuario valido, quando usuário votar não na pauta, deve atualizar pauta corretamente.")
+    void votarNaoEmPautaAbertaTest() {
+        Usuario usuario = UsuarioFixture.builderDefault();
+        Pauta pautaAberta = PautaFixture.builderDePautaAberta();
+        Pauta pautaEsperada = PautaFixture.builderDePautaAbertaComVotos(usuario);
+
+        when(pautaRepository.save(any())).thenReturn(pautaEsperada);
+
+        Pauta pautaObtida = votacaoService.votar(pautaAberta, usuario, Voto.NAO);
 
         verify(validacaoPautaService).validaPautaAberta(pautaAberta);
         verify(validacaoPautaService).validaPautaFinalizada(pautaAberta);

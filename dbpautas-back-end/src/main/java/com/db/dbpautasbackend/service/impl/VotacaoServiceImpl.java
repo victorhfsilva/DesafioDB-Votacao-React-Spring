@@ -1,6 +1,6 @@
 package com.db.dbpautasbackend.service.impl;
 
-import com.db.dbpautasbackend.enums.Voto;
+import com.db.dbpautasbackend.model.enums.Voto;
 import com.db.dbpautasbackend.model.Pauta;
 import com.db.dbpautasbackend.model.Usuario;
 import com.db.dbpautasbackend.repository.PautaRepository;

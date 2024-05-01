@@ -38,15 +38,15 @@ public class AbrirPautaTest {
     void deveAbrirPautaFechadaComSucesso(){
         PautaRequisicao pauta = PautaFixture.builderValido();
         request.body(pauta)
-                .post("/pauta/registrar")
+                .post("/pautas")
                 .then().statusCode(201);
 
-        Response response = request.get("/pauta/fechada/");
+        Response response = request.get("/pautas/fechadas/");
         Assertions.assertEquals(200, response.getStatusCode());
         List<PautaEmAndamentoResposta> pautas = response.jsonPath()
                 .getList(".", PautaEmAndamentoResposta.class);
 
-        request.patch("/pauta/abrir/" + pautas.get(pautas.size()-1).getId())
+        request.patch("/pautas/" + pautas.get(pautas.size()-1).getId()+"/status")
                 .then().statusCode(200)
                 .and().assertThat().body(equalTo("true"));
     }
@@ -55,23 +55,23 @@ public class AbrirPautaTest {
     void naoDeveAbrirPautaJaAberta(){
         PautaRequisicao pauta = PautaFixture.builderValido();
         request.body(pauta)
-                .post("/pauta/registrar")
+                .post("/pautas")
                 .then().statusCode(201);
 
-        Response pautasFechadasResponse = request.get("/pauta/fechada/");
+        Response pautasFechadasResponse = request.get("/pautas/fechadas/");
         Assertions.assertEquals(200, pautasFechadasResponse.getStatusCode());
         List<PautaEmAndamentoResposta> pautasFechadas = pautasFechadasResponse.jsonPath()
                 .getList(".", PautaEmAndamentoResposta.class);
 
-        request.patch("/pauta/abrir/" + pautasFechadas.get(pautasFechadas.size()-1).getId())
+        request.patch("/pautas/" + pautasFechadas.get(pautasFechadas.size()-1).getId()+"/status")
                 .then().statusCode(200);
 
-        Response pautasAbertasResponse = request.get("/pauta/aberta/");
+        Response pautasAbertasResponse = request.get("/pautas/abertas/");
         Assertions.assertEquals(200, pautasAbertasResponse.getStatusCode());
         List<PautaEmAndamentoResposta> pautasAbertas = pautasAbertasResponse.jsonPath()
                 .getList(".", PautaEmAndamentoResposta.class);
 
-        request.patch("/pauta/abrir/" + pautasAbertas.get(pautasAbertas.size()-1).getId())
+        request.patch("/pautas/" + pautasAbertas.get(pautasAbertas.size()-1).getId()+"/status")
                 .then().statusCode(409);
     }
 }

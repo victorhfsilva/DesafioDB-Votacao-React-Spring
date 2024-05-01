@@ -77,6 +77,10 @@ Lembre-se de criar o banco de dados de desenvolvimento previamente e substituir 
 
 - Configurar a responsividade das páginas.
 
+## Cobertura de Testes
+
+O relatório de cobertura de testes do Back-End pode ser visualizado neste [arquivo html](./dbpautas-back-end/jacoco/test/html/index.html).
+
 ## Bugs
 
 - Quando o front-end é executado sobre uma imagem do Nginx definida no Dockerfile do front-end, as pautas não são carregadas automaticamente ao navegar para suas respectivas páginas. É necessário antes selecionar uma categoria e só então as pautas serão carregadas. Executando localmente o erro não ocorre. 

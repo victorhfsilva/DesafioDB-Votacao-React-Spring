@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TokenServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">dbpautas-back-end</a> &gt; <a href="index.source.html" class="el_package">com.db.dbpautasbackend.service.impl</a> &gt; <span class="el_source">TokenServiceImpl.java</span></div><h1>TokenServiceImpl.java</h1><pre class="source lang-java linenums">package com.db.dbpautasbackend.service.impl;
+
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.db.dbpautasbackend.repository.UsuarioRepository;
+import com.db.dbpautasbackend.service.TokenService;
+import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+
+@Service
+public class TokenServiceImpl implements TokenService {
+
+    private Environment environment;
+    private UsuarioRepository usuarioRepository;
+    private String jwtSecret;
+    private String issuer;
+    private Algorithm algorithm;
+
+<span class="fc" id="L22">    public TokenServiceImpl(Environment environment, UsuarioRepository usuarioRepository) {</span>
+<span class="fc" id="L23">        this.environment = environment;</span>
+<span class="fc" id="L24">        this.usuarioRepository = usuarioRepository;</span>
+<span class="fc" id="L25">        this.jwtSecret = environment.getProperty(&quot;jwt.secret&quot;);</span>
+<span class="fc" id="L26">        this.issuer = environment.getProperty(&quot;jwt.issuer&quot;);</span>
+<span class="fc" id="L27">        this.algorithm = Algorithm.HMAC256(jwtSecret);</span>
+<span class="fc" id="L28">    }</span>
+
+    public String gerarToken(String cpf){
+<span class="fc" id="L31">        return JWT.create()</span>
+<span class="fc" id="L32">                .withIssuer(issuer)</span>
+<span class="fc" id="L33">                .withSubject(cpf)</span>
+<span class="fc" id="L34">                .withExpiresAt(LocalDateTime.now().plusHours(1L).toInstant(ZoneOffset.of(&quot;-03:00&quot;)))</span>
+<span class="fc" id="L35">                .sign(algorithm);</span>
+    }
+
+    public boolean isTokenValido(String token){
+        try {
+<span class="fc" id="L40">            JWT.require(algorithm)</span>
+<span class="fc" id="L41">                    .withIssuer(issuer)</span>
+<span class="fc" id="L42">                    .build()</span>
+<span class="fc" id="L43">                    .verify(token);</span>
+
+<span class="fc" id="L45">            String cpf = JWT.decode(token).getSubject();</span>
+
+<span class="fc" id="L47">            return usuarioRepository.findUserDetailsByCpf(cpf).isPresent();</span>
+
+<span class="fc" id="L49">        } catch (Exception ex) {</span>
+<span class="fc" id="L50">            return false;</span>
+        }
+    }
+
+    @Override
+    public String extrairSujeito(String token) {
+<span class="fc" id="L56">        return JWT.require(Algorithm.HMAC256(jwtSecret))</span>
+<span class="fc" id="L57">                .withIssuer(issuer)</span>
+<span class="fc" id="L58">                .build()</span>
+<span class="fc" id="L59">                .verify(token)</span>
+<span class="fc" id="L60">                .getSubject();</span>
+    }
+
+    @Override
+    public String extrairToken(String authorizationHeader) {
+<span class="fc bfc" id="L65" title="All 2 branches covered.">        if (authorizationHeader != null) {</span>
+<span class="fc" id="L66">            return authorizationHeader.replace(&quot;Bearer &quot;, &quot;&quot;);</span>
+        } else {
+<span class="fc" id="L68">            return &quot;&quot;;</span>
+        }
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

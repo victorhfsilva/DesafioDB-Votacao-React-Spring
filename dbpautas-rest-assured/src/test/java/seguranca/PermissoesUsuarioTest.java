@@ -32,7 +32,7 @@ public class PermissoesUsuarioTest {
 
         UsuarioRequisicao usuario = UsuarioFixture.builderValido();
         request.body(usuario)
-                .post("/usuario/registrar");
+                .post("/usuarios");
 
         LoginRequisicao login = LoginFixture.builderDoUsuario(usuario);
         Response response = request.body(login).post("/login");
@@ -47,7 +47,7 @@ public class PermissoesUsuarioTest {
     void deveRetornarStatus403QuandoUsuarioTentaCadastrarAdmin(){
         UsuarioRequisicao admin = AdminFixture.builderValido();
         request.body(admin)
-                .post("/usuario/registrar")
+                .post("/usuarios")
                 .then().statusCode(403);
     }
 
@@ -56,28 +56,28 @@ public class PermissoesUsuarioTest {
     void deveRetornarStatus403QuandoUsuarioTentaRegistrarPauta(){
         UsuarioRequisicao usuario = UsuarioFixture.builderValido();
         request.body(usuario)
-                .post("/usuario/registrar")
+                .post("/usuarios")
                 .then().statusCode(403);
     }
 
     @Test
     @DisplayName("Dado um usuário comun, quando o usuário tenta obter as pautas abertas, então o sistema deve retornar com status 200.")
     void deveRetornarStatus403QuandoUsuarioTentaObterPautasAbertas(){
-        request.get("/pauta/aberta/")
+        request.get("/pautas/abertas/")
                 .then().statusCode(200);
     }
 
     @Test
     @DisplayName("Dado um usuário comun, quando o usuário tenta obter as pautas fechadas, então o sistema deve retornar com status 200.")
     void deveRetornarStatus403QuandoUsuarioTentaObterPautasFechadas(){
-        request.get("/pauta/fechada/")
+        request.get("/pautas/fechadas/")
                 .then().statusCode(403);
     }
 
     @Test
     @DisplayName("Dado um usuário comun, quando o usuário tenta obter as pautas finalizadas, então o sistema deve retornar com status 200.")
     void deveRetornarStatus403QuandoUsuarioTentaObterPautasFinalizadas(){
-        request.get("/pauta/finalizada/")
+        request.get("/pautas/finalizadas/")
                 .then().statusCode(200);
     }
 

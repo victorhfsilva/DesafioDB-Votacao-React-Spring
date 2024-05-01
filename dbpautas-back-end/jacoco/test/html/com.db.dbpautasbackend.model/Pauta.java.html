@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Pauta.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">dbpautas-back-end</a> &gt; <a href="index.source.html" class="el_package">com.db.dbpautasbackend.model</a> &gt; <span class="el_source">Pauta.java</span></div><h1>Pauta.java</h1><pre class="source lang-java linenums">package com.db.dbpautasbackend.model;
+
+import com.db.dbpautasbackend.model.enums.Categoria;
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+@Getter
+<span class="pc" id="L11">@Setter</span>
+<span class="fc" id="L12">@NoArgsConstructor(access = AccessLevel.PROTECTED)</span>
+<span class="fc" id="L13">@AllArgsConstructor</span>
+<span class="pc bfc" id="L14" title="All 8 branches covered.">@Builder</span>
+<span class="pc bpc" id="L15" title="71 of 72 branches missed.">@EqualsAndHashCode</span>
+<span class="fc" id="L16">@ToString</span>
+@Entity
+@Table(name = &quot;pautas&quot;)
+public class Pauta {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(updatable = false, nullable = false)
+<span class="fc" id="L24">    private Long id;</span>
+
+    @Column(nullable = false)
+<span class="fc" id="L27">    private String titulo;</span>
+
+    @Column(nullable = false, length = 500)
+<span class="fc" id="L30">    private String resumo;</span>
+
+    @Column(nullable = false, columnDefinition = &quot;TEXT&quot;)
+<span class="fc" id="L33">    private String descricao;</span>
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 20)
+<span class="fc" id="L37">    private Categoria categoria;</span>
+
+    @ManyToMany
+    @JoinTable(
+        name = &quot;pautas_eleitores&quot;,
+        joinColumns = @JoinColumn(name = &quot;pauta_id&quot;),
+        inverseJoinColumns = @JoinColumn(name = &quot;usuario_id&quot;)
+    )
+<span class="fc" id="L45">    private List&lt;Usuario&gt; eleitores;</span>
+
+    @Column(nullable = false)
+    @Builder.Default
+<span class="fc" id="L49">    private boolean aberta = false;</span>
+
+<span class="fc" id="L51">    private LocalDateTime abertoAs;</span>
+
+    @Column(nullable = false)
+    @Builder.Default
+<span class="fc" id="L55">    private int votosSim = 0;</span>
+
+    @Column(nullable = false)
+    @Builder.Default
+<span class="fc" id="L59">    private int votosNao = 0;</span>
+
+    @Column(nullable = false)
+    @Builder.Default
+<span class="fc" id="L63">    private int tempoDeSessaoEmMinutos = 1;</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

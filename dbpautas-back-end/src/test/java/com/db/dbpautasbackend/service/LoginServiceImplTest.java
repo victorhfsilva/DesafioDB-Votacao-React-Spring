@@ -1,9 +1,9 @@
 package com.db.dbpautasbackend.service;
 
-import com.db.dbpautasbackend.dto.LoginDTO;
-import com.db.dbpautasbackend.dto.LoginRespostaDTO;
-import com.db.dbpautasbackend.enums.Papel;
-import com.db.dbpautasbackend.fixture.LoginDTOFixture;
+import com.db.dbpautasbackend.model.dto.LoginRequest;
+import com.db.dbpautasbackend.model.dto.LoginResponse;
+import com.db.dbpautasbackend.model.enums.Papel;
+import com.db.dbpautasbackend.fixture.LoginRequestFixture;
 import com.db.dbpautasbackend.service.impl.LoginServiceImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -38,7 +38,7 @@ class LoginServiceImplTest {
     @Test
     @DisplayName("Dado dados de login válidos, quando feito o login, deve retornar um Token.")
     void gerarTokenComLoginValidoTest(){
-        LoginDTO login = LoginDTOFixture.buiderDefault();
+        LoginRequest login = LoginRequestFixture.buiderDefault();
 
         String token = "token";
         Papel papel = Papel.ADMIN;
@@ -53,7 +53,7 @@ class LoginServiceImplTest {
         when(authenticationManager.authenticate(usernamePasswordAuthenticationToken)).thenReturn(authentication);
         when(tokenService.gerarToken(login.cpf())).thenReturn(token);
 
-        LoginRespostaDTO loginRespostaDTO = loginService.gerarToken(login);
+        LoginResponse loginRespostaDTO = loginService.gerarToken(login);
 
         assertEquals(token, loginRespostaDTO.token());
         assertEquals(Papel.ADMIN, loginRespostaDTO.papel());

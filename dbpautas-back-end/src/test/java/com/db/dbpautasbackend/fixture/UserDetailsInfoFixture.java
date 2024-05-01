@@ -1,7 +1,7 @@
 package com.db.dbpautasbackend.fixture;
 
-import com.db.dbpautasbackend.enums.Papel;
-import com.db.dbpautasbackend.info.impl.UserDetailsInfoImpl;
+import com.db.dbpautasbackend.model.enums.Papel;
+import com.db.dbpautasbackend.model.info.impl.UserDetailsInfoImpl;
 
 public interface UserDetailsInfoFixture {
 

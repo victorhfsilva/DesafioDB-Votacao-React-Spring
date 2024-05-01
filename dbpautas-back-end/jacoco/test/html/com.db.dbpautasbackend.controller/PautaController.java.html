@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PautaController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">dbpautas-back-end</a> &gt; <a href="index.source.html" class="el_package">com.db.dbpautasbackend.controller</a> &gt; <span class="el_source">PautaController.java</span></div><h1>PautaController.java</h1><pre class="source lang-java linenums">package com.db.dbpautasbackend.controller;
+
+import com.db.dbpautasbackend.model.dto.PautaEmAndamentoResponse;
+import com.db.dbpautasbackend.model.dto.PautaFinalizadaResponse;
+import com.db.dbpautasbackend.model.dto.RegistrarPautaRequest;
+import com.db.dbpautasbackend.model.enums.Categoria;
+import com.db.dbpautasbackend.model.enums.Voto;
+import com.db.dbpautasbackend.service.PautaService;
+import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping(&quot;/pautas&quot;)
+<span class="fc" id="L20">@AllArgsConstructor</span>
+public class PautaController {
+
+    private PautaService pautaService;
+
+    @PostMapping(&quot;&quot;)
+    @Operation(summary = &quot;Registra uma pauta no sistema.&quot;)
+    public ResponseEntity&lt;Boolean&gt; registrar(@RequestBody @Valid RegistrarPautaRequest pautaDTO) {
+<span class="fc" id="L28">        pautaService.salvar(pautaDTO);</span>
+<span class="fc" id="L29">        return ResponseEntity.status(HttpStatus.CREATED).body(true);</span>
+    }
+
+    @PatchMapping(&quot;/{id}/status&quot;)
+    @Operation(summary = &quot;Abre uma pauta jÃ¡ registrada para votaÃ§Ã£o.&quot;)
+    public ResponseEntity&lt;Boolean&gt; abrir(
+            @PathVariable(&quot;id&quot;) Long id,
+            @RequestParam(value = &quot;minutos&quot;, required = false) Integer tempoDeSessaoEmMinutos){
+<span class="fc" id="L37">        pautaService.abrirPauta(id, tempoDeSessaoEmMinutos);</span>
+<span class="fc" id="L38">        return ResponseEntity.status(HttpStatus.OK).body(true);</span>
+    }
+
+    @PatchMapping(&quot;/{id}/votos&quot;)
+    @Operation(summary = &quot;Vota uma pauta aberta. Cada usuÃ¡rio sÃ³ pode votar uma vez.&quot;)
+    public ResponseEntity&lt;Boolean&gt; votar(
+            @PathVariable(&quot;id&quot;) Long id,
+            @RequestParam(value = &quot;voto&quot;) Voto voto
+            ){
+<span class="fc" id="L47">        pautaService.votarPauta(id, voto);</span>
+<span class="fc" id="L48">        return ResponseEntity.status(HttpStatus.OK).body(true);</span>
+    }
+
+    @GetMapping(&quot;/fechadas/&quot;)
+    @Operation(summary = &quot;ObtÃªm uma pÃ¡gina de pautas fechadas&quot;)
+    public ResponseEntity&lt;List&lt;PautaEmAndamentoResponse&gt;&gt; buscarPautasFechadas(
+    ){
+<span class="fc" id="L55">        List&lt;PautaEmAndamentoResponse&gt; pautasDTOs = pautaService.obterPautasFechadas();</span>
+<span class="fc" id="L56">        return ResponseEntity.status(HttpStatus.OK).body(pautasDTOs);</span>
+    }
+
+    @GetMapping(&quot;/fechadas/{categoria}&quot;)
+    @Operation(summary = &quot;ObtÃªm uma pÃ¡gina de pautas fechadas por categoria.&quot;)
+    public ResponseEntity&lt;List&lt;PautaEmAndamentoResponse&gt;&gt; buscarPautasFechadasPorCategoria(
+            @PathVariable(&quot;categoria&quot;) Categoria categoria
+            ){
+<span class="fc" id="L64">        List&lt;PautaEmAndamentoResponse&gt; pautasDTOs = pautaService.obterPautasFechadasPorCategoria(categoria);</span>
+<span class="fc" id="L65">        return ResponseEntity.status(HttpStatus.OK).body(pautasDTOs);</span>
+    }
+
+    @GetMapping(&quot;/abertas/&quot;)
+    @Operation(summary = &quot;ObtÃªm uma pÃ¡gina de pautas abertas.&quot;)
+    public ResponseEntity&lt;List&lt;PautaEmAndamentoResponse&gt;&gt; buscarPautasAbertas(
+    ){
+<span class="fc" id="L72">        List&lt;PautaEmAndamentoResponse&gt; pautasDTOs = pautaService.obterPautasAbertas();</span>
+<span class="fc" id="L73">        return ResponseEntity.status(HttpStatus.OK).body(pautasDTOs);</span>
+    }
+
+    @GetMapping(&quot;/abertas/{categoria}&quot;)
+    @Operation(summary = &quot;ObtÃªm uma pÃ¡gina de pautas abertas por categoria&quot;)
+    public ResponseEntity&lt;List&lt;PautaEmAndamentoResponse&gt;&gt; buscarPautasAbertasPorCategoria(
+            @PathVariable(&quot;categoria&quot;) Categoria categoria
+    ){
+<span class="fc" id="L81">        List&lt;PautaEmAndamentoResponse&gt; pautasDTOs = pautaService.obterPautasAbertasPorCategoria(categoria);</span>
+<span class="fc" id="L82">        return ResponseEntity.status(HttpStatus.OK).body(pautasDTOs);</span>
+    }
+
+    @GetMapping(&quot;/finalizadas/&quot;)
+    @Operation(summary = &quot;ObtÃªm uma pÃ¡gina de pautas finalizadas&quot;)
+    public ResponseEntity&lt;List&lt;PautaFinalizadaResponse&gt;&gt; buscarPautasFinalizadas(
+    ){
+<span class="fc" id="L89">        List&lt;PautaFinalizadaResponse&gt; pautasDTOs = pautaService.obterPautasFinalizadas();</span>
+<span class="fc" id="L90">        return ResponseEntity.status(HttpStatus.OK).body(pautasDTOs);</span>
+    }
+
+    @GetMapping(&quot;/finalizadas/{categoria}&quot;)
+    @Operation(summary = &quot;ObtÃªm uma pÃ¡gina de pautas fechadas&quot;)
+    public ResponseEntity&lt;List&lt;PautaFinalizadaResponse&gt;&gt; buscarPautasFinalizadasPorCategoria(
+            @PathVariable(&quot;categoria&quot;) Categoria categoria
+    ){
+<span class="fc" id="L98">        List&lt;PautaFinalizadaResponse&gt; pautasDTOs = pautaService.obterPautasFinalizadasPorCategoria(categoria);</span>
+<span class="fc" id="L99">        return ResponseEntity.status(HttpStatus.OK).body(pautasDTOs);</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

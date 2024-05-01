@@ -1,6 +1,6 @@
 package com.db.dbpautasbackend.fixture;
 
-import com.db.dbpautasbackend.enums.Categoria;
+import com.db.dbpautasbackend.model.enums.Categoria;
 import com.db.dbpautasbackend.model.Pauta;
 import com.db.dbpautasbackend.model.Usuario;
 

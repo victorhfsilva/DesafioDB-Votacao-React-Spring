@@ -55,7 +55,7 @@ describe("Teste da página de pautas finalizadas", () => {
         expect(botaoSobre[0]).toBeInTheDocument();
         fireEvent.click(botaoSobre[0]);
 
-        const botaoClose = screen.queryAllByText('Close');
+        const botaoClose = screen.queryAllByText('Fechar');
         expect(botaoClose[0]).toBeInTheDocument();
     
     });

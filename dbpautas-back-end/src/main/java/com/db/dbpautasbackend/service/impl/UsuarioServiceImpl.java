@@ -1,6 +1,6 @@
 package com.db.dbpautasbackend.service.impl;
 
-import com.db.dbpautasbackend.dto.RegistrarUsuarioDTO;
+import com.db.dbpautasbackend.model.dto.RegistrarUsuarioRequest;
 import com.db.dbpautasbackend.mapper.UsuarioMapper;
 import com.db.dbpautasbackend.model.Usuario;
 import com.db.dbpautasbackend.repository.UsuarioRepository;
@@ -22,14 +22,9 @@ public class UsuarioServiceImpl implements UsuarioService {
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public Usuario salvar(RegistrarUsuarioDTO usuarioDTO) {
+    public Usuario salvar(RegistrarUsuarioRequest usuarioDTO) {
         validacaoUsuarioService.validarSituacaoRegularDoCpf(usuarioDTO.cpf());
-        Usuario usuario = UsuarioMapper.mapRegistrarUsuarioDTOToUsuario(usuarioDTO, passwordEncoder);
+        Usuario usuario = UsuarioMapper.mapRegistrarUsuarioRequestToUsuario(usuarioDTO, passwordEncoder);
         return usuarioRepository.save(usuario);
-    }
-
-    @Override
-    public Page<Usuario> buscarTodosUsuariosPorPagina(Pageable pageable) {
-        return usuarioRepository.findAll(pageable);
     }
 }

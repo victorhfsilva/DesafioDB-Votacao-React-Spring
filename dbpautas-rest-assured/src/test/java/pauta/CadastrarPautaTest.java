@@ -47,7 +47,7 @@ public class CadastrarPautaTest {
     public void deveCadastrarPautaComSucesso() {
         PautaRequisicao pauta = PautaFixture.builderValido();
         request.body(pauta)
-                .post("/pauta/registrar")
+                .post("/pautas")
                 .then().statusCode(201)
                 .and().assertThat().body(equalTo("true"));
     }
@@ -57,7 +57,7 @@ public class CadastrarPautaTest {
     @DisplayName("Dada uma pauta com campo inválido, quando o usuário tenta cadastrar, então o sistema deve retornar status 400.")
     void deveRetornarStatus400QuandoCampoInvalido(PautaRequisicao pauta) {
         request.body(pauta)
-                .post("/pauta/registrar")
+                .post("/pautas")
                 .then().statusCode(400);
     }
 

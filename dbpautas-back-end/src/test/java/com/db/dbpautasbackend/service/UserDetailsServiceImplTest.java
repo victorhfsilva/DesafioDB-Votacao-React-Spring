@@ -1,7 +1,7 @@
 package com.db.dbpautasbackend.service;
 
 import com.db.dbpautasbackend.fixture.UserDetailsInfoFixture;
-import com.db.dbpautasbackend.info.impl.UserDetailsInfoImpl;
+import com.db.dbpautasbackend.model.info.impl.UserDetailsInfoImpl;
 import com.db.dbpautasbackend.repository.UsuarioRepository;
 import com.db.dbpautasbackend.service.impl.UserDetailsServiceImpl;
 import org.junit.jupiter.api.DisplayName;

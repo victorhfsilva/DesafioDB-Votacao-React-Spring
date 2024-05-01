@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ExceptionHandlerAdvice.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">dbpautas-back-end</a> &gt; <a href="index.source.html" class="el_package">com.db.dbpautasbackend.advicer</a> &gt; <span class="el_source">ExceptionHandlerAdvice.java</span></div><h1>ExceptionHandlerAdvice.java</h1><pre class="source lang-java linenums">package com.db.dbpautasbackend.advicer;
+
+import com.db.dbpautasbackend.exception.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import java.util.NoSuchElementException;
+
+@ControllerAdvice
+<span class="fc" id="L17">public class ExceptionHandlerAdvice {</span>
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity&lt;String&gt; handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
+<span class="fc" id="L22">        FieldError fieldError = ex.getBindingResult().getFieldError();</span>
+<span class="fc" id="L23">        return ResponseEntity.badRequest().body(&quot;O campo &quot; + fieldError.getField() + &quot; Ã© invÃ¡lido.&quot;);</span>
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity&lt;String&gt; handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex) {
+<span class="nc" id="L29">        return ResponseEntity.badRequest().body(&quot;Esperava-se uma entrada com tipo diferente.&quot;);</span>
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public ResponseEntity&lt;String&gt; handleMissingServletRequestParameterException(MissingServletRequestParameterException ex) {
+<span class="nc" id="L35">        return ResponseEntity.badRequest().body(&quot;ParÃ¢metro ausente.&quot;);</span>
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(CpfIrregularException.class)
+    public ResponseEntity&lt;String&gt; handleCpfIrregularException(CpfIrregularException ex) {
+<span class="nc" id="L41">        return ResponseEntity.badRequest().body(&quot;O estado deste cpf Ã© irregular.&quot;);</span>
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(VotoInvalidoException.class)
+    public ResponseEntity&lt;String&gt; handleVotoInvalidoException(VotoInvalidoException ex) {
+<span class="nc" id="L47">        return ResponseEntity.badRequest().body(&quot;VocÃª jÃ¡ votou nesta pauta.&quot;);</span>
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity&lt;String&gt; handleHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
+<span class="nc" id="L53">        return ResponseEntity.badRequest().body(&quot;Ocorreu um erro ao converter sua mensagem.&quot;);</span>
+    }
+
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(PautaAbertaException.class)
+    public ResponseEntity&lt;String&gt; handlePautaAbertaException(PautaAbertaException ex) {
+<span class="nc" id="L59">        return ResponseEntity.status(HttpStatus.CONFLICT).body(&quot;Esta pauta jÃ¡ foi aberta.&quot;);</span>
+    }
+
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(PautaFechadaException.class)
+    public ResponseEntity&lt;String&gt; handlePautaFechadaException(PautaFechadaException ex) {
+<span class="nc" id="L65">        return ResponseEntity.status(HttpStatus.CONFLICT).body(&quot;Esta pauta se encontra fechada.&quot;);</span>
+    }
+
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(PautaFinalizadaException.class)
+    public ResponseEntity&lt;String&gt; handlePautaFinalizadaException(PautaFinalizadaException ex) {
+<span class="nc" id="L71">        return ResponseEntity.status(HttpStatus.CONFLICT).body(&quot;A votaÃ§Ã£o desta pauta jÃ¡ foi finalizada.&quot;);</span>
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(NoSuchElementException.class)
+    public ResponseEntity&lt;String&gt; handleNoSuchElementException(NoSuchElementException ex) {
+<span class="nc" id="L77">        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(&quot;O recurso solicitado nÃ£o foi encontrado.&quot;);</span>
+    }
+
+    @ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
+    @ExceptionHandler(ClienteIndisponivelException.class)
+    public ResponseEntity&lt;String&gt; handleClienteIndisponivelException(ClienteIndisponivelException ex) {
+<span class="nc" id="L83">        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(&quot;NÃ£o foi possÃ­vel validar dados no momento.&quot;);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

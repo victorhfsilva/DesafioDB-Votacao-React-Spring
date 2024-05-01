@@ -1,9 +1,9 @@
 package com.db.dbpautasbackend.controller;
 
-import com.db.dbpautasbackend.dto.LoginDTO;
-import com.db.dbpautasbackend.dto.LoginRespostaDTO;
-import com.db.dbpautasbackend.fixture.LoginDTOFixture;
-import com.db.dbpautasbackend.fixture.LoginRespostaDTOFixture;
+import com.db.dbpautasbackend.model.dto.LoginRequest;
+import com.db.dbpautasbackend.model.dto.LoginResponse;
+import com.db.dbpautasbackend.fixture.LoginRequestFixture;
+import com.db.dbpautasbackend.fixture.LoginResponseFixture;
 import com.db.dbpautasbackend.service.impl.LoginServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
@@ -38,8 +38,8 @@ class LoginControllerTest {
     @Test
     @DisplayName("Dado um login válido, quando logado, deve gerar um token corretamente")
     void loginTest() throws Exception {
-        LoginDTO login = LoginDTOFixture.buiderDefault();
-        LoginRespostaDTO loginResposta = LoginRespostaDTOFixture.buiderDefault();
+        LoginRequest login = LoginRequestFixture.buiderDefault();
+        LoginResponse loginResposta = LoginResponseFixture.buiderDefault();
 
         String loginJson = objectMapper.writeValueAsString(login);
 

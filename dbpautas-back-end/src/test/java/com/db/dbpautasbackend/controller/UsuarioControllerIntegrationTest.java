@@ -1,10 +1,10 @@
 package com.db.dbpautasbackend.controller;
 
-import com.db.dbpautasbackend.dto.LoginDTO;
-import com.db.dbpautasbackend.dto.LoginRespostaDTO;
-import com.db.dbpautasbackend.dto.RegistrarUsuarioDTO;
-import com.db.dbpautasbackend.fixture.LoginDTOFixture;
-import com.db.dbpautasbackend.fixture.RegistrarUsuarioDTOFixture;
+import com.db.dbpautasbackend.model.dto.LoginRequest;
+import com.db.dbpautasbackend.model.dto.LoginResponse;
+import com.db.dbpautasbackend.model.dto.RegistrarUsuarioRequest;
+import com.db.dbpautasbackend.fixture.LoginRequestFixture;
+import com.db.dbpautasbackend.fixture.RegistrarUsuarioRequestFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,19 +38,19 @@ class UsuarioControllerIntegrationTest {
             @Sql(scripts = "/db/insert_usuarios.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     })
     void registrarTest(){
-        LoginDTO login = LoginDTOFixture.buiderDefault();
-        HttpEntity<LoginDTO> requisicaoLogin = new HttpEntity<>(login);
+        LoginRequest login = LoginRequestFixture.buiderDefault();
+        HttpEntity<LoginRequest> requisicaoLogin = new HttpEntity<>(login);
 
-        ResponseEntity<LoginRespostaDTO> respostaLogin = restTemplate.postForEntity("http://localhost:" + port + "/login", requisicaoLogin, LoginRespostaDTO.class);
+        ResponseEntity<LoginResponse> respostaLogin = restTemplate.postForEntity("http://localhost:" + port + "/login", requisicaoLogin, LoginResponse.class);
         String token = respostaLogin.getBody().token();
 
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("Authorization", "Bearer " + token);
 
-        RegistrarUsuarioDTO registrarUsuarioDTO = RegistrarUsuarioDTOFixture.builderDefault();
-        HttpEntity<RegistrarUsuarioDTO> requisicao = new HttpEntity<>(registrarUsuarioDTO, httpHeaders);
+        RegistrarUsuarioRequest registrarUsuarioDTO = RegistrarUsuarioRequestFixture.builderDefault();
+        HttpEntity<RegistrarUsuarioRequest> requisicao = new HttpEntity<>(registrarUsuarioDTO, httpHeaders);
 
-        ResponseEntity<Boolean> resposta = restTemplate.postForEntity("http://localhost:" + port + "/usuario/registrar", requisicao, Boolean.class);
+        ResponseEntity<Boolean> resposta = restTemplate.postForEntity("http://localhost:" + port + "/usuarios", requisicao, Boolean.class);
 
         assertEquals(HttpStatus.CREATED, resposta.getStatusCode());
         assertEquals(Boolean.TRUE, resposta.getBody());

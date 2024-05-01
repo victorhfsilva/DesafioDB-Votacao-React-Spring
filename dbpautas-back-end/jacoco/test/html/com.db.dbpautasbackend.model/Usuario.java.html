@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Usuario.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">dbpautas-back-end</a> &gt; <a href="index.source.html" class="el_package">com.db.dbpautasbackend.model</a> &gt; <span class="el_source">Usuario.java</span></div><h1>Usuario.java</h1><pre class="source lang-java linenums">package com.db.dbpautasbackend.model;
+
+import com.db.dbpautasbackend.model.enums.Papel;
+import jakarta.persistence.*;
+import lombok.*;
+import java.util.List;
+
+@Getter
+<span class="nc" id="L9">@Setter</span>
+<span class="fc" id="L10">@NoArgsConstructor(access = AccessLevel.PROTECTED)</span>
+<span class="fc" id="L11">@AllArgsConstructor</span>
+<span class="pc" id="L12">@Builder</span>
+<span class="pc bpc" id="L13" title="69 of 70 branches missed.">@EqualsAndHashCode</span>
+<span class="nc" id="L14">@ToString</span>
+@Entity
+@Table(name = &quot;usuarios&quot;)
+public class Usuario {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(updatable = false, nullable = false)
+<span class="nc" id="L22">    private Long id;</span>
+
+    @Column(nullable = false, length = 50)
+<span class="fc" id="L25">    private String nome;</span>
+
+    @Column(nullable = false, length = 50)
+<span class="fc" id="L28">    private String sobrenome;</span>
+
+    @Column(nullable = false, length = 100, unique = true)
+<span class="fc" id="L31">    private String email;</span>
+
+    @Column(nullable = false, length = 11, unique = true)
+<span class="fc" id="L34">    private String cpf;</span>
+
+    @Column(nullable = false)
+<span class="fc" id="L37">    private String senha;</span>
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 20)
+<span class="fc" id="L41">    private Papel papel;</span>
+
+    @ManyToMany(mappedBy = &quot;eleitores&quot;)
+<span class="nc" id="L44">    private List&lt;Pauta&gt; pautasVotadas;</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

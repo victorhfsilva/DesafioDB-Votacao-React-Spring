@@ -40,7 +40,7 @@ public class RegistrarUsuarioTest {
     void deveCadastrarAdminComSucesso(){
         UsuarioRequisicao admin = AdminFixture.builderValido();
         request.body(admin)
-                .post("/usuario/registrar")
+                .post("/usuarios")
                 .then().statusCode(201)
                 .and().assertThat().body(equalTo("true"));
     }
@@ -50,7 +50,7 @@ public class RegistrarUsuarioTest {
     void deveCadastrarUsuarioComSucesso(){
         UsuarioRequisicao usuario = UsuarioFixture.builderValido();
         request.body(usuario)
-                .post("/usuario/registrar")
+                .post("/usuarios")
                 .then().statusCode(201)
                 .and().assertThat().body(equalTo("true"));
     }
@@ -60,7 +60,7 @@ public class RegistrarUsuarioTest {
     void deveRetornarStatus400QuandoCampoInvalido(UsuarioRequisicao admin, String mensagem) {
         String mensagemEsperada = new String(mensagem.getBytes(), StandardCharsets.UTF_8);
         request.body(admin)
-                .post("/usuario/registrar")
+                .post("/usuarios")
                 .then().statusCode(400)
                 .and().assertThat().body(equalTo(mensagemEsperada));
     }

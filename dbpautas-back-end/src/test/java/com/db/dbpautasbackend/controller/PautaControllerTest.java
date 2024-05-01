@@ -1,11 +1,10 @@
 package com.db.dbpautasbackend.controller;
 
-import com.db.dbpautasbackend.dto.PautaEmAndamentoDTO;
-import com.db.dbpautasbackend.dto.PautaFinalizadaDTO;
-import com.db.dbpautasbackend.dto.RegistrarPautaDTO;
-import com.db.dbpautasbackend.enums.Categoria;
-import com.db.dbpautasbackend.enums.Decisao;
-import com.db.dbpautasbackend.enums.Voto;
+import com.db.dbpautasbackend.model.dto.PautaEmAndamentoResponse;
+import com.db.dbpautasbackend.model.dto.PautaFinalizadaResponse;
+import com.db.dbpautasbackend.model.dto.RegistrarPautaRequest;
+import com.db.dbpautasbackend.model.enums.Categoria;
+import com.db.dbpautasbackend.model.enums.Voto;
 import com.db.dbpautasbackend.fixture.*;
 import com.db.dbpautasbackend.mapper.PautaMapper;
 import com.db.dbpautasbackend.model.Pauta;
@@ -51,14 +50,14 @@ class PautaControllerTest {
     @DisplayName("Dado uma pauta válida, quando registrada com sucesso, deve retornar verdadeiro")
     @WithMockUser(username = "admin", authorities = {"ADMIN"})
     void registrarTest() throws Exception {
-        RegistrarPautaDTO pautaDTO = RegistrarPautaDTOFixture.builderDefault();
-        Pauta pauta = PautaMapper.mapRegistrarPautaDTOtoPauta(pautaDTO);
+        RegistrarPautaRequest pautaDTO = RegistrarPautaRequestFixture.builderDefault();
+        Pauta pauta = PautaMapper.mapRegistrarPautaRequesttoPauta(pautaDTO);
 
         String pautaDTOJson = objectMapper.writeValueAsString(pautaDTO);
 
         when(pautaService.salvar(pautaDTO)).thenReturn(pauta);
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/pauta/registrar")
+        mockMvc.perform(MockMvcRequestBuilders.post("/pautas")
                         .contentType("application/json")
                         .content(pautaDTOJson))
                 .andExpect(MockMvcResultMatchers.status().isCreated())
@@ -73,7 +72,7 @@ class PautaControllerTest {
 
         when(pautaService.abrirPauta(anyLong(), any())).thenReturn(pautaAberta);
 
-        mockMvc.perform(MockMvcRequestBuilders.patch("/pauta/abrir/1")
+        mockMvc.perform(MockMvcRequestBuilders.patch("/pautas/1/status")
                         .param("minutos", "180"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string("true"));
@@ -88,7 +87,7 @@ class PautaControllerTest {
 
         when(pautaService.votarPauta(anyLong(), eq(Voto.SIM))).thenReturn(pauta);
 
-        mockMvc.perform(MockMvcRequestBuilders.patch("/pauta/votar/1")
+        mockMvc.perform(MockMvcRequestBuilders.patch("/pautas/1/votos")
                         .param("voto", "SIM"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string("true"));
@@ -98,12 +97,12 @@ class PautaControllerTest {
     @DisplayName("Dado uma lista de pautas, quando o usuário buscar por pautas fechadas, deve retornar as pautas corretamente.")
     @WithMockUser(username = "admin", authorities = {"ADMIN"})
     void buscarPautasFechadaTest() throws Exception {
-        PautaEmAndamentoDTO pautaEsperada = PautaEmAndamentoDTOFixture.builderDefault();
-        List<PautaEmAndamentoDTO> pautasDTOs = List.of(pautaEsperada);
+        PautaEmAndamentoResponse pautaEsperada = PautaEmAndamentoResponseFixture.builderDefault();
+        List<PautaEmAndamentoResponse> pautasDTOs = List.of(pautaEsperada);
 
         when(pautaService.obterPautasFechadas()).thenReturn(pautasDTOs);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/pauta/fechada/"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/pautas/fechadas/"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].titulo").value("Título da Pauta"));
     }
@@ -112,12 +111,12 @@ class PautaControllerTest {
     @DisplayName("Dado uma lista de pautas, quando o usuário buscar por pautas fechadas filtradas por categoria, deve retornar as pautas corretamente.")
     @WithMockUser(username = "admin", authorities = {"ADMIN"})
     void buscarPautasFechadaPorCategoriaTest() throws Exception {
-        PautaEmAndamentoDTO pautaEsperada = PautaEmAndamentoDTOFixture.builderDefault();
-        List<PautaEmAndamentoDTO> pautasDTOs = List.of(pautaEsperada);
+        PautaEmAndamentoResponse pautaEsperada = PautaEmAndamentoResponseFixture.builderDefault();
+        List<PautaEmAndamentoResponse> pautasDTOs = List.of(pautaEsperada);
 
         when(pautaService.obterPautasFechadasPorCategoria(Categoria.EDUCACAO)).thenReturn(pautasDTOs);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/pauta/fechada/EDUCACAO"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/pautas/fechadas/EDUCACAO"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].titulo").value("Título da Pauta"));
     }
@@ -126,12 +125,12 @@ class PautaControllerTest {
     @DisplayName("Dado uma lista de pautas, quando o usuário buscar por pautas abertas, deve retornar as pautas corretamente.")
     @WithMockUser(username = "admin", authorities = {"ADMIN"})
     void buscarPautasAbertaTest() throws Exception {
-        PautaEmAndamentoDTO pautaEsperada = PautaEmAndamentoDTOFixture.builderDefault();
-        List<PautaEmAndamentoDTO> pautasDTOs = List.of(pautaEsperada);
+        PautaEmAndamentoResponse pautaEsperada = PautaEmAndamentoResponseFixture.builderDefault();
+        List<PautaEmAndamentoResponse> pautasDTOs = List.of(pautaEsperada);
 
         when(pautaService.obterPautasAbertas()).thenReturn(pautasDTOs);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/pauta/aberta/"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/pautas/abertas/"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].titulo").value("Título da Pauta"));
     }
@@ -140,12 +139,12 @@ class PautaControllerTest {
     @DisplayName("Dado uma lista de pautas, quando o usuário buscar por pautas abertas filtradas por categoria, deve retornar as pautas corretamente.")
     @WithMockUser(username = "admin", authorities = {"ADMIN"})
     void buscarPautasAbertaPorCategoriaTest() throws Exception {
-        PautaEmAndamentoDTO pautaEsperada = PautaEmAndamentoDTOFixture.builderDefault();
-        List<PautaEmAndamentoDTO> pautasDTOs = List.of(pautaEsperada);
+        PautaEmAndamentoResponse pautaEsperada = PautaEmAndamentoResponseFixture.builderDefault();
+        List<PautaEmAndamentoResponse> pautasDTOs = List.of(pautaEsperada);
 
         when(pautaService.obterPautasAbertasPorCategoria(Categoria.EDUCACAO)).thenReturn(pautasDTOs);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/pauta/aberta/EDUCACAO"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/pautas/abertas/EDUCACAO"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].titulo").value("Título da Pauta"));
     }
@@ -154,12 +153,12 @@ class PautaControllerTest {
     @DisplayName("Dado uma lista de pautas, quando o usuário buscar por pautas finalizadas, deve retornar as pautas corretamente.")
     @WithMockUser(username = "admin", authorities = {"ADMIN"})
     void buscarPautasFinalizadasTest() throws Exception {
-        PautaFinalizadaDTO pautaEsperada = PautaFinalizadaDTOFixture.builderDefault();
-        List<PautaFinalizadaDTO> pautasDTOs = List.of(pautaEsperada);
+        PautaFinalizadaResponse pautaEsperada = PautaFinalizadaResponseFixture.builderDefault();
+        List<PautaFinalizadaResponse> pautasDTOs = List.of(pautaEsperada);
 
         when(pautaService.obterPautasFinalizadas()).thenReturn(pautasDTOs);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/pauta/finalizada/"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/pautas/finalizadas/"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].titulo").value("Título da Pauta"));
     }
@@ -168,12 +167,12 @@ class PautaControllerTest {
     @DisplayName("Dado uma lista de pautas, quando o usuário buscar por pautas finalizadas filtradas por categoria, deve retornar as pautas corretamente.")
     @WithMockUser(username = "admin", authorities = {"ADMIN"})
     void buscarPautasFinalizadasPorCategoriaTest() throws Exception {
-        PautaFinalizadaDTO pautaEsperada = PautaFinalizadaDTOFixture.builderDefault();
-        List<PautaFinalizadaDTO> pautasDTOs = List.of(pautaEsperada);
+        PautaFinalizadaResponse pautaEsperada = PautaFinalizadaResponseFixture.builderDefault();
+        List<PautaFinalizadaResponse> pautasDTOs = List.of(pautaEsperada);
 
         when(pautaService.obterPautasFinalizadasPorCategoria(Categoria.EDUCACAO)).thenReturn(pautasDTOs);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/pauta/finalizada/EDUCACAO"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/pautas/finalizadas/EDUCACAO"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].titulo").value("Título da Pauta"));
     }
