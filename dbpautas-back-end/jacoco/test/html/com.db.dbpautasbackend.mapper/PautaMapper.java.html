@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PautaMapper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">dbpautas-back-end</a> &gt; <a href="index.source.html" class="el_package">com.db.dbpautasbackend.mapper</a> &gt; <span class="el_source">PautaMapper.java</span></div><h1>PautaMapper.java</h1><pre class="source lang-java linenums">package com.db.dbpautasbackend.mapper;
+
+import com.db.dbpautasbackend.model.dto.PautaEmAndamentoResponse;
+import com.db.dbpautasbackend.model.dto.PautaFinalizadaResponse;
+import com.db.dbpautasbackend.model.dto.RegistrarPautaRequest;
+import com.db.dbpautasbackend.model.Pauta;
+import com.db.dbpautasbackend.service.PautaService;
+
+import java.util.List;
+
+public interface PautaMapper {
+
+    static Pauta mapRegistrarPautaRequesttoPauta(RegistrarPautaRequest registrarPautaDTO){
+<span class="fc" id="L14">        return Pauta.builder()</span>
+<span class="fc" id="L15">                .titulo(registrarPautaDTO.titulo())</span>
+<span class="fc" id="L16">                .resumo(registrarPautaDTO.resumo())</span>
+<span class="fc" id="L17">                .descricao(registrarPautaDTO.descricao())</span>
+<span class="fc" id="L18">                .categoria(registrarPautaDTO.categoria())</span>
+<span class="fc" id="L19">                .build();</span>
+    }
+
+    static RegistrarPautaRequest mapPautaToRegistrarPautaRequest(Pauta pauta){
+<span class="fc" id="L23">        return RegistrarPautaRequest.builder()</span>
+<span class="fc" id="L24">                .titulo(pauta.getTitulo())</span>
+<span class="fc" id="L25">                .resumo(pauta.getResumo())</span>
+<span class="fc" id="L26">                .descricao(pauta.getDescricao())</span>
+<span class="fc" id="L27">                .categoria(pauta.getCategoria())</span>
+<span class="fc" id="L28">                .build();</span>
+    }
+
+    static List&lt;PautaEmAndamentoResponse&gt; mapListOfPautaToListOfPautaEmAndamentoResponse(List&lt;Pauta&gt; pautas){
+<span class="fc" id="L32">        return pautas.stream()</span>
+<span class="fc" id="L33">                .map(pauta -&gt; PautaEmAndamentoResponse.builder().id(pauta.getId())</span>
+<span class="fc" id="L34">                    .titulo(pauta.getTitulo())</span>
+<span class="fc" id="L35">                    .resumo(pauta.getResumo())</span>
+<span class="fc" id="L36">                    .descricao(pauta.getDescricao())</span>
+<span class="fc" id="L37">                    .categoria(pauta.getCategoria())</span>
+<span class="fc" id="L38">                    .build()</span>
+<span class="fc" id="L39">        ).toList();</span>
+    }
+
+    static List&lt;PautaFinalizadaResponse&gt; mapListOfPautaToListOfPautaFinalizadaResponse(List&lt;Pauta&gt; pautas, PautaService pautaService){
+<span class="fc" id="L43">        return pautas.stream().map(pauta -&gt; PautaFinalizadaResponse.builder().id(pauta.getId())</span>
+<span class="fc" id="L44">                        .titulo(pauta.getTitulo())</span>
+<span class="fc" id="L45">                        .resumo(pauta.getResumo())</span>
+<span class="fc" id="L46">                        .descricao(pauta.getDescricao())</span>
+<span class="fc" id="L47">                        .categoria(pauta.getCategoria())</span>
+<span class="fc" id="L48">                        .votosSim(pauta.getVotosSim())</span>
+<span class="fc" id="L49">                        .votosNao(pauta.getVotosNao())</span>
+<span class="fc" id="L50">                        .decisao(pautaService.contabilizar(pauta))</span>
+<span class="fc" id="L51">                        .build()</span>
+<span class="fc" id="L52">        ).toList();</span>
+    }
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
